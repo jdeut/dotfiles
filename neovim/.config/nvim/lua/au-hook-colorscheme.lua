@@ -17,7 +17,7 @@ local syntax = {
    HopNextKey1      = { bg = 'none', fg = '#00ff00', style = 'italic' },
    HopNextKey2      = { bg = 'none', fg = '#ff4722', style = 'italic' },
 
-   ColorColumn      = { bg = '#2a2a26', fg = 'NONE', style = 'bold' },
+   ColorColumn      = { bg = '#e9e9e9', fg = 'NONE', style = 'bold' },
 
    rainbowcol1      = { fg = '#ff2a2f' },
    rainbowcol2      = { fg = '#073de6' },
@@ -41,7 +41,7 @@ local syntax = {
    DenitePathHead   = { fg = '#3233ff' },
    DenitePathTail   = { fg = '#ff7032' },
 
-   rnowebChunk      = { fg = '#c9c9ff' },
+   rnowebChunk      = { fg = '#a85656' },
 
    FloatermBorder   = { bg = 'NONE', fg = '#9696ff', style = 'bold' },
    Floaterm         = { bg = 'black', fg = '#00ff00' },
