@@ -241,15 +241,6 @@ endfunc
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
-"═══════════════════════════════════════════════════════════════
-" ColorScheme 
-
-augroup AuCustomizeColorScheme
-    autocmd!
-    au ColorScheme * lua require('au-hook-colorscheme').hook()
-augroup END
-
-colorscheme srcery
 
 "══════════════════════════════════════════════════════════════════
 " Autocommands (FileType specific settings, mappings, etc.) 

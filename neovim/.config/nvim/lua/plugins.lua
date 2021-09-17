@@ -24,6 +24,14 @@ local p = function()
         requires = {"rktjmp/lush.nvim"},
         config = function() 
             -- print('op')
+            --
+            vim.cmd( [[
+               augroup AuCustomizeColorScheme
+                   autocmd!
+                   au ColorScheme * lua require('au-hook-colorscheme').hook()
+               augroup END
+            ]])
+
             local onedark = require('onedark')
 
             onedark.setup({
