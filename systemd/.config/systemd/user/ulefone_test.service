@@ -1,0 +1,13 @@
+[Unit]
+Description=Start scrcpy when correct usb device is plugged
+StopWhenUnneeded=true
+After=dev-ulefone_p.device
+Requires=dev-ulefone_p.device
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/scrcpy -m 1024 
+Restart=always
+
+[Install]
+RequiredBy=dev-ulefone_p.device

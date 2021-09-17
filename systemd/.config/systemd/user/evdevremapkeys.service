@@ -1,0 +1,15 @@
+[Unit]
+Conflicts=gnome-shell-x11.service
+
+[Service]
+WorkingDirectory=/tmp
+Restart=always
+ExecStart=/home/johannes/.local/bin/evdevremapkeys -f /home/johannes/.config/evdevremapkeys/config.toml
+ExecReload=/bin/kill -9 $MAINPID
+ExecStop=/bin/kill -9 $MAINPID
+Restart=always
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

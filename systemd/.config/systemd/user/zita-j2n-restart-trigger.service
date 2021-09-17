@@ -1,0 +1,9 @@
+[Unit]
+Wants=zita-j2n.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl --user daemon-reload
+ExecStart=/bin/sleep 0.5
+ExecStart=/bin/systemctl --user restart zita-j2n.service
+

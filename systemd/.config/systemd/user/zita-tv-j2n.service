@@ -1,0 +1,19 @@
+[Unit]
+Description=zita-tv-j2n
+Requires=zita-tv-j2n-delay.service
+Before=zita-tv-j2n-delay.service
+
+[Service]
+Type=simple
+
+# ExecCondition=/usr/bin/jack_control status
+ExecCondition=/bin/ping -c 1 -W 0.2 ${TV_IP_ADDR}
+
+ExecStart=/home/johannes/.local/bin/zita-j2n --chan 2 --jname zita-tv-j2n --float --ipv4 ${TV_IP_ADDR} 9999
+
+ExecStartPost=/bin/sleep 0.1
+#
+# PulseAudio JACK Sink -->> Zita j2n
+#ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "zita-tv-j2n:in_2" 
+#ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "zita-tv-j2n:in_1" 
+

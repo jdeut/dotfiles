@@ -1,0 +1,14 @@
+[Unit]
+Description=Starts nvimheadless service
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/home/johannes/.local/bin/nvim -V10/tmp/nvim.log --headless
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillMode=process
+TimeoutSec=180
+
+[Install]
+WantedBy=default.target
