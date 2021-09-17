@@ -1,16 +1,22 @@
 #!/bin/zsh
 
+# gxmessage $PATH
+#
 if [ $# -eq 0 ]
 then
     echo "Please pass a filename to the program"
     exit 1
 fi
 
-export NVIM_LISTEN_ADDRESS=localhost:62531
-#gxmessage "$NVIM_LISTEN_ADDRESS"
+pgrep nvim-qt > /dev/null
 
-$HOME/.local/bin/nvr -cc 'tabnew' "$@"
+if [ $? -eq 1 ]; then
+    #gxmessage nnono
+    gtk-launch nvim-qt
+fi
 
-tmux select-window -t Primary:1
-run-raise-bridge.sh nvim
+$HOME/.local/bin/nvr --remote -c 'call GuiForeground()' -p "$@"
+
+# tmux select-window -t Primary:1
+# run-raise-bridge.sh nvim
 
