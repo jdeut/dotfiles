@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=GPaste Copy
+Comment=Copy File Content to Clipboard
+TryExec=gpaste-client
+Exec=sh -c "gpaste-client file %f"
+Terminal=false
+Type=Application
+Icon=editpaste
+StartupNotify=false
+MimeType=text/plain

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=SakuraPrimary
+GenericName=Terminal
+Comment=Use the command line
+TryExec=sakura
+Exec=sakura -m --name "SakuraPrimary" -e "tmuxp load -y primary"
+Icon=terminal-tango
+Type=Application
+Categories=GTK;Utility;TerminalEmulator;System;
+Keywords=terminal;
+StartupNotify=true
