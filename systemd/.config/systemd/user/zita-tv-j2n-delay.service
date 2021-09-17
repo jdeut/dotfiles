@@ -1,0 +1,27 @@
+[Unit]
+Requires=zita-tv-j2n.service
+
+[Service]
+Type=simple
+
+# ExecCondition=/usr/bin/jack_control status
+
+ExecStart=/usr/bin/jalv -n "${JACK_CLIENT_NAME_ZITA_DELAY}" -i -c mode=2 -c time=78 "http://lsp-plug.in/plugins/lv2/comp_delay_stereo"
+ExecStartPost=/bin/sleep 0.1
+
+#
+# PulseAudio JACK Sink --//-- System
+# ExecStartPost=-jack_disconnect "PulseAudio JACK Sink:front-left" "system:playback_1"
+# ExecStartPost=-jack_disconnect "PulseAudio JACK Sink:front-right" "system:playback_2"
+#
+# PulseAudio JACK Sink -->> Zita j2n delay
+# ExecStartPost=jack_connect "PulseAudio JACK Sink:front-left" "zita-j2n-delay:in_l"
+# ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "zita-j2n-delay:in_r"
+#
+# Zita j2n delay -->> System
+# ExecStartPost=pw-link "zita-j2n-delay:out_l" "alsa_output.usb-SENUCN_Digital_Hifi_Audio-00.analog-stereo:playback_FL" 
+# ExecStartPost=pw-link "zita-j2n-delay:out_r" "alsa_output.usb-SENUCN_Digital_Hifi_Audio-00.analog-stereo:playback_FR"
+#
+# PulseAudio JACK Sink -->> System
+# ExecStopPost=jack_connect "PulseAudio JACK Sink:front-left" "system:playback_1"
+# ExecStopPost=jack_connect "PulseAudio JACK Sink:front-right" "system:playback_2"

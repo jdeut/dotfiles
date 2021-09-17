@@ -1,0 +1,15 @@
+[Unit]
+Description=zita-henri-j2n
+
+[Service]
+Type=simple
+# ExecCondition=/usr/bin/jack_control status
+ExecCondition=/bin/ping -c 1 -W 0.2 192.168.1.131
+
+ExecStart=/home/johannes/.local/bin/zita-j2n --jname henri-j2n --chan 1 --24bit --ipv4 192.168.1.131 9999
+ExecStartPost=/bin/sleep 0.1
+#
+# PulseAudio JACK Sink -->> Zita j2n
+#ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "henri-j2n:in_2" 
+#ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "henri-j2n:in_1" 
+

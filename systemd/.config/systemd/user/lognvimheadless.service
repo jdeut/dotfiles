@@ -1,0 +1,14 @@
+[Unit]
+Description=Starts nvimheadless service
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/systemd-cat -t nvimheadless /usr/bin/tail -F -n0 /tmp/nvim.log
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillMode=process
+TimeoutSec=180
+
+[Install]
+WantedBy=default.target
