@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Nvr
+GenericName=Neovim
+GenericName[de]=Neovim
+Comment=Edit text files
+TryExec=/home/johannes/bin/ydotool-switch-to-nvim.sh
+Exec=/home/johannes/bin/ydotool-switch-to-nvim.sh %f 
+Terminal=false
+Type=Application
+Keywords=Text;editor;
+Icon=nvim
+Categories=Utility;TextEditor;
+StartupNotify=false
+MimeType=text/english;text/plain;text/x-makefile;
