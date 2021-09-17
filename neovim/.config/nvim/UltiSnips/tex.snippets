@@ -1,0 +1,94 @@
+snippet box "" !
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% $0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+endsnippet
+
+snippet si "si"
+\\${1|num,si|}{${2:${VISUAL}}}
+endsnippet
+
+snippet fbox ""
+\fbox{%
+	${0:${VISUAL}}%
+}
+endsnippet
+
+snippet newdoc "new document with preamble"
+\documentclass{beamer}
+
+\input{preamble.tex}
+
+\begin{document}
+${0:${VISUAL}}
+\end{document}
+endsnippet
+
+snippet i "Italic text" w
+\textit{${0:${VISUAL}}}
+endsnippet
+
+snippet note "\note{ }"
+\note{
+	\begin{itemize}
+		\item $0
+	\end{itemize}
+}
+endsnippet
+
+snippet ft "\frametitle{}" 
+\frametitle{$0}
+endsnippet
+
+snippet it "\item" 
+\item 
+endsnippet
+
+snippet n "tikz node"
+node ${1:[$2] }${3:($4) }{$5} $0
+endsnippet
+
+#newcommand
+snippet nc
+\newcommand{\\${1:cmd}}[${2:opt}]{${3:realcmd}} ${0}
+endsnippet
+
+snippet c "tikz coordinate"
+coordinate ($1) $0
+endsnippet
+
+snippet #f "fold markes" bA
+% ❰❰❰
+${1:${VISUAL}}
+% ❱❱❱
+endsnippet
+
+snippet b "begin{} / end{}" b
+\begin{${1:something}}
+	${2:${VISUAL}}
+\end{$1}
+endsnippet
+
+snippet btcb "begin{} / end{}" b
+\begin{tcolorbox}
+	${1:${VISUAL}}
+\end{tcolorbox}
+endsnippet
+
+snippet bi "begin{itemize} / end{}" b
+\begin{${1|enumerate,itemize,describe|}}
+	\item ${2:${VISUAL}}
+\end{$1}$0
+endsnippet
+
+snippet pc "parencite"
+\parencite${1:[S.${2}]}{${3:`!v @0`}}$0
+endsnippet
+
+snippet tc "textcite"
+\textcite${1:[S.${2}]}{${3:`!v @0`}}$0
+endsnippet
+
+snippet SI "siunitx unit" i
+\SI{$1}{$2}
+endsnippet

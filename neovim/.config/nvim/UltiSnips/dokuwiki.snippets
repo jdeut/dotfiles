@@ -1,0 +1,158 @@
+snippet h1 "Heading1" b
+===== ${VISUAL}$0 =====
+endsnippet
+snippet h2 "Heading2" b
+==== ${VISUAL}$0 ====
+endsnippet
+snippet h3 "Heading3" b
+===${VISUAL}$0===
+endsnippet
+snippet h4 "Heading4" b
+==${VISUAL}$0==
+endsnippet
+snippet h5 "Heading5" b
+=${VISUAL}$0=
+endsnippet
+snippet ft "Footnote"
+((${VISUAL}$0))
+endsnippet
+snippet src "Footnote"
+((Source: $0))
+endsnippet
+snippet url "URL"
+[[$1|$2]]
+endsnippet
+snippet ourl "OURL"
+<html><a href="$1" target="_blank">$2</a></html>
+endsnippet
+snippet / "Commenting"
+<html><!-- $1 --></html>
+endsnippet
+snippet to "TODO"
+<html><!-- TODO: $1 --></html>
+endsnippet
+snippet $$ "math centered"
+$$$1$$
+endsnippet
+snippet ( "paraenthesis complete ("
+($1)
+endsnippet
+snippet { "paraenthesis complete {"
+{$1}
+endsnippet
+snippet [ "paraenthesis complete ["
+[$1]
+endsnippet
+snippet file "file"
+<file $1 $2>
+$3
+</file>
+endsnippet
+snippet DIS "Discussion turn on"
+~~DISCUSSION~~
+endsnippet
+snippet frac "Math fraction"
+\frac{$1}{$2}
+endsnippet
+snippet {{ "File Link"
+{{$1|$2}}
+endsnippet
+snippet ** "Bold"
+** ${VISUAL}$0 **
+endsnippet
+snippet R "R"
+\mathbb{R}^$1
+endsnippet
+snippet eqn "Equation"
+\begin{equation}$1\label{$2}\end{equation}
+endsnippet
+snippet er "Equation number reference"
+$\eqref{eq:$1}$
+endsnippet
+snippet alg "Align"
+\begin{align}
+$1&=\label{$2}
+\end{align}
+endsnippet
+snippet opr "Operator Name"
+\operatorname{$1}($2)
+endsnippet
+snippet mat "Matrix"
+$1=\left[ {\begin{array}{cc} & \\\\ & \end{array} } \right]
+endsnippet
+snippet code "Description"
+<code>
+$1
+</code>
+endsnippet
+snippet html "<html"
+<html>
+$1
+</html>
+endsnippet
+snippet $ "Math-Inline"
+$$1$
+endsnippet
+snippet ht "Heading with tagging"
+[size=120%][b]$1[/b]{{entry>$1;-}}[/size]
+endsnippet
+snippet keyw "Keyword"
+**$1**{{entry>$1;-}}
+endsnippet
+snippet non "Nonumber + \\"
+\nonumber \\\
+endsnippet
+snippet G "See Glossary"
+((See Glossary for definition))
+endsnippet
+snippet set "Set Definition"
+\\{$1\\}
+endsnippet
+snippet Rp "Non-negative Orthant"
+{\mathbb{R}^n_+}
+endsnippet
+snippet Sp "Positive Semi-definite"
+{\mathbb{S}^n_+}
+endsnippet
+snippet \a "alpha"
+\alpha
+endsnippet
+snippet \b "beta"
+\beta
+endsnippet
+snippet \t "theta"
+\theta
+endsnippet
+snippet \g "gamma"
+\gamma
+endsnippet
+snippet \o "omega"
+\omega
+endsnippet
+snippet \O "Omega"
+\Omega
+endsnippet
+snippet x "Times"
+\times
+endsnippet
+snippet d "dot"
+\dot{$1}
+endsnippet
+snippet h "hat"
+\hat{$1}
+endsnippet
+snippet emph "Italics"
+\emph{$1}
+endsnippet
+snippet v "vector"
+\vec{$1}
+endsnippet
+snippet fr "Frame"
+$\\{\mathbb{$1}\\}$
+endsnippet
+snippet paperh "Paper heading" !b
+======$1======
+
+My notes on the paper presented by $2.
+endsnippet
+# vim:ft=snippets:
