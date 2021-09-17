@@ -1,0 +1,13 @@
+snippet #fc "set fold marker" bAms
+${VISUAL/\A(\s*)(.*?)\n(.*)\n*\Z/" $2 ❰❰❰\n$1$2\n$3/m}
+" ❱❱❱
+endsnippet
+
+
+snippet x
+${${VISUAL/a/X/g}/X/Y/g}
+endsnippet
+
+snippet y
+${VISUAL/(\A.*//}
+endsnippet
