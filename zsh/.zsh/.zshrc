@@ -71,8 +71,7 @@ setopt hist_save_no_dups
 # Key Bindings
 function zvm_after_init() {
     FZF_TMUX=0
-    source $HOME/.config/zsh/fzf.zsh
-    source $HOME/.config/broot/launcher/bash/br
+    source $ZDOTDIR/fzf/fzf.zsh
 }
 
 function zvm_after_lazy_keybindings() {
