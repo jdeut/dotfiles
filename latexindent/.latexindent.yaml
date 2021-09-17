@@ -1,0 +1,123 @@
+defaultIndent: "   "
+
+removeTrailingWhitespace:
+    afterProcessing: 1
+
+replacements:
+    -
+      substitution: s/ \s*/ /sg
+    -
+      substitution: |-
+        s/
+            ^(\s*)(.*?)\\tcblower(\n|)
+         /
+            $1$2
+            $1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            $1\\tcblower%
+            $1%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+         /sgx
+
+specialBeginEnd:
+    NiceMatrixCodeBefore:
+        begin: '\\CodeBefore'
+        end: '\\Body'
+        lookForThis: 1
+
+indentAfterItems:
+    itemize: 1
+    enumerate: 1
+    enumerateNoVskip: 1
+    description: 1
+    list: 1
+    tcbitemize: 1
+
+lookForAlignDelims:
+    tabularx:
+        multiColumnGrouping: 1
+    tabular:
+        multiColumnGrouping: 1
+    NiceTabular:
+        multiColumnGrouping: 1
+
+# if you want to use other names for your items (for example, \part)
+# then populate them here; note that you can trick latexindent.pl
+# into indenting all kinds of commands (within environments specified in 
+# indentAfterItems) using this technique.
+itemNames:
+    item: 1
+    myitem: 1
+    tcbitem: 1
+
+#noAdditionalIndentGlobal:
+    #commands: 1
+    #mandatoryArguments: 1
+
+modifyLineBreaks:
+    preserveBlankLines: 1
+    condenseMultipleBlankLinesInto: 1
+    textWrapOptions:
+        columns:
+            default: 78
+            mandatoryArguments: 60
+            items: 60
+            environments:
+                quotation: 40
+        #huge: die
+        perCodeBlockBasis: 0
+        all:
+            except:
+              - tikzpicture  
+        #commands: 1
+        #mandatoryArguments: 1
+        #environments:
+            #quotation: 1
+            #tikzpicture: 0
+        #items: 1
+        #all: 1
+    removeParagraphLineBreaks:
+        beforeTextWrap: 1
+        paragraphsStopAt:
+            comments: 1
+    commands:
+        CommandStartsOnOwnLine: 0
+        CommandNameFinishesWithLineBreak: 0
+    mandatoryArguments:
+        LCuBStartsOnOwnLine: 0
+        MandArgBodyStartsOnOwnLine: 0
+        RCuBStartsOnOwnLine: 0
+        RCuBFinishesWithLineBreak: 0
+    optionalArguments:
+        tcolorbox:
+            LSqBStartsOnOwnLine: 0
+            OptArgBodyStartsOnOwnLine: 1
+            RSqBStartsOnOwnLine: 1
+            CommaFinishesWithLineBreak: 1
+        scope:
+            LSqBStartsOnOwnLine: 0
+            OptArgBodyStartsOnOwnLine: 1
+            RSqBStartsOnOwnLine: 1
+            CommaFinishesWithLineBreak: 1
+        tikzpicture:
+            LSqBStartsOnOwnLine: 0
+            OptArgBodyStartsOnOwnLine: 1
+            RSqBStartsOnOwnLine: 1
+            CommaFinishesWithLineBreak: 1
+        tcbitemize:
+            LSqBStartsOnOwnLine: 0
+            OptArgBodyStartsOnOwnLine: 1
+            RSqBStartsOnOwnLine: 1
+            CommaFinishesWithLineBreak: 1
+        tcbraster:
+            LSqBStartsOnOwnLine: 0
+            OptArgBodyStartsOnOwnLine: 1
+            RSqBStartsOnOwnLine: 1
+            CommaFinishesWithLineBreak: 1
+    items:
+        ItemStartsOnOwnLine: 1
+        ItemFinishesWithLineBreak: 2
+    environments:
+        BeginStartsOnOwnLine: 2
+        BodyStartsOnOwnLine: 1
+        EndFinishesWithLineBreak: 2
+        EndStartsOnOwnLine: 2
+        DBSFinishesWithLineBreak: 2
