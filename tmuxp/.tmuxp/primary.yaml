@@ -1,0 +1,19 @@
+session_name: Primary
+start_directory: '~'
+global_options:
+  default-shell: /bin/zsh
+  default-command: /bin/zsh
+options: 
+  set-titles: on
+  base-index: 1
+  set-titles-string: Primary Tmux Session
+windows:
+- window_name: Nvim
+  layout: main-horizontal
+  panes:
+  - shell_command:
+    - nvim
+- layout: main-horizontal
+  panes:
+  - shell_command:
+    - clear
