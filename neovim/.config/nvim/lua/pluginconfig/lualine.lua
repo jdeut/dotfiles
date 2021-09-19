@@ -1,11 +1,9 @@
 
 require('lualine').setup({
     options = {
-        component_separators = { [[]] , [[]] },
-        section_separators = { [[]] , [[]] },
-        icons_enabled = 1,
-        padding = 1,
-        left_padding = 1
+       component_separators = { left = [[]] , right = [[]] },
+        section_separators = { left = [[]] , right = [[]] },
+        icons_enabled = true
     },
     sections = {
         lualine_a = { [[mode]] },
