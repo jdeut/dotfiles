@@ -40,14 +40,14 @@ local p = function()
                    fg = '#000000', 
                    bg = '#ffffff',
                    white = '#ffffff',
-                   yellow = '#cf9200',
+                   yellow = '#bf8200',
                    -- purple = '#ffffff',
                    purple = '#9a12cf',
                    black = '#000000',
                    gray = '#2c2c2c',
                    cyan = '#00a4ae',
-                   green = '#1da900',
-                   red = '#ff4651',
+                   green = '#1d9a0d',
+                   red = '#ba3621',
                    comment = '#797979',
                 }, 
                 styles = {
@@ -81,6 +81,7 @@ local p = function()
     use { 'matsui54/denite-nvim-lsp' }
     use { 'delphinus/denite-floaterm',
         config = function() 
+           vim.g.floaterm_autoclose   = 2
            vim.g.floaterm_title       = ' $1/$2 '
            vim.g.floaterm_borderchars = {
                '', '', '', '', '', '', '', '' 
@@ -92,6 +93,44 @@ local p = function()
         config = function() 
             vim.g['fruzzy#usenative']   = 1
             vim.g['fruzzy#sortonempty'] = 0
+        end
+    }
+    use { 'ibhagwan/fzf-lua',
+        requires = {
+            'vijaymarupudi/nvim-fzf',
+            'kyazdani42/nvim-web-devicons'
+        },
+        config = function()
+            local actions = require'fzf-lua.actions'
+
+            require'fzf-lua'.setup({
+                fzf_args = "--color=dark,preview-fg:#00ff00",
+                preview_border = 'noborder',
+                actions = {
+                    -- set bind to 'false' to disable
+                    ["default"]     = actions.file_edit,
+                    ["ctrl-s"]      = actions.file_split,
+                    ["ctrl-v"]      = actions.file_vsplit,
+                    ["ctrl-t"]      = actions.file_tabedit,
+                    ["alt-q"]       = actions.file_sel_to_qf,
+                    -- custom actions are available too
+                    -- ["ctrl-y"]      = function(selected) print(selected[2]) end,
+                },
+                git = {
+                    files = {
+                        prompt          = 'GitFiles❯ ',
+                        cmd             = 'git ls-files',
+                        git_icons       = true,           -- show git icons?
+                        file_icons      = true,           -- show file icons?
+                        color_icons     = true,           -- colorize file|git icons
+                        preview_horizontal = "right:0%"
+                     }
+                },
+                oldfiles = {
+                    preview_opts = 'hidden',
+                    preview_horizontal = 'right:0%'
+                }
+            })
         end
     }
     use { 'hrsh7th/nvim-cmp',
@@ -235,7 +274,9 @@ local p = function()
     }
     use { 'borissov/fugitive-gitea',
         config = function()
-            vim.g.fugitive_gitea_domains = { 'https://energien.uber.space/gitea' }
+            vim.g.fugitive_gitea_domains = {
+               'https://energien.uber.space/gitea'
+            }
         end
     }
     use { 'romainl/vim-cool' }
@@ -244,17 +285,37 @@ local p = function()
             require('pluginconfig.whichkey')
         end
     }
-    use { 'voldikss/vim-floaterm' }
+    -- use { 'numtostr/FTerm.nvim',
+    --    config = function()
+    --       local fterm = require("FTerm")
+    --       fterm.setup({
+    --           border = 'double'
+    --       })
+    --    end
+    -- }
+    use { 'voldikss/vim-floaterm',
+        disable = false
+    }
     use { 'powerman/vim-plugin-AnsiEsc' }
     use { 'Matt-Deacalion/vim-systemd-syntax' }
-    use { '907th/vim-auto-save',
+    use { 'Pocco81/AutoSave.nvim',
         config = function()
-           vim.g.auto_save        = 1
-           vim.g.auto_save_silent = 1
-           vim.g.auto_save_events = {
-               "InsertLeave", "FocusLost",
-               "WinLeave", "BufLeave"
-           }
+           local autosave = require("autosave")           vim.g.auto_save_silent = 1
+
+           autosave.setup( {
+               enabled = true,
+               execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+               events = {"InsertLeave", "TextChanged"},
+               conditions = {
+                   exists = true,
+                   filetype_is_not = {},
+                   modifiable = true
+               },
+               write_all_buffers = false,
+               on_off_commands = true,
+               clean_command_line_interval = 0,
+               debounce_delay = 135
+           } )
         end
     }
     use { 'glts/vim-texlog' }
