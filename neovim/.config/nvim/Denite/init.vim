@@ -7,12 +7,12 @@ call denite#custom#option('_', {
 \   'match_highlight':             v:true,
 \   'preview_height':              8,
 \   'filter_split_direction':      'floating',
-\   'highlight_window_background': 'Normal',
+\   'highlight_window_background': 'Folded',
 \   'highlight_matched_range':     'DeniteHighlightMatchedRange',
 \   'highlight_matched_char':      'DeniteHighlightMatchedChar',
-\   'highlight_prompt':            'Pmenu',
+\   'highlight_prompt':            'DeniteSignColumn',
 \   'highlight_preview_line':      'Visual',
-\   'highlight_filter_background': 'Visual',
+\   'highlight_filter_background': 'Folded',
 \   'prompt':                      '$ ',
 \   'source_names':                'short',
 \   'split':                       'floating_relative_cursor',
@@ -24,12 +24,6 @@ call denite#custom#option('_', {
 \   'winwidth':                    89,
 \   'vertical_preview':            v:false
 \ })
-
-"call denite#custom#var(
-"\   'file/rec/git/tracked,file/rec/git/tracked,file/old',
-"\   'buffer_name',
-"\   'files'
-"\ )
 
 function! s:denite_quickfix()
     "call jobstart('gxmessage "asdasd"')

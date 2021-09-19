@@ -1,7 +1,7 @@
 "call jobstart('gxmessage "asdasd"')
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync() 
 
-source <sfile>:p:h/denite-common.vim
+" source <sfile>:p:h/denite-common.vim
 
 setlocal list
 setlocal winblend=20
@@ -23,7 +23,7 @@ if bufname("%") =~ '.*files$'
     call matchadd('DenitePathHead', '.*\([^/]*$\)\@!')
 endif
 
-setlocal winhighlight="SignColumn:DeniteSignColumn,Normal:DeniteNormal,deniteSoureLine_file_rec_git_tracked:DeniteNormal"
+setlocal winhighlight="SignColumn:DeniteSignColumn"
 
 nnoremap <silent><buffer> m
 \   <Cmd>call denite#call_map('choose_action')<cr>
