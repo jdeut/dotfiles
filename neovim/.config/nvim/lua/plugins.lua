@@ -432,7 +432,7 @@ local p = function()
             }
         end
     }
-    use { 'hoob3rt/lualine.nvim',
+    use { 'shadmansaleh/lualine.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons', opt = true
         },
