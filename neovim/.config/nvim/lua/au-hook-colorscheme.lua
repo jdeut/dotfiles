@@ -37,9 +37,10 @@ local syntax = {
    Whitespace       = { fg = '#353522' },
 
    DeniteCursorLine = { bg = '#483232' },
-   PmenuSbar        = { style = 'bold', fg = 'red', bg = 'green' },
    DenitePathHead   = { fg = '#3233ff' },
    DenitePathTail   = { fg = '#ff7032' },
+
+   PmenuSbar        = { style = 'bold', fg = 'red', bg = 'green' },
 
    rnowebChunk      = { fg = '#a85656' },
 
@@ -77,6 +78,9 @@ local function highlight(group, color)
       .. fg .. ' ' .. bg .. ' ' .. sp
    )
 end
+
+vim.cmd('au FileType denite-filter setlocal winhighlight=Normal:Folded')
+vim.cmd('au FileType denite,denite-filter setlocal winhighlight=CursorLine:DeniteCursorLine')
 
 t.hook = function()
    for group,colors in pairs(syntax) do
