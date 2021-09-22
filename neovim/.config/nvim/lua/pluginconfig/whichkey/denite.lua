@@ -49,7 +49,7 @@ wk.register({
         --       [[ file/rec/git/tracked<CR>]], [[Project Dir]] },
 
         a = { function() 
-               require'fzf-lua'.git_files() 
+               require'pluginconfig.fzf-lua'.custom.git_files() 
             end, 
             [[Help]] 
         },
