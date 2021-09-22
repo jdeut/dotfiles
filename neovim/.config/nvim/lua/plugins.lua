@@ -101,36 +101,7 @@ local p = function()
             'kyazdani42/nvim-web-devicons'
         },
         config = function()
-            local actions = require'fzf-lua.actions'
-
-            require'fzf-lua'.setup({
-                fzf_args = "--color=dark,preview-fg:#00ff00",
-                preview_border = 'noborder',
-                actions = {
-                    -- set bind to 'false' to disable
-                    ["default"]     = actions.file_edit,
-                    ["ctrl-s"]      = actions.file_split,
-                    ["ctrl-v"]      = actions.file_vsplit,
-                    ["ctrl-t"]      = actions.file_tabedit,
-                    ["alt-q"]       = actions.file_sel_to_qf,
-                    -- custom actions are available too
-                    -- ["ctrl-y"]      = function(selected) print(selected[2]) end,
-                },
-                git = {
-                    files = {
-                        prompt          = 'GitFiles❯ ',
-                        cmd             = 'git ls-files',
-                        git_icons       = true,           -- show git icons?
-                        file_icons      = true,           -- show file icons?
-                        color_icons     = true,           -- colorize file|git icons
-                        preview_horizontal = "right:0%"
-                     }
-                },
-                oldfiles = {
-                    preview_opts = 'hidden',
-                    preview_horizontal = 'right:0%'
-                }
-            })
+            require('pluginconfig.fzf-lua')
         end
     }
     use { 'hrsh7th/nvim-cmp',
