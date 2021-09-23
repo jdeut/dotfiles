@@ -171,6 +171,12 @@ local p = function()
                 numhl              = true,
                 linehl             = false,
                 current_line_blame = true,
+                current_line_blame_opts = {
+                    virt_text_pos = 'right_align'
+                },
+                watch_index = {
+                    interval = 100
+                },
                 signs = {
                     add          = {text = '🞧'},
                     change       = {text = '⮛'},
@@ -178,9 +184,20 @@ local p = function()
                     topdelete    = {text = '‾'},
                     changedelete = {text = 'ⓒ'},
                 },
-                watch_index = {
-                    interval = 100
-                }
+                current_line_blame_formatter = function(name, blame_info, opts)
+                  local text
+                  if blame_info.author == '' then
+                    text = blame_info.author
+                  else
+                    local date_time
+
+                    date_time = os.date('%Y-%m-%d', tonumber(blame_info['author_time']))
+
+                    text = string.format('%s - %s', date_time, blame_info.summary)
+                  end
+
+                  return {{' '..text, 'GitSignsCurrentLineBlame'}}
+                end,
             })
         end
     }
