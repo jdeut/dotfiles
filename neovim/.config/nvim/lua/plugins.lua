@@ -197,7 +197,7 @@ local p = function()
                     text = string.format('%s - %s', date_time, blame_info.summary)
                   end
 
-                  return {{' '..text, 'GitSignsCurrentLineBlame'}}
+                  return {{'          ' .. text, 'GitSignsCurrentLineBlame'}}
                 end,
             })
         end
