@@ -117,6 +117,7 @@ local p = function()
             require('pluginconfig.nvim-cmp')
 
             vim.cmd([[autocmd FileType denite-filter lua require('cmp').setup.buffer { enabled = false }]])
+            vim.cmd([[autocmd FileType gitcommit lua require('cmp').setup.buffer { enabled = false }]])
         end
     }
     use { 'vigoux/oak' }
