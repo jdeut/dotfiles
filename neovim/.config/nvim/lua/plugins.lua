@@ -432,9 +432,9 @@ local p = function()
     use { 'davidhalter/jedi-vim' }
     use { 'kynan/dokuvimki',
         config = function()
-            vim.g.DokuVimKi_USER = "admin"
-            vim.g.DokuVimKi_PASS = "1984_Deutsch"
-            vim.g.DokuVimKi_URL  = "https://wiki.technik.tk"
+            vim.g.DokuVimKi_USER = ""
+            vim.g.DokuVimKi_PASS = ""
+            vim.g.DokuVimKi_URL  = ""
         end
     }
     use { 'monaqa/dial.nvim' }
