@@ -1,6 +1,6 @@
 wk = require("which-key")
 
-require'which-key.plugins.registers'.registers =  '+"-:.%/#=_adfjkn0123456789'
+require'which-key.plugins.registers'.registers =  '+"-:.%/#=_adfjkn0123789'
 
 wk.setup {
     plugins = {
@@ -8,14 +8,15 @@ wk.setup {
         registers = true,
     },
     window = {
-        margin = { 0, 5, 2, 50 },
-        padding = { 0, 0, 0, 3 }
+        margin = { 0, 10, 4, 10 },
+        padding = { 0, 0, 0, 0 },
+        border = 'single'
     },
     layout = {
-        height = { min = 1, max = 10 }, -- 
-        width = { min = 5, max = 38 }, -- 
-        spacing = 4, -- spacing between columns
-        align = "left",
+        height = { min = 4, max = 22 }, -- 
+        width = { min = 5, max = 40 }, -- 
+        spacing = 5, -- spacing between columns
+        align = "center",
     },
     hidden = {
         "<silent>", 
@@ -43,7 +44,7 @@ wk.register({
 })
 
 wk.register({
-   ["."] = {
+   [":"] = {
         name = 'Exec',
         n    = { [[<Cmd>silent !xdg-open %:p:h<CR>]], "Nautilus" },
         g    = { [[<Cmd>lua require('plenary.job'):new({command = 'gitg'}):start()<CR>]], "Gitg" }
@@ -55,16 +56,6 @@ wk.register({
     },
     j = {
         name = 'Utils',
-        h = {
-            name = 'GitSigns',
-            l    = { [[<Cmd>Gitsigns toggle_linehl<CR>]], "Togl linehl" },
-            n    = { [[<Cmd>Gitsigns toggle_numhl<CR>]], "Togl numhl" },
-            s    = { [[<cmd>Gitsigns stage_hunk<CR>]], [[Stage Hunk]] },
-            u    = { [[<cmd>Gitsigns undo_stage_hunk<CR>]], [[Undo Stage Hunk]] },
-            r    = { [[<cmd>Gitsigns reset_hunk<CR>]], [[Reset Hunk]] },
-            p    = { [[<cmd>Gitsigns preview_hunk<CR>]], [[Preview Hunk]] },
-            b    = { [[<cmd>Gitsigns blame_line<CR>]], [[Blame Line]] }
-        },
         p = {
             name = 'Packer',
             u    = { [[<Cmd>PackerUpdate<CR>]], 'Update'},
@@ -85,13 +76,27 @@ wk.register({
             s    = { [[:UltiSnipsEdit<CR>]], [[Edit]]}
         }
     },
-    x = {
+    i = {
         name = 'Git',
-        x    = { [[<Cmd>cclose <bar> tab Git<CR>]], [[Git]] },
+        i    = { [[<Cmd>cclose <bar> tab Git<CR>]], [[Git]] },
+        w    = { [[<Cmd>Gwrite<CR>]], [[Git]] },
+        m    = { [[<Cmd>GMove<CR>]], [[Git]] },
+        d    = { [[<Cmd>GDelete<CR>]], [[Git]] },
+        c    = { [[<Cmd>Git commit<CR>]], [[Git Commit]] },
         l    = { [[<Cmd>Git log<CR>]], [[Git Log]] },
         p    = { [[<Cmd>Git push<CR>]], [[Git Push]] },
-        i    = { [[<Cmd>Gvdiffsplit<CR>]], [[Git Split]] }
-    },
+        s    = { [[<Cmd>Gvdiffsplit<CR>]], [[Git Split]] },
+        h    = {
+            name = 'GitSigns',
+            l    = { [[<Cmd>Gitsigns toggle_linehl<CR>]], "Togl linehl" },
+            n    = { [[<Cmd>Gitsigns toggle_numhl<CR>]], "Togl numhl" },
+            s    = { [[<cmd>Gitsigns stage_hunk<CR>]], [[Stage Hunk]] },
+            u    = { [[<cmd>Gitsigns undo_stage_hunk<CR>]], [[Undo Stage Hunk]] },
+            r    = { [[<cmd>Gitsigns reset_hunk<CR>]], [[Reset Hunk]] },
+            p    = { [[<cmd>Gitsigns preview_hunk<CR>]], [[Preview Hunk]] },
+            b    = { [[<cmd>Gitsigns blame_line<CR>]], [[Blame Line]] }
+        }
+    }
 },  {
     mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true
 })
