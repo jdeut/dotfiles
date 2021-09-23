@@ -44,6 +44,15 @@ wk.register({
 })
 
 wk.register({
+   ['/'] = {
+        name = 'localleader',
+        ['/']    = { [[/]], "Search", silent = false}
+   }
+}, {
+    mode = "n", prefix = "", buffer = nil, silent = true, noremap = true
+})
+
+wk.register({
    [":"] = {
         name = 'Exec',
         n    = { [[<Cmd>silent !xdg-open %:p:h<CR>]], "Nautilus" },
@@ -80,7 +89,7 @@ wk.register({
         name = 'Git',
         i    = { [[<Cmd>cclose <bar> tab Git<CR>]], [[Git]] },
         w    = { [[<Cmd>Gwrite<CR>]], [[Git]] },
-        m    = { [[<Cmd>GMove<CR>]], [[Git]] },
+        m    = { [[:GMove <C-r>%]], [[Git]], silent = false},
         d    = { [[<Cmd>GDelete<CR>]], [[Git]] },
         c    = { [[<Cmd>Git commit<CR>]], [[Git Commit]] },
         l    = { [[<Cmd>Git log<CR>]], [[Git Log]] },
