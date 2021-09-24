@@ -96,15 +96,6 @@ require'fzf-lua'.setup({
        ['ctrl-space'] = 'toggle',
        ['ctrl-l']     = 'clear-query',
     },
-    actions = {
-        ['default'] = actions.file_edit,
-        ['ctrl-s']  = actions.file_split,
-        ['ctrl-v']  = actions.file_vsplit,
-        ['ctrl-t']  = actions.file_tabedit,
-        ['ctrl-q']  = actions.file_sel_to_qf,
-        -- custom actions are available too
-        -- ["ctrl-y"]      = function(selected) print(selected[2]) end,
-    },
     winopts = {
         win_border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
         hl_border  = 'Folded'
@@ -115,6 +106,19 @@ require'fzf-lua'.setup({
             preview_horizontal = 'right:0%',
             preview_vertical   = 'down:0%',
          }
+    },
+    grep = {
+       prompt             = 'Ag❯ ',
+       input_prompt       = 'Grep For❯ ',
+       cmd                = 'ag -i --color --hidden --vimgrep --nomultiline --',
+       git_icons          = true,           -- show git icons?
+       file_icons         = true,           -- show file icons?
+       color_icons        = true,           -- colorize file|git icons
+       preview_horizontal = 'right:0%',
+       preview_vertical   = 'down:10%',
+       actions = {
+           ['ctrl-q']  = actions.file_sel_to_qf,
+       },
     },
     oldfiles = {
         preview_horizontal = 'right:0%',
