@@ -291,10 +291,16 @@ local p = function()
         config = function()
            local autosave = require("autosave")           vim.g.auto_save_silent = 1
 
+           autosave.hook_after_saving = function()
+               autosave.setup({
+                  execution_message = "AutoSave: " .. vim.fn.strftime("%H:%M:%S")
+               })
+           end
+
            autosave.setup( {
                enabled = true,
-               execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
-               events = {"InsertLeave", "TextChanged"},
+               execution_message = "AutoSave: " .. vim.fn.strftime("%H:%M:%S"),
+               events = {"InsertLeave", "WinLeave", "TextChanged"},
                conditions = {
                    exists = true,
                    filetype_is_not = {},
@@ -302,8 +308,8 @@ local p = function()
                },
                write_all_buffers = false,
                on_off_commands = true,
-               clean_command_line_interval = 0,
-               debounce_delay = 135
+               clean_command_line_interval = 3000,
+               debounce_delay = 50
            } )
         end
     }
