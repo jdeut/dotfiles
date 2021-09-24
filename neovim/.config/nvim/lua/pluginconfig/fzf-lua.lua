@@ -54,7 +54,7 @@ local floatArgs = function()
    local lines = vim.o.lines
 
    local width = math.floor(columns - (columns * 1 / 10))
-   local height = lines - 4
+   local height = lines - 5
 
    local row = lines
 
@@ -63,29 +63,29 @@ local floatArgs = function()
    end
 
    if lines < 30 then
-      height = lines - 2
+      height = lines - 3
    end
 
    return {
       relative = 'editor',
-      row = 0,
-      col = math.floor((columns - width) / 2),
-      width = width,
-      height = height,
-      style = 'minimal',
-      border = nil
+      row      = 1,
+      col      = math.floor((columns - width) / 2),
+      width    = width,
+      height   = height,
+      style    = 'minimal',
+      border   = nil
    }
 end
 
 require'fzf-lua'.setup({
-    fzf_args = '--color=dark,preview-fg:#00ff00',
+    fzf_args       = '--color=dark,preview-fg:#00ff00',
     preview_border = 'noborder',
-    winopts_raw = floatArgs,
-    git_icons          = true,           -- show git icons?
-    file_icons         = true,           -- show file icons?
-    color_icons        = true,           -- colorize file|git icons
-    fzf_args            = '',             -- adv: fzf extra args, empty unless adv
-    fzf_binds           = {               -- fzf '--bind=' options
+    winopts_raw    = floatArgs,
+    git_icons      = true,           -- show git icons?
+    file_icons     = true,           -- show file icons?
+    color_icons    = true,           -- colorize file|git icons
+    fzf_args       = '',             -- adv: fzf extra args, empty unless adv
+    fzf_binds      = {               -- fzf '--bind=' options
        ['f2']         = 'toggle-preview',
        ['f3']         = 'toggle-preview-wrap',
        ['shift-down'] = 'preview-page-down',
