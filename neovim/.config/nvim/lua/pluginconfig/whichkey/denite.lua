@@ -30,6 +30,21 @@ wk.register({
         m = { [[<Cmd>Denite -winwidth=50 -quick-move=immediately]] ..
               [[ menu:custom<cr>]], [[Menu]] },
 
+        g = { function()
+               local m = require'fzf-lua.path'
+               local path = vim.fn.expand('%:p:h')
+               local cwd = m.git_root(path, 0)
+
+               if not cwd then
+                  cwd = path
+               end
+
+               require "fzf-lua".grep({
+                  cwd = cwd
+               })
+            end, [[Grep Ftype]]
+        },
+
         h = { function() 
                win_width_abs = 120 
                win_width = win_width_abs / vim.o.columns
