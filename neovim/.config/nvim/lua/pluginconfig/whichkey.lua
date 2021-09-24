@@ -104,6 +104,15 @@ wk.register({
             p    = { [[<cmd>Gitsigns preview_hunk<CR>]], [[Preview Hunk]] },
             b    = { [[<cmd>Gitsigns blame_line<CR>]], [[Blame Line]] }
         }
+    },
+    q = {
+       name = 'Quickfix',
+       q    = { function()
+             require('Fn/quickfix-toggle').toggle()
+          end, 'toggle'
+       },
+       n    = { [[<cmd>cnext<CR>]], 'next entry'},
+       p    = { [[<cmd>cprev<CR>]], 'previous entry'},
     }
 },  {
     mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true
