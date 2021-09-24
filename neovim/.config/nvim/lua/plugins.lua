@@ -482,6 +482,20 @@ local p = function()
             }
         end
     }
+    use { 'kdheepak/tabline.nvim',
+        requires = { 'shadmansaleh/lualine.nvim', opt = true },
+        config = function()
+            require'tabline'.setup({
+               enable = true,
+               options = {
+                  show_tabs_always = false,
+                  show_devicons = false,
+                  show_filename_only = true,
+                  max_bufferline_percentage = 0,
+               }
+            })
+        end
+    }
     use { 'shadmansaleh/lualine.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons', opt = true
