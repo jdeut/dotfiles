@@ -8,9 +8,10 @@ end
 
 local sections_common = {
     lualine_c = { [[vim.fn.expand("%")]] },
-    lualine_x = {},
+    lualine_x = { },
     lualine_y = {{
-       [[encoding]] , [[filetype]], [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]], [[progress]],
+       [[encoding]] , [[filetype]], 
+       [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]] , [[progress]],
        cond = hide_on_winwidth_cond
     }},
     lualine_z = {{
@@ -31,13 +32,16 @@ local inactive_sections = vim.tbl_deep_extend('keep', {
    }, sections_common
 )
 
-
 require('lualine').setup({
+    sections          = sections,
+    inactive_sections = inactive_sections,
+    extensions = {
+       'quickfix', 'fzf',
+       'fugitive', 'toggleterm'
+    },
     options = {
        component_separators = { left = [[]] , right = [[]] },
-          section_separators = { left = [[]] , right = [[]] },
-          icons_enabled = true
-    },
-    sections = sections,
-    inactive_sections = inactive_sections
+       section_separators   = { left = [[]] , right = [[]] },
+       icons_enabled        = true,
+    }
 })
