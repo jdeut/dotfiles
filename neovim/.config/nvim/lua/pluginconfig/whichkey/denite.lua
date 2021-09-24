@@ -3,19 +3,23 @@ wk = require("which-key")
 wk.register({
     name = 'Hop',
 
-    ["1"] = { [[<Cmd>Denite -split=tab -buffer-name=files -path=~/.dotfiles/neovim/.config/nvim]] ..
-              [[ -matchers=matcher/ignore_current_buffer,matcher/substring]] ..
-              [[ file/rec/git/tracked<cr>]], [[Nvim Config Dir]] },
+    ['1'] = { function()
+            require'pluginconfig.fzf-lua'.custom.git_files({
+               cwd = [[/home/johannes/.dotfiles/neovim/.config/nvim]]
+            })
+        end, 
+        [[Nvim Config Dir]]
+    },
 
     ["<leader>"] = {
 
         name = 'Denite',
-        x = { [[:FloatermNew --name=browse_git_dirs --opener=vsplit --autoclose=2]] ..
-              [[ --width=0.8 --height=0.8 <C-R>=g:nvim_config_home<CR>]] ..
-              [[/shscripts/mrcgitdirs.sh<CR>]], [[Recent Projects]] },
         s = { [[<Cmd>DeniteProjectDir -buffer-name=files -winheight=35]] ..
               [[ -winwidth=69 -matchers=matcher/ignore_current_buffer,]] ..
               [[matcher/fruzzy]], [[Project Dir 2]] },
+        -- x = { [[:FloatermNew --name=browse_git_dirs --opener=vsplit --autoclose=2]] ..
+        --       [[ --width=0.8 --height=0.8 <C-R>=g:nvim_config_home<CR>]] ..
+        --       [[/shscripts/mrcgitdirs.sh<CR>]], [[Recent Projects]] },
         -- n = { [[<Cmd>Denite -buffer-name=files]] ..
         --       [[ -matchers=matcher/ignore_current_buffer file/old<CR>]],
         --       [[Recent Files]] },
@@ -48,25 +52,11 @@ wk.register({
         --       [[matcher/fruzzy,matcher/ignore_globs]] ..
         --       [[ file/rec/git/tracked<CR>]], [[Project Dir]] },
 
-        a = { function() 
-               require'pluginconfig.fzf-lua'.custom.git_files() 
-            end, 
-            [[Help]] 
+        a = { function() require'pluginconfig.fzf-lua'.custom.git_files() end, 
+            [[Git Files]] 
         },
-        n = { function() 
-               win_width_abs = 120 
-               win_width = win_width_abs / vim.o.columns
-               -- preview_width_abs = 80
-               -- preview_width = math.floor(preview_width_abs / win_width_abs * 100)
-
-               require'fzf-lua'.oldfiles({
-                  winopts = {
-                     win_width = win_width,
-                     win_border = nil
-                  },
-               }) 
-            end, 
-            [[Help]] 
+        n = { function() require'fzf-lua'.oldfiles() end, 
+            [[Oldfiles]] 
         },
 
         [","] = { [[<Cmd>Denite -resume -cursor-pos=+1 -immediately<CR>]],

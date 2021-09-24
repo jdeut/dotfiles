@@ -1,51 +1,125 @@
 t = {}
 
 local actions = require'fzf-lua.actions'
+local path    = require'fzf-lua.path'
 
 t.custom = {}
 
-t.custom.git_files = function()
-   local path = vim.fn.expand('%:.')
-   local cmd = 
-      'fdfind -t f -H --exclude "' .. path .. '"' ..
-      ' --exec stat --printf="%Y\t%n\n" | sort -r -k 1 | cut -f 2'
+t.custom.git_files = function(opts)
 
-   require'fzf-lua'.git_files({
+   local merged_opts
+   local default_opts = {
       prompt             = 'GitFiles❯ ',
       git_icons          = true,           -- show git icons?
       file_icons         = true,           -- show file icons?
       color_icons        = true,           -- colorize file|git icons
-      preview_horizontal = "right:0%",
-      cmd                = cmd
+      preview_horizontal = 'right:0%',
+      preview_vertical   = 'down:0%',
+   }
+
+   if not type(opts) == 'table' then
+      merged_opts = default_opts
+   else
+      merged_opts = vim.tbl_deep_extend('force', default_opts, opts or {})
+   end
+
+   if not merged_opts.cwd then
+      merged_opts.cwd = path.git_root(vim.fn.expand('%:h:.'))
+
+      if not merged_opts.cwd then
+         return
+      end
+   end
+
+   local exclude = not vim.fn.expand('%:.') == ''
+      and '--exclude "' .. vim.fn.expand('%:.') .. '" '
+      or ''
+
+   merged_opts.cmd = table.concat({
+      'fdfind -t f -H ',
+      exclude,
+      '--base-directory "', merged_opts.cwd or vim.env.PWD , '" ',
+      '--exec stat --printf="%Y\t%n\n"',
+      ' | sort -r -k 1 | cut -f 2'
    })
+
+   -- print(vim.inspect(merged_opts))
+
+   require'fzf-lua'.files(merged_opts)
+end
+
+local floatArgs = function()
+
+   local columns = vim.o.columns
+   local lines = vim.o.lines
+
+   local width = math.floor(columns - (columns * 1 / 10))
+   local height = lines - 4
+
+   local row = lines
+
+   if columns < 100 then
+     width = columns -- math.floor(columns - (columns * 1 / 5))
+   end
+
+   if lines < 30 then
+      height = lines - 2
+   end
+
+   return {
+      relative = 'editor',
+      row = 0,
+      col = math.floor((columns - width) / 2),
+      width = width,
+      height = height,
+      style = 'minimal',
+      border = nil
+   }
 end
 
 require'fzf-lua'.setup({
-    fzf_args = "--color=dark,preview-fg:#00ff00",
+    fzf_args = '--color=dark,preview-fg:#00ff00',
     preview_border = 'noborder',
+    winopts_raw = floatArgs,
+    git_icons          = true,           -- show git icons?
+    file_icons         = true,           -- show file icons?
+    color_icons        = true,           -- colorize file|git icons
+    fzf_args            = '',             -- adv: fzf extra args, empty unless adv
+    fzf_binds           = {               -- fzf '--bind=' options
+       ['f2']         = 'toggle-preview',
+       ['f3']         = 'toggle-preview-wrap',
+       ['shift-down'] = 'preview-page-down',
+       ['shift-up']   = 'preview-page-up',
+       ['ctrl-d']     = 'half-page-down',
+       ['ctrl-u']     = 'half-page-up',
+       ['ctrl-a']     = 'toggle-all',
+       ['ctrl-space'] = 'toggle',
+       ['ctrl-l']     = 'clear-query',
+    },
     actions = {
-        -- set bind to 'false' to disable
-        ["default"]     = actions.file_edit,
-        ["ctrl-s"]      = actions.file_split,
-        ["ctrl-v"]      = actions.file_vsplit,
-        ["ctrl-t"]      = actions.file_tabedit,
-        ["alt-q"]       = actions.file_sel_to_qf,
+        ['default'] = actions.file_edit,
+        ['ctrl-s']  = actions.file_split,
+        ['ctrl-v']  = actions.file_vsplit,
+        ['ctrl-t']  = actions.file_tabedit,
+        ['ctrl-q']  = actions.file_sel_to_qf,
         -- custom actions are available too
         -- ["ctrl-y"]      = function(selected) print(selected[2]) end,
     },
+    winopts = {
+        win_border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+        hl_border  = 'Folded'
+    },
     git = {
         files = {
-            prompt          = 'GitFiles❯ ',
-            -- cmd             = 
-            git_icons       = true,           -- show git icons?
-            file_icons      = true,           -- show file icons?
-            color_icons     = true,           -- colorize file|git icons
-            preview_horizontal = "right:0%"
+            prompt             = 'GitFiles❯ ',
+            preview_horizontal = 'right:0%',
+            preview_vertical   = 'down:0%',
          }
     },
     oldfiles = {
-        preview_opts = 'hidden',
-        preview_horizontal = 'right:0%'
+        preview_horizontal = 'right:0%',
+        preview_vertical   = 'down:0%',
+        cwd                = vim.env.HOME
     }
 })
 
