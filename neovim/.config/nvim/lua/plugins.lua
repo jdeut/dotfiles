@@ -488,7 +488,7 @@ local p = function()
             require'tabline'.setup({
                enable = true,
                options = {
-                  show_tabs_always = false,
+                  show_tabs_always = true,
                   show_devicons = false,
                   show_filename_only = true,
                   max_bufferline_percentage = 0,
