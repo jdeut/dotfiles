@@ -32,14 +32,13 @@ wk.setup {
 wk.register({
     name = 'etc',
     ["<F5>"] = { [[:write<cr>:silent Reload<cr>]], 'Reload settings'},
-    ["<F6>"] = { [[<Cmd>lua print('asdasd')<cr>]], 'Reload settings'}
 },  {
     mode = "n", prefix = "", buffer = nil, silent = true, noremap = true
 })
 
 wk.register({
     h = { [[<Cmd>Gitsigns select_hunk<cr>]], 'Hunk'},
-},  {
+}, {
     mode = "o", prefix = "i", buffer = nil, silent = true, noremap = true
 })
 

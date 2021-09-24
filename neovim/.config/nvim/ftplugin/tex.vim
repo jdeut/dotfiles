@@ -1,5 +1,9 @@
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync()
-setlocal linebreak "breaks by word rather than character
+"breaks by word rather than character
+
+lua require'pluginconfig.whichkey.ftype.tex'
+
+setlocal linebreak 
 setlocal formatprg=latexindent\ -m\ -rv
 setlocal foldlevel=1
 setlocal tabstop=3
@@ -7,61 +11,14 @@ setlocal shiftwidth=0
 setlocal iskeyword+=:
 setlocal conceallevel=0
 setlocal iskeyword+=-
+setlocal keywordprg=texdoc
 setlocal foldmethod=indent
 
 let b:ftype_tex_build_dir = 'compiled'
 
-let g:neoyank_disable = 1
-
 au BufNewFile,BufRead *.cls set syntax=tex
 
 "call vimtex#syntax#p#mycustom#load()
-
-"let g:which_key_localleader_map['e'] = {
-"\   'name' : '+vimtex'
-"\ }
-noremap <buffer> <localleader>ei <plug>(vimtex-info-full)
-
-noremap <buffer> <localleader>em <plug>(vimtex-toggle-main)
-
-"let g:which_key_localleader_map['g'] = {
-"\   'name' : '+Format_Browser'
-"\ }
-
-noremap <silent><buffer> <LocalLeader>gt
-\   <Cmd>execute "OpenBrowserSmartSearch -tex ".expand('<cword>')<CR>
-
-"let g:which_key_localleader_map['l'] = {
-"\   'name' : '+Compile'
-"\ }
-
-noremap <silent><buffer> <localleader>ll
-\   :w<cr>:VimtexCompile<cr>
-
-noremap <silent><buffer> <localleader>rr
-\   :w<cr>:VimtexCompile<cr>
-
-noremap <buffer> <localleader>rb <Cmd>lua require('plenary.job'):new({
-\       command = 'zathura',
-\       args = { 
-\           [[--fork]],
-\           vim.fn.expand('%:h') .. [[/]] .. vim.b.ftype_tex_build_dir .. [[/]] .. vim.fn.expand('%:t:r') .. [[.pdf]],
-\       }
-\ }):sync()<cr>
-
-noremap <buffer> <localleader>lg <Cmd>lua x = vim.b.vimtex.compiler
-\   vim.cmd("botright vsplit " .. x.root .. [[/]] .. x.build_dir .. [[/]] .. x.target:gsub(".tex$", ".log"))<CR>
-
-noremap <buffer> <localleader><localleader>n <Cmd>lua x = vim.b.vimtex.compiler
-\   vim.cmd([[DeniteProjectDir file -no-immediately-1 -relpath=texinputs]])<CR>
-
-function! MyTexdocHandler(context)
-    call vimtex#doc#make_selection(a:context)
-    if !empty(a:context.selected)
-        execute '!texdoc' a:context.selected '&'
-    endif
-    return 1
-endfunction
 
 let g:vimtex_syntax_nospell_comments             = 1
 let g:vimtex_quickfix_autoclose_after_keystrokes = 3
@@ -73,7 +30,7 @@ let g:vimtex_view_zathura_check_libsynctex       = v:false
 let g:vimtex_syntax_enabled                      = 1
 let g:tex_no_error                               = 1
 let g:tex_flavor                                 = 'latex'
-let g:vimtex_compiler_method                     = "latexmk"
+let g:vimtex_compiler_method                     = 'latexmk'
 let g:vimtex_fold_enabled                        = 0
 let g:vimtex_compiler_progname                   = 'nvr'
 let g:vimtex_syntax_conceal_default              = 0
