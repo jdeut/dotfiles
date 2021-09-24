@@ -173,10 +173,11 @@ local p = function()
                 linehl             = false,
                 current_line_blame = true,
                 current_line_blame_opts = {
-                    virt_text_pos = 'right_align'
+                    virt_text_pos = 'eol'
                 },
-                watch_index = {
-                    interval = 100
+                watch_gitdir = {
+                    interval = 100,
+                    follow_files = true
                 },
                 signs = {
                     add          = {text = '🞧'},
@@ -488,23 +489,14 @@ local p = function()
             }
         end
     }
-    use { 'kdheepak/tabline.nvim',
-        requires = { 'shadmansaleh/lualine.nvim', opt = true },
-        config = function()
-            require'tabline'.setup({
-               enable = true,
-               options = {
-                  show_tabs_always = true,
-                  show_devicons = false,
-                  show_filename_only = true,
-                  max_bufferline_percentage = 0,
-               }
-            })
-        end
+
+    use { 'romgrk/barbar.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'}
     }
+
     use { 'shadmansaleh/lualine.nvim',
         requires = {
-            'kyazdani42/nvim-web-devicons', opt = true
+            'kyazdani42/nvim-web-devicons', opt = true 
         },
         config = function()
             require('pluginconfig.lualine')
