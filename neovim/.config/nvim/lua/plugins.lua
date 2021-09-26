@@ -442,9 +442,6 @@ local p = function()
         end,
         disable = false
     }
-    use { 'luochen1990/rainbow',
-        disable = true
-    }
     use { 'euclidianAce/BetterLua.vim' }
     use { 'akinsho/nvim-toggleterm.lua',
         config = function()
