@@ -13,13 +13,7 @@ local p = function()
     -- Packer can manage itself
  
     use { 'wbthomason/packer.nvim' }
-
     use { 'rktjmp/lush.nvim' } 
-
-    use {"ellisonleao/gruvbox.nvim",
-        requires = {"rktjmp/lush.nvim"}
-    }
-
     use {"olimorris/onedark.nvim",
         requires = {"rktjmp/lush.nvim"},
         config = function() 
@@ -45,7 +39,7 @@ local p = function()
                    purple = '#9a12cf',
                    black = '#000000',
                    gray = '#2c2c2c',
-                   cyan = '#00a4ae',
+                   cyan = '#00949e',
                    green = '#1d9a0d',
                    red = '#ba3621',
                    comment = '#797979',
@@ -130,21 +124,6 @@ local p = function()
                 { vim.fn.stdpath('config') }
         end
     }
-    use { 'fcpg/vim-fahrenheit' }
-    use { 'srcery-colors/srcery-vim',
-        config = function()
-            vim.g.srcery_italic    = 1
-            vim.g.srcery_bold      = 1
-            vim.g.srcery_underline = 0
-        end
-    }
-    use { 'mhartington/oceanic-next' }
-    use { 'dracula/vim' }
-    use { 'Th3Whit3Wolf/one-nvim' }
-    use { 'gkapfham/vim-vitamin-onec' }
-    use { 'agude/vim-eldar' }
-
-    use { 'lfenzo/vim-fusion' }
     use { 'ekickx/clipboard-image.nvim',
         config = function()
             require'clipboard-image'.setup {
@@ -161,9 +140,6 @@ local p = function()
                 },
             }
         end
-    }
-    use { 'tanvirtin/monokai.nvim',
-        requires = 'nvim-treesitter/nvim-treesitter'
     }
     use { 'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
@@ -203,8 +179,6 @@ local p = function()
             })
         end
     }
-    use { 'dannywillems/vim-icalendar' }
-    use { 'kdav5758/TrueZen.nvim' }
     use { 'L3MON4D3/LuaSnip',
         config = function()
             require('LuaSnip/test')
@@ -216,8 +190,6 @@ local p = function()
             -- snoremap <silent> <F4> <cmd>lua require'luasnip'.jump(-1)<Cr>
         end
     }
-    use { 'jacoborus/tender.vim' }
-    use { 'equalsraf/neovim-gui-shim' }
     use { 'rhysd/vim-grammarous',
         config = function()
             vim.g['grammarous#disabled_rules'] = {
@@ -269,7 +241,6 @@ local p = function()
             }
         end
     }
-    use { 'romainl/vim-cool' }
     use { 'folke/which-key.nvim',
         config = function()
             require('pluginconfig.whichkey')
