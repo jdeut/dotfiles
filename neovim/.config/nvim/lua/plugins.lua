@@ -288,6 +288,13 @@ local p = function()
     }
     use { 'powerman/vim-plugin-AnsiEsc' }
     use { 'Matt-Deacalion/vim-systemd-syntax' }
+    use { 'lukas-reineke/indent-blankline.nvim',
+        require("indent_blankline").setup {
+            char = '▏',
+            char_highlight_list = { "IndentBlankline" },
+            buftype_exclude = {"terminal"}
+      }
+    }
     use { 'Pocco81/AutoSave.nvim',
         config = function()
            local autosave = require("autosave")           vim.g.auto_save_silent = 1
