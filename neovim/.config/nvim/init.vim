@@ -155,7 +155,7 @@ set spelllang=de_20
 "══════════════════════════════════════════════════
 " Gui Options
 "══════════════════════════════════════════════════
-let guifont_start = "Liga Meslo LG M DZ:h11"
+let guifont_start = "Liga Meslo LG M DZ:h12"
 let &guifont = g:guifont_start
 set linespace=1
 set winaltkeys=no
