@@ -1,6 +1,12 @@
 lua require('ftplugin.lua')
 
-setlocal tabstop=3
+setlocal tabstop=4
+
+set foldlevelstart=2
+set foldlevel=2
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldenable
 
 "autocmd BufRead,BufNewFile *.lua
 "\   lua
@@ -12,7 +18,7 @@ setlocal tabstop=3
 "\           'n',
 "\           '<LocalLeader>re',
 "\           [[<Cmd>lua require('plenary.reload').reload_module(']] 
-"\           .. str .. 
+"\           .. str .. :
 "\           [[') print("reload...")<CR>]],
 "\           { noremap = true }
 "\       )
@@ -27,11 +33,7 @@ setlocal tabstop=3
 "\       )
 "\   end
 
-nnoremap <silent><buffer> <LocalLeader>rl
-\   <Cmd>w <bar> FloatermNew --autoclose=0 --position=bottomright --width=80 --height=0.8 love %:h<cr>
-nnoremap <silent><buffer> <LocalLeader>gl
-\   <Cmd>execute "OpenBrowserSmartSearch -loveapiref ".expand("<cword>")<cr>
-nnoremap <silent><buffer> <LocalLeader>hl
-\   <Cmd>execute "help love-".substitute(expand("<cWORD>"), "(.*$", "", "") <bar>
-\   wincmd L<cr>
+
+
+lua require'pluginconfig.whichkey.ftype.lua'.set_mappings()
 
