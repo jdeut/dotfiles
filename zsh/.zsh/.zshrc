@@ -126,7 +126,7 @@ eval $($HOME/.local/bin/luarocks --lua-version 5.3 path)
 export HISTFILE=$HOME/.zsh_history
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # set VIMODE according to the current mode (default “[i]”)
-export PROMPT="%B%F{yellow}[%?]%f %B%n:%~ %# %b"
+export PROMPT="%B%F{yellow}%?%f %B%n:%~ %# %b"
 export ZVM_KEYTIMEOUT=0.3
 export KEYTIMEOUT=0.3
 export ZVM_CURSOR_STYLE_ENABLED=true
