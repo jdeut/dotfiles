@@ -1,7 +1,17 @@
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync()
 "breaks by word rather than character
 
-lua require'pluginconfig.whichkey.ftype.tex'
+function! MyHandler(context)
+    call vimtex#doc#make_selection(a:context)
+    if !empty(a:context.selected)
+        execute 'silent !texdoc' a:context.selected '&'
+    endif
+    return 1
+endfunction
+
+setlocal keywordprg=texdoc
+
+lua require'pluginconfig.whichkey.ftype.tex'.set_mappings()
 
 setlocal linebreak 
 setlocal formatprg=latexindent\ -m\ -rv
@@ -11,7 +21,6 @@ setlocal shiftwidth=0
 setlocal iskeyword+=:
 setlocal conceallevel=0
 setlocal iskeyword+=-
-setlocal keywordprg=texdoc
 setlocal foldmethod=indent
 
 let b:ftype_tex_build_dir = 'compiled'
@@ -39,8 +48,9 @@ let g:vimtex_view_enabled                        = 1
 let g:vimtex_view_automatic                      = 0
 let g:vimtex_quicktex_open_on_warning            = 0
 let g:vimtex_view_general_viewer                 = 'evince'
-let g:vimtex_doc_handlers                        = ['MyTexdocHandler']
+let g:vimtex_doc_handlers                        = ['MyHandler']
 let g:vimtex_subfile_start_local                 = 0
+" let g:vimtex_doc_handlers                        = ['MyTexdocHandler']
 "let g:vimtex_subfile_start_local = 1
 "let g:vimtex_view_general_viewer = 'evince'
 
