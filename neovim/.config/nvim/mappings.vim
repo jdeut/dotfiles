@@ -141,7 +141,7 @@ nnoremap <silent> <leader><F2> <Cmd>call SynStack()<cr>
 "inoremap z y
 "inoremap y z
 
-inoremap <Esc> <C-c>
+" inoremap <Esc> <C-c>
 
 nmap ]] <plug>(matchup-]%)
 nmap [[ <plug>(matchup-[%)
