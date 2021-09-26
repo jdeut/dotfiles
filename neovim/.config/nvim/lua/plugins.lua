@@ -493,11 +493,12 @@ local p = function()
             }
         end
     }
-
-    use { 'romgrk/barbar.nvim',
-        requires = {'kyazdani42/nvim-web-devicons'}
+    use { 'alvarosevilla95/luatab.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+           vim.o.tabline = '%!v:lua.require\'luatab\'.tabline()'
+        end
     }
-
     use { 'shadmansaleh/lualine.nvim',
         requires = {
             'kyazdani42/nvim-web-devicons', opt = true 
