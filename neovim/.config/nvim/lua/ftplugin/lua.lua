@@ -1,5 +1,4 @@
 local Terminal = require('toggleterm.terminal').Terminal
-local wk = require('which-key')
 
 --_G.ftplugin_lua_includeexpr = require'ftplugin.lua.includeexpr'
 
@@ -12,7 +11,7 @@ if toggleterminals.lua == nil then
 
     toggleterminals.lua = {
         config = {
-            size = 100
+            size = 60
         }
     }
 
@@ -173,55 +172,3 @@ if toggleterminals.lua == nil then
     toggleterminals.lua.terminal = toggleterminals.lua.init()
 end
 
-
-if string.match(vim.fn.expand('%:p'), '/%.config/nvim/.*%.lua$') then
-    --wk.register({
-        --r = {
-            --name = '',
-            --e = { [[<Cmd>lua require'ftplugin.lua'.reload()<cr>]], 'Reload'},
-        --}
-    --},  {
-        --mode = "n", prefix = "<localleader>",
-        --buffer = buf, silent = true, noremap = true
-    --})
-    --package.path = package.path .. 
-                   --[[;/home/johannes/.config/nvim/lua/?.lua]]
-else
-    wk.register({
-        r = {
-            name = '',
-            r = { 
-                [[<Cmd>lua toggleterminals.lua.run()<Cr>]],
-                'Exec in Term'
-            },
-            m = { 
-                [[<Cmd>lua toggleterminals.lua.close()<Cr>]],
-                'Close Term'
-            },
-            c = { 
-                [[<Cmd>lua toggleterminals.lua.terminal:clear()<Cr>]],
-                'Clear Term'
-            },
-            o = { 
-                [[<Cmd>lua toggleterminals.lua.open()<Cr>]],
-                'Switch to Term'
-            },
-            i = { 
-                [[<Cmd>lua toggleterminals.lua.enter()<Cr>]],
-                'Switch to Term'
-            },
-            ["<"] = { 
-                [[<Cmd>lua toggleterminals.lua.size_inc()<Cr>]],
-                'Dec Size'
-            },
-            [">"] = { 
-                [[<Cmd>lua toggleterminals.lua.size_dec()<Cr>]],
-                'Inc Size'
-            },
-            j = { [[<Cmd>FloatermNew luajit %<cr>]], 'Run with LuaJIT'}
-        }
-    },  {
-        mode = "n", prefix = "<localleader>",
-        buffer = buf, silent = true, noremap = true
-    })
-end
