@@ -12,6 +12,8 @@ source '/usr/share/zsh-antigen/antigen.zsh'
 
 #antigen use oh-my-zsh
 
+FZF_FINDER_BINDKEY='^F'
+
 antigen bundles <<EOBUNDLES 
     Aloxaf/fzf-tab
     zsh-users/zsh-autosuggestions
@@ -23,7 +25,6 @@ antigen bundles <<EOBUNDLES
 EOBUNDLES
 
 #antigen theme michelebologna
-
 antigen apply
 # ❱❱❱
 
@@ -42,7 +43,8 @@ zstyle ':filter-select' case-insensitive yes
 zstyle ':filter-select' extended-search yes
 zstyle ':filter-select:highlight' matched fg=green,standout
 zstyle ':filter-select:highlight' selected fg=yellow,bold
-bindkey -M filterselect '^E' autosuggest-accept
+
+# bindkey -M filterselect '^E' autosuggest-accept
 # ❱❱❱
 
 # Terminal settings ❰❰❰
@@ -72,25 +74,32 @@ setopt hist_save_no_dups
 function zvm_after_init() {
     FZF_TMUX=0
     source $ZDOTDIR/fzf/fzf.zsh
+    # source $ZDOTDIR/fzf/completion.zsh
+
+    # remove conflicting key bindings
+    bindkey -rM viins '^R'
+
+    zvm_bindkey vicmd '^O' fzf-cdr
+    zvm_bindkey viins '^O' fzf-cdr
+
+    zvm_bindkey vicmd '^R' fzf-history-widget
+    zvm_bindkey viins '^R' fzf-history-widget
+    
+    zvm_bindkey vicmd '^f' fzf-cd-widget
+    zvm_bindkey viins '^f' fzf-cd-widget
 }
+
 
 function zvm_after_lazy_keybindings() {
 
     zvm_bindkey filterselect '^[' send-break
 
-    zvm_bindkey vicmd ']o' zaw-cdr
-    zvm_bindkey viins ']o' zaw-cdr
+    # zvm_bindkey vicmd ']r' fzf-history-widget
+    # zvm_bindkey viins ']r' fzf-history-widget
 
-    zvm_bindkey vicmd ']r' fzf-history-widget
-    zvm_bindkey viins ']r' fzf-history-widget
-    zvm_bindkey vicmd '^r' fzf-history-widget
-    zvm_bindkey viins '^r' fzf-history-widget
 
-    zvm_bindkey vicmd ']d' fzf-cd-widget
-    zvm_bindkey viins ']d' fzf-cd-widget
-
-    zvm_bindkey vicmd ']l' "ddilg^M"
-    zvm_bindkey viins ']l' "^[ddilg^M"
+    # zvm_bindkey vicmd ']l' "ddilg^M"
+    # zvm_bindkey viins ']l' "^[ddilg^M"
 
     #zvm_bindkey viins '\\\\' '^v\\'
     #bindkey -M viins -s '#' 'asdasdasd'
@@ -130,13 +139,12 @@ export DIRSTACKSIZE=80
 # FZF
 export FZF_TMUX=1
 export FZF_TMUX_HEIGHT=60%
-export FZF_DEFAULT_OPTS='--margin=0,1,1,1'
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --ansi"
+export FZF_DEFAULT_OPTS='--margin=0,1,1,1 --ansi --bind "ctrl-y:execute(wl-copy {})"'
 #FZF_CTRL_R_OPTS='--margin=5 --bind "alt-enter:execute(bash -c {})+execute(sleep 5)+abort"'
 # ----------------------------------------------------------------------------
 # PERL
-export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-export PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+export PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+export PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+export PERL_MB_OPT="--install_base \"$HOME/perl5\""
+export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 
