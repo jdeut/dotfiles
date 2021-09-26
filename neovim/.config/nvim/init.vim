@@ -143,7 +143,7 @@ set switchbuf=useopen,vsplit
 set display=lastline
 "time in ms that is waited for a key sequence to complete
 set timeout
-set timeoutlen=1000
+set timeoutlen=500
 "apply to key codes
 set ttimeoutlen=1
 "set persistent undo
