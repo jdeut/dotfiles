@@ -97,12 +97,14 @@ wk.register({
         h    = {
             name = 'GitSigns (Hunks)',
             l    = { [[<Cmd>Gitsigns toggle_linehl<CR>]], "Togl linehl" },
-            n    = { [[<Cmd>Gitsigns toggle_numhl<CR>]], "Togl numhl" },
+            u    = { [[<Cmd>Gitsigns toggle_numhl<CR>]], "Togl numhl" },
             s    = { [[<cmd>Gitsigns stage_hunk<CR>]], [[Stage Hunk]] },
             u    = { [[<cmd>Gitsigns undo_stage_hunk<CR>]], [[Undo Stage Hunk]] },
             r    = { [[<cmd>Gitsigns reset_hunk<CR>]], [[Reset Hunk]] },
-            p    = { [[<cmd>Gitsigns preview_hunk<CR>]], [[Preview Hunk]] },
-            b    = { [[<cmd>Gitsigns blame_line<CR>]], [[Blame Line]] }
+            v    = { [[<cmd>Gitsigns preview_hunk<CR>]], [[Preview Hunk]] },
+            b    = { [[<cmd>Gitsigns blame_line<CR>]], [[Blame Line]] },
+            n    = { require'gitsigns'.next_hunk, [[Jump to Next Hunk]] },
+            p    = { require'gitsigns'.prev_hunk, [[Jump to Prev Hunk]] },
         }
     },
     q = {
