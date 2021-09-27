@@ -5,27 +5,18 @@ __fzfcmd() {
 
 fzf-history-widget() {
     local selected num
-    setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2> /dev/null
-    # perl -ne 'print if !$seen{(/^\s*[0-9]+\**\s+(.*)/, $1)}++' | \
-    selected=( $(
-            fc -rln 1 | \
-            FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} $FZF_DEFAULT_OPTS -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort,ctrl-z:ignore $FZF_CTRL_R_OPTS --query=${(qqq)LBUFFER} +m" \
-            $(__fzfcmd)
-        )
-    )
-    local ret=$?
+    selected=( $(fc -l 1 |FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%}"  $(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r -q "${LBUFFER//$/\\$}") )
     if [ -n "$selected" ]; then
         num=$selected[1]
         if [ -n "$num" ]; then
             zle vi-fetch-history -n $num
         fi
     fi
-    zle reset-prompt
-    return $ret
+    zle redisplay
 }
 zle     -N   fzf-history-widget
 
-function fzf-cdr() {
+fzf-cdr() {
     local selected_dir=$(cdr -l | perl -lane 'print join q{ }, @F[1..$#F]' | fzf --ansi --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
