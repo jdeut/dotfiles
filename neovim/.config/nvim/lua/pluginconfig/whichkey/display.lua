@@ -41,37 +41,39 @@ local set_font = function(height)
 end
 
 wk.register({
-    d = {
-        name = 'Display',
-        r = { [[<Cmd>set splitright! splitright?<cr>]], [[Togl Splitright]] },
-        n = { [[<Cmd>setlocal relativenumber! relativenumber?<cr>]], [[Togl Relnumber]] },
-        w = { [[<Cmd>set wrap! wrap?<cr>]], [[Togl Wrap]] },
-        h = { [[<Cmd>set hlsearch! hlsearch?<cr>]], [[Togl Hlsearch]] },
-        s = { [[<Cmd>lua require'pluginconfig.mappings.display'.togl_scrolloff()<CR><cr>]], [[Togl Scrolloff]] },
-        b = {
-            name = 'Brightness',
-            ["1"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(0)<CR>]], [[0 %]] },
-            ["2"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(2)<CR>]], [[2 %]] },
-            ["3"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(100)<CR>]], [[100 %]] }
-        },
-        c = {
-            name = 'Cursor',
-            c = { [[<Cmd>setlocal cursorcolumn! cursorcolumn?<cr>]], [[Togl Column]] },
-            l = { [[<Cmd>setlocal cursorline! cursorline?<cr>]], [[Togl line]] }
-        },
-        f = {
-            name = 'Font Size',
-            t = set_font(6.7),
-            l = set_font(11.7),
-            h = set_font(13.8),
-            f = set_font(nil)
-        },
-        s = {
-            name = 'Colorscheme',
-            ["<Space>"] = { [[<Cmd>colorscheme srcery<CR>]], [[srcery]] },
-            s = { [[<Cmd>colorscheme shirotelin<CR>]], [[shirotelin]] },
-            d = { [[<Cmd>colorscheme delek<CR>]], [[delek]] }
-        },
+    j = {
+        d = {
+            name = 'Display',
+            r = { [[<Cmd>set splitright! splitright?<cr>]], [[Togl Splitright]] },
+            n = { [[<Cmd>setlocal relativenumber! relativenumber?<cr>]], [[Togl Relnumber]] },
+            w = { [[<Cmd>set wrap! wrap?<cr>]], [[Togl Wrap]] },
+            h = { [[<Cmd>set hlsearch! hlsearch?<cr>]], [[Togl Hlsearch]] },
+            s = { [[<Cmd>lua require'pluginconfig.mappings.display'.togl_scrolloff()<CR><cr>]], [[Togl Scrolloff]] },
+            b = {
+                name = 'Brightness',
+                ["1"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(0)<CR>]], [[0 %]] },
+                ["2"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(2)<CR>]], [[2 %]] },
+                ["3"] = { [[<Cmd>lua require'pluginconfig.mappings.display'.set_brightness(100)<CR>]], [[100 %]] }
+            },
+            c = {
+                name = 'Cursor',
+                c = { [[<Cmd>setlocal cursorcolumn! cursorcolumn?<cr>]], [[Togl Column]] },
+                l = { [[<Cmd>setlocal cursorline! cursorline?<cr>]], [[Togl line]] }
+            },
+            f = {
+                name = 'Font Size',
+                t = set_font(6.7),
+                l = set_font(11.7),
+                h = set_font(13.8),
+                f = set_font(nil)
+            },
+            s = {
+                name = 'Colorscheme',
+                ["<Space>"] = { [[<Cmd>colorscheme srcery<CR>]], [[srcery]] },
+                s = { [[<Cmd>colorscheme shirotelin<CR>]], [[shirotelin]] },
+                d = { [[<Cmd>colorscheme delek<CR>]], [[delek]] }
+            },
+        }
     }
 }, {
     mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true
