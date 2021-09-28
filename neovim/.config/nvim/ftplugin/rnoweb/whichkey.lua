@@ -8,9 +8,14 @@ local mappings = {
         n = {[[<Cmd>call RnwNextChunk() <bar> normal zt<cr>]], 'Next Chunk'}
     },
     a = {
-        name = '',
-        a = {[[:!latexmk -c %:r.tex<cr><Plug>RKnit<Plug>RMakePDFK]], 'RMakePDFK'},
-        f = {[[<Plug>RKnit]], 'Knit'}
+        name = 'Knit',
+        a = {
+            function()
+                vim.fn.RWeave('nobib', 1, 0)
+                vim.fn.RWeave('nobib', 1, 1)
+            end, 'RMakePDFK'
+        },
+        f = { vim.fn.RKnit , 'Knit'}
     }
 }
 
