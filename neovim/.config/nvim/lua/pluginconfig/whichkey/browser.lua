@@ -34,13 +34,6 @@ wk.register({
         e = v_openbrowser('sematicscholar'),
         i = v_openbrowser('github')
     },
-    j = {
-        name = 'Utils',
-        e = {
-            name = 'Align',
-            a = { [[:EasyAlign<CR>]], "EasyAlign" }
-        }
-    }
 }, {
     mode = "v", prefix = "<leader>", buffer = nil, silent = true, noremap = true
 })
