@@ -7,6 +7,10 @@ local mappings = {
         p = {[[<Cmd>call RnwPreviousChunk() <bar> normal zt<cr>]], 'Prev Chunk'},
         n = {[[<Cmd>call RnwNextChunk() <bar> normal zt<cr>]], 'Next Chunk'}
     },
+    l = {
+        name = '',
+        v = { function() vim.fn.ROpenPDF('Get Master') end, 'open pdf' }
+    },
     a = {
         name = 'Knit',
         a = {
@@ -16,6 +20,9 @@ local mappings = {
             end, 'RMakePDFK'
         },
         f = { vim.fn.RKnit , 'Knit'}
+    },
+    f = {
+        vim.fn.SyncTeX_forward, 'SynctexForwar'
     }
 }
 
