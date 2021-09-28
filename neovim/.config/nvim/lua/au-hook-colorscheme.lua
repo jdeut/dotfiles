@@ -101,8 +101,8 @@ local syntax = {
     GitSignsChange                = { fg = '#ffff00', bg = '#504945', style = 'bold' },
     GitSignsCurrentLineBlame      = { fg = '#504945', style = 'italic' },
 
-    GitSignsAddLn                 = { fg = 'NONE', bg = '#dcffdc' },
-    GitSignsChangeLn              = { fg = 'NONE', bg = '#ffffdc' },
+    GitSignsAddLn                 = { fg = 'NONE', bg = '#acffac' },
+    GitSignsChangeLn              = { fg = 'NONE', bg = '#ffff8c' },
     GitSignsDeleteLn              = { fg = 'NONE', bg = '#ffdfdf' }
 }
 
