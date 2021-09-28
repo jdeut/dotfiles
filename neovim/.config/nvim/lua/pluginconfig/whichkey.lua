@@ -87,10 +87,10 @@ wk.register({
     i = {
         name = 'Git',
         i    = { [[<Cmd>cclose <bar> tab Git<CR>]], [[Git]] },
-        w    = { [[<Cmd>Gwrite<CR>]], [[Git Write--hidden ]] },
+        w    = { [[<Cmd>Gwrite<CR>]], [[Git Write]] },
         m    = { [[:GMove <C-r>%]], [[Git Move]], silent = false},
         d    = { [[<Cmd>GDelete<CR>]], [[Git Delete file]] },
-        c    = { [[<Cmd>Git commit<CR>]], [[Git Commit]] },
+        c    = { [[<Cmd>Git commit --quiet<CR>]], [[Git Commit]] },
         l    = { [[<Cmd>Git log<CR>]], [[Git Log]] },
         p    = { [[<Cmd>Git push<CR>]], [[Git Push]] },
         s    = { [[<Cmd>Gvdiffsplit<CR>]], [[Git Split]] },
