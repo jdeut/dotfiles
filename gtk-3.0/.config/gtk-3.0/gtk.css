@@ -1,3 +1,6 @@
+@import url('/home/johannes/.local/share/gnome-shell/extensions/no-title-bar@jonaspoehler.de/stylesheet.css');
+@import url('/home/johannes/.local/share/gnome-shell/extensions/no-title-bar@jonaspoehler.de/stylesheet-tiled.css');
+
 /* .titlebar {
     background: #30FF00;
 }

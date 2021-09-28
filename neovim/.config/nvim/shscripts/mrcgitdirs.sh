@@ -1,7 +1,7 @@
 #!/bin/bash 
 #set -x
 project_dirs () {
-    search_dirs="-E .config/obs-studio -E .config/dein.vim --search-path=Bildung --search-path=.config"
+    search_dirs="-E .config/obs-studio -E .config/dein.vim --search-path=.dotfiles --search-path=Bildung --search-path=.config"
 
     fdfind -H -t d '\.git$' $search_dirs | \
         sed 's/\.git$//' | \

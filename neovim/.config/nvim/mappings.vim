@@ -8,13 +8,13 @@
 "vnoremap <silent> <leader><leader>g
 "\   l<ESC>`<""y`>:execute "Denite -input=" . @" . " grep "<CR>
 
-nnoremap <silent> <leader><leader>f
-\   <Cmd>Denite -source-names=hide
-\   -winwidth=80 -winheight=6 floaterm<cr>
-
-tnoremap <silent> <leader><leader>f
-\   <Cmd>Denite -source-names=hide
-\   -winwidth=80 -winheight=6 floaterm<cr>
+" nnoremap <silent> <leader><leader>f
+" \   <Cmd>Denite -source-names=hide
+" \   -winwidth=80 -winheight=6 floaterm<cr>
+"
+" tnoremap <silent> <leader><leader>f
+" \   <Cmd>Denite -source-names=hide
+" \   -winwidth=80 -winheight=6 floaterm<cr>
 
 
 "══════════════════════════════════════════════════
@@ -35,8 +35,6 @@ nnoremap <silent> <leader>dfo
 " Favorites 
 "══════════════════════════════════════════════════
 " Global Mappings 
-
-noremap // /
 
 map <C-1> <Plug>(dial-increment)
 map <C-2> <Plug>(dial-decrement)
@@ -129,29 +127,6 @@ noremap! <C-0> ❱
 
 nnoremap <silent> <leader><F2> <Cmd>call SynStack()<cr>
 
-"nnoremap <silent> <leader> :<C-u>WhichKey ';'<CR>
-"vnoremap <silent> <leader> :<c-u>WhichKeyVisual ';'<CR>
-
-"nnoremap <silent> <localleader> :<C-u>WhichKey ','<CR>
-"vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
-
-"nnoremap <silent> s :<C-u>WhichKey 's'<CR>
-"vnoremap <silent> s :<c-u>WhichKeyVisual 's'<CR>
-
-"inoremap z y
-"inoremap y z
-
-" inoremap <Esc> <C-c>
-
-nmap ]] <plug>(matchup-]%)
-nmap [[ <plug>(matchup-[%)
-
-"══════════════════════════════════════════════════
-" Quickfix => <Leader>q* 
-
-"nnoremap <leader>q :call QuickfixToggle()<cr>
-nnoremap <silent> <leader>qq <Cmd>lua require('Fn/quickfix-toggle').toggle()<cr>
-
 "══════════════════════════════════════════════════
 " Substitute / Edit commands => <Leader>e* 
 
@@ -163,17 +138,11 @@ noremap N Nzvzz
 "══════════════════════════════════════════════════
 " Terminal / Floaterm => <Leader>t* 
 
-let g:floaterm_keymap_prev   = '<leader>fj'
-let g:floaterm_keymap_next   = '<leader>ff'
-let g:floaterm_keymap_toggle = '<leader>fo'
+nnoremap <silent> <leader>fnj
+\   <Cmd>FloatermNew --position=auto --width=80 --height=20<CR>
 
-nnoremap <silent> <leader>fn
-\   <Cmd>FloatermNew --position=auto --width=80 --height=10<CR>
-tnoremap <silent> <leader>fn
-\   <Cmd>FloatermNew --position=auto --width=80 --height=10<CR>
-
-nnoremap <silent> <leader>fc
-\   <Cmd>FloatermNew --width=0.8 --height=0.8<CR>
+nnoremap <silent> <leader>fnk
+\   <Cmd>FloatermNew --width=80 --height=0.8<CR>
 
 nnoremap <silent> <leader>fL
 \   <Cmd>FloatermUpdate --position=bottomright<CR>
@@ -199,6 +168,9 @@ tnoremap <silent> <leader>fa
 "the command line window and switch to normal mode
 "tnoremap <Esc> <C-\><C-n>
 tnoremap <leader><Esc> <C-\><C-n>
+
+
+tnoremap <C-ESC> <C-w><C-c>
 
 nnoremap <silent> <leader>f+
 \   <Cmd>execute "FloatermUpdate".

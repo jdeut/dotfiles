@@ -54,11 +54,11 @@ local p = function()
     }
 
     use { 'jalvesaq/Nvim-R',
-        disable = false,
-        -- branch = 'oldstable',
+        branch = 'stable',
         config = function() 
             -- print('op')
-        end
+        end,
+        -- disable = false,
         -- disable = true
     }
 
@@ -263,7 +263,7 @@ local p = function()
         require("indent_blankline").setup {
             char = '▏',
             char_highlight_list = { "IndentBlankline" },
-            buftype_exclude = {"terminal"}
+            buftype_exclude = { "terminal", "help", "nofile", "quickfix" }
       }
     }
     use { 'Pocco81/AutoSave.nvim',
@@ -443,9 +443,9 @@ local p = function()
     use { 'sgur/vim-textobj-parameter',
         requires = { 'kana/vim-textobj-user' }
     }
-    use { 'mllg/vim-devtools-plugin',
-        ft =  {'r', 'rmd', 'rdoc', 'rnoweb'}
-    }
+    -- use { 'mllg/vim-devtools-plugin',
+    --     ft =  {'r', 'rmd', 'rdoc', 'rnoweb'}
+    -- }
     use { 'davisdude/vim-love-docs',
         run = './src/gen.sh'
     }
