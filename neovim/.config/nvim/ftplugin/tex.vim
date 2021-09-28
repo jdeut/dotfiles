@@ -9,22 +9,6 @@ function! MyHandler(context)
     return 1
 endfunction
 
-setlocal keywordprg=texdoc
-
-lua require'pluginconfig.whichkey.ftype.tex'.set_mappings()
-
-setlocal linebreak 
-setlocal formatprg=latexindent\ -m\ -rv
-setlocal foldlevel=1
-setlocal tabstop=3
-setlocal shiftwidth=0
-setlocal iskeyword+=:
-setlocal conceallevel=0
-setlocal iskeyword+=-
-setlocal foldmethod=indent
-
-let b:ftype_tex_build_dir = 'compiled'
-
 au BufNewFile,BufRead *.cls set syntax=tex
 
 "call vimtex#syntax#p#mycustom#load()

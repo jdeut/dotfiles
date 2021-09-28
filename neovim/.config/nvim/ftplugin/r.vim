@@ -1,54 +1,6 @@
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync() 
 "au FileType rnoweb exe "normal ßrf\<CR>"
 
-setlocal foldenable
-setlocal foldmethod=expr
-setlocal spell
-setlocal isfname-={,}
-
-"let g:which_key_localleader_map['r'] = {
-"\   'name' : '+diverse'
-"\ }
-
-
-nmap <buffer> <LocalLeader>rf <Plug>RStart
-imap <buffer> <LocalLeader>rf <Plug>RStart
-vmap <buffer> <LocalLeader>rf <Plug>RStart
-
-nmap <buffer> <LocalLeader>rs <Plug>RStop
-imap <buffer> <LocalLeader>rs <Plug>RStop
-vmap <buffer> <LocalLeader>rs <Plug>RStop
-
-nmap <buffer> <LocalLeader>rq <Plug>RClose
-imap <buffer> <LocalLeader>rq <Plug>RClose
-vmap <buffer> <LocalLeader>rq <Plug>RClose
-
-nmap <buffer> <LocalLeader>aa <Plug>RSendFile
-
-nmap <buffer> <LocalLeader>rh <Plug>RHelp
-
-"let g:which_key_localleader_map['j'] = {
-"\   'name' : '+diverse'
-"\ }
-
-noremap <silent><buffer> <LocalLeader>jgw
-\   <Cmd>DeniteCursorWord -highlight-matched-char=None grep::--r<CR>
-noremap <silent><buffer> <LocalLeader>jr
-\  j<Cmd>Denite file/rec:R<CR>
-noremap <silent><buffer> <LocalLeader>jt
-\   <Cmd>Denite -buffer-name=ttfiles -no-start-filter file/ttfiles<CR>
-noremap <silent><buffer> <LocalLeader>jgg
-\   <Cmd>Denite -highlight-matched-char=None grep::--r<CR>
-noremap <silent><buffer> <LocalLeader>jm
-\   <Cmd>Denite -winwidth=50 -wincol=2 -quick-move=immediately menu:R<cr>
-
-"let g:which_key_localleader_map['t'] = {
-"\   'name' : '+test'
-"\ }
-
-noremap <silent><buffer> <LocalLeader>tt
-\   <Cmd>RSend Q<CR>:w<CR>:RTestPackage<cr>
-
 function! MySendFileToR(arg_fpath, sargs)
     if !filereadable(a:arg_fpath)
         call RWarningMsg('Error: "' . a:arg_fpath . '" doesnt exist')

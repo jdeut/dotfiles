@@ -1,5 +1,3 @@
-t = {}
-
 local ttl = toggleterminals.lua
 
 local mappings = {
@@ -37,17 +35,13 @@ local mappings = {
    }
 }
 
-t.set_mappings = function()
-   if string.match(vim.fn.expand('%:p'), '/%.config/nvim/.*%.lua$') then
-   else
-      require('which-key').register(mappings, {
-          buffer = 0,
-          prefix = '<localleader>'
-      })
-   end
+if string.match(vim.fn.expand('%:p'), '/%.config/nvim/.*%.lua$') then
+else
+    require('which-key').register(mappings, {
+        buffer = 0,
+        prefix = '<localleader>'
+    })
 end
-
-return t
 
 --
 -- nnoremap <silent><buffer> <LocalLeader>rl

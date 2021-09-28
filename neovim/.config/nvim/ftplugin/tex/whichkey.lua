@@ -1,7 +1,11 @@
-t = {}
-
 local mappings = {
     k = {[[:VimtexDocPackage<CR>]], 'vimtex-info-full'},
+    ['<F6>'] = {
+        function()
+            require('plenary.job'):new({command = 'gxmessage', args = { 'test' } }):sync()
+        end,
+        'test'
+    },
     e = {
        name = 'VimtexInfo',
        i = {[[<plug>(vimtex-info-full)]], 'vimtex-info-full'},
@@ -41,11 +45,9 @@ local mappings = {
     }
 }
 
-t.set_mappings = function()
-    require('which-key').register(mappings, {
+require('which-key').register(
+    mappings, {
         buffer = 0,
         prefix = '<localleader>'
-    })
-end
-
-return t
+    }
+)

@@ -33,7 +33,3 @@ set foldenable
 "\       )
 "\   end
 
-
-
-lua require'pluginconfig.whichkey.ftype.lua'.set_mappings()
-
