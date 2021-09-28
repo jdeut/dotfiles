@@ -95,14 +95,15 @@ local syntax = {
     LspDiagnosticsSignHint        = { fg = '#ff7780', bg = '#504945', style = 'bold' },
 
     SignColumn                    = { fg = 'NONE', bg = '#504945' },
+
     GitSignsAdd                   = { fg = '#00ff00', bg = '#504945', style = 'bold' },
     GitSignsDelete                = { fg = '#ee1022', bg = '#504945', style = 'bold' },
     GitSignsChange                = { fg = '#ffff00', bg = '#504945', style = 'bold' },
     GitSignsCurrentLineBlame      = { fg = '#504945', style = 'italic' },
 
-    GitSignsAddLn                 = { fg = 'NONE', bg = '#225522' },
-    GitSignsChangeLn              = { fg = 'NONE', bg = '#556622' },
-    GitSignsDeleteLn              = { fg = 'NONE', bg = '#502020' }
+    GitSignsAddLn                 = { fg = 'NONE', bg = '#dcffdc' },
+    GitSignsChangeLn              = { fg = 'NONE', bg = '#ffffdc' },
+    GitSignsDeleteLn              = { fg = 'NONE', bg = '#ffdfdf' }
 }
 
 local function highlight(group, color)
