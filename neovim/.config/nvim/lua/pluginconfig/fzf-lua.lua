@@ -110,10 +110,11 @@ require'fzf-lua'.setup({
     grep = {
        prompt             = 'Ag❯ ',
        input_prompt       = 'Grep For❯ ',
-       cmd                = 'ag -i --color --hidden --vimgrep --nomultiline --',
+       cmd                = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
        git_icons          = true,           -- show git icons?
        file_icons         = true,           -- show file icons?
        color_icons        = true,           -- colorize file|git icons
+       no_esc             = 2,
        preview_horizontal = 'right:0%',
        preview_vertical   = 'down:10%',
        actions = {
