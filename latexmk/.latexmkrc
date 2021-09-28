@@ -87,7 +87,7 @@ $dvi_mode        = 0;
 $out_dir         = "compiled";
 $lualatex        = "internal mylatex ".
                    "texfot lualatex --interaction=nonstopmode -file-line-error " .
-                   "--shell-escape -enable-write18 %O %S";
+                   "--synctex=1 --shell-escape -enable-write18 %O %S";
 $dvipdf          = "dvipdfmx %O -o %D %S";
 my $gitroot      = `git rev-parse --show-toplevel`;
 
