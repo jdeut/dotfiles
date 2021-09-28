@@ -1,13 +1,19 @@
 [Unit]
 Description=virtual input output fallback
 After=multi-user.target
+PartOf=virtual_input_output_fallback.service
 
 [Service]
 Type=simple
 # ExecCondition=/usr/bin/jack_control status
+# pw-loopback --capture-props='audio.position=[FR FL]' --playback-props='media.class=Audio/Source node.name=my-source audio.position=[FL FR]'
+# pw-loopback --capture-props='audio.position=[FR FL]' --playback-props='media.class=Audio/Source node.name=my-source audio.position=[FL FR]'
+# pw-loopback --capture-props='audio.position=[FR FL]' --playback-props='media.class=Audio/Source node.name=my-source audio.position=[FL FR]'
+
+# --capture-props='audio.position=[FR FL] node.name=my-virtualsource node.description=my-virtualsource' \
 ExecStart=/usr/bin/pw-loopback \
-    --capture-props='audio.position=[FR FL] node.name=my-virtualsource node.description=my-virtualsource ' \
-    --playback-props='media.class=Audio/Source node.description=my-virtualsource node.name=my-virtualsource audio.position=[FL FR]'
+    --capture-props='audio.position=[FR FL] node.description=my-virtualsource-capture node.name=my-virtualsource-capture' \
+    --playback-props='media.class=Audio/Source node.description=my-virtualsource-playback node.name=my-virtualsource-playback audio.position=[FL FR]'
 #
 # PulseAudio JACK Sink -->> Zita j2n
 #ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "zita-tv-j2n:in_2" 

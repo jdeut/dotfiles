@@ -1,13 +1,15 @@
 [Unit]
 Description=virtual input output fallback
 After=multi-user.target
+PartOf=virtual_input_output_fallback.service
 
 [Service]
 Type=simple
 # ExecCondition=/usr/bin/jack_control status
-ExecStart=/usr/bin/pw-loopback \
-    --capture-props='audio.position=[FR FL] node.name=my-virtualsink node.description=my-virtualsink ' \
-    --playback-props='media.class=Audio/Sink node.description=my-virtualsink node.name=my-virtualsink audio.position=[FL FR]'
+
+ExecStart=/usr/bin/pw-loopback -m \
+    --capture-props='audio.position=[FR FL] media.class=Audio/Sink node.name=my-virtualsink-capture node.description=my-virtualsink-capture' \
+    --playback-props='audio.position=[FL FR] node.name=my-virtualsink-playback node.description=my-virtualsink-playback'
 #
 # PulseAudio JACK Sink -->> Zita j2n
 #ExecStartPost=jack_connect "PulseAudio JACK Sink:front-right" "zita-tv-j2n:in_2" 
