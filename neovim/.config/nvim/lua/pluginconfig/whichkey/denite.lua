@@ -10,6 +10,13 @@ wk.register({
         end, 
         [[Nvim Config Dir]]
     },
+    ['2'] = { function()
+            require'pluginconfig.fzf-lua'.custom.git_files({
+               cwd = [[/home/johannes/.dotfiles]]
+            })
+        end, 
+        [[Dotfiles]]
+    },
 
     ["<leader>"] = {
 
@@ -23,41 +30,40 @@ wk.register({
         -- n = { [[<Cmd>Denite -buffer-name=files]] ..
         --       [[ -matchers=matcher/ignore_current_buffer file/old<CR>]],
         --       [[Recent Files]] },
-        g = { [[:Denite grep::--<C-r>=expand("%:e")<CR>]], [[Grep Ftype]] },
         b = { [[<Cmd>Denite -matchers=matcher/ignore_current_buffer,]] ..
               [[matcher/substring buffer<CR>]], [[Buffer]] },
         d = { [[<Cmd>Denite -resume<CR>]], [[Resume]] },
         m = { [[<Cmd>Denite -winwidth=50 -quick-move=immediately]] ..
               [[ menu:custom<cr>]], [[Menu]] },
 
-        g = { function()
-               local m = require'fzf-lua.path'
-               local path = vim.fn.expand('%:p:h')
-               local cwd = m.git_root(path, 0)
+        ['/'] = { function()
+                local m = require'fzf-lua.path'
+                local path = vim.fn.expand('%:p:h')
+                local cwd = m.git_root(path, 0)
 
-               if not cwd then
-                  cwd = path
-               end
+                if not cwd then
+                    cwd = path
+                end
 
-               require "fzf-lua".grep({
-                  cwd = cwd
-               })
+                require "fzf-lua".grep({
+                    cwd = cwd
+                })
             end, [[Grep Ftype]]
         },
 
         h = { function() 
-               win_width_abs = 120 
-               win_width = win_width_abs / vim.o.columns
-               preview_width_abs = 80
-               preview_width = math.floor(preview_width_abs / win_width_abs * 100)
+                win_width_abs = 120 
+                win_width = win_width_abs / vim.o.columns
+                preview_width_abs = 80
+                preview_width = math.floor(preview_width_abs / win_width_abs * 100)
 
-               require'fzf-lua'.help_tags({
-                  winopts = {
-                     win_width = win_width,
-                     win_border = nil
-                  },
-                  preview_horizontal = 'right:' .. preview_width .. '%'
-               }) 
+                require'fzf-lua'.help_tags({
+                        winopts = {
+                        win_width = win_width,
+                        win_border = nil
+                    },
+                    preview_horizontal = 'right:' .. preview_width .. '%'
+                }) 
             end, 
             [[Help]] 
         },

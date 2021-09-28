@@ -9,11 +9,12 @@ end
 local sections_common = {
     lualine_c = { [[vim.fn.expand("%")]] },
     lualine_x = { },
-    lualine_y = {{
-       [[encoding]] , [[filetype]], 
-       [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]] , [[progress]],
-       cond = hide_on_winwidth_cond
-    }},
+    lualine_y = {
+        { [[o:encoding]], cond = hide_on_winwidth_cond }, 
+        { [[bo:filetype]], cond = hide_on_winwidth_cond },
+        { [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]], cond = hide_on_winwidth_cond},
+        { [[progress]], cond = hide_on_winwidth_cond }
+    },
     lualine_z = {{
        [[location]],
        cond = hide_on_winwidth_cond
