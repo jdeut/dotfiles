@@ -28,7 +28,7 @@ wk.register({
         f = { [[<cmd>silent! vsplit <cfile><cr>]], 'split under cursor'}
     }
 },  {
-    mode = "n", prefix = "s", buffer = nil, silent = true, noremap = true
+    mode = "n", prefix = "s", silent = true, noremap = true
 })
 
 
