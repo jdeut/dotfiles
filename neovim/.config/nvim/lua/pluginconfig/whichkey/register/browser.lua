@@ -1,6 +1,14 @@
 wk = require("which-key")
 
-local n_openbrowser = function(s) return { 
+local n_openbrowser_query = function(s) 
+    return { 
+        [[:OpenBrowserSmartSearch -]] ..  s ..  [[ ]] , 
+        s,
+        silent = false
+    } 
+end
+
+local n_openbrowser_cword = function(s) return { 
     [[<Cmd>execute "OpenBrowserSmartSearch -]] ..  s ..
     [[ " . expand('<cword>')<CR>]] , s
 } end
@@ -12,13 +20,19 @@ local v_openbrowser = function(s) return {
 
 wk.register({
     g = {
-        name = 'Browser',
-        g = n_openbrowser('google'),
-        b = n_openbrowser('googlebooks'),
-        s = n_openbrowser('googlescholar'),
-        w = n_openbrowser('wortbuch'),
-        e = n_openbrowser('sematicscholar'),
-        i = n_openbrowser('github')
+        name = 'Search <cword>',
+        g = n_openbrowser_cword('google'),
+        b = n_openbrowser_cword('googlebooks'),
+        s = n_openbrowser_cword('googlescholar'),
+        w = n_openbrowser_cword('wortbuch'),
+        e = n_openbrowser_cword('sematicscholar'),
+        i = n_openbrowser_cword('github'),
+        ['<S-g>'] = n_openbrowser_query('google'),
+        ['<S-b>'] = n_openbrowser_query('googlebooks'),
+        ['<S-s>'] = n_openbrowser_query('googlescholar'),
+        ['<S-w>'] = n_openbrowser_query('wortbuch'),
+        ['<S-e>'] = n_openbrowser_query('sematicscholar'),
+        ['<S-i>'] = n_openbrowser_query('github')
     }
 }, {
     mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true
