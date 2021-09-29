@@ -29,17 +29,23 @@ wk.setup {
     show_help = true
 }
 
+-- copy into + register with <DEL>
+wk.register({ ["<DEL>"] = { [["+]], '' } },  { mode = "v" })
+wk.register({ ["<DEL>"] = { ["<DEL>"] = { [["+y]], '' } } },  { mode = "v" })
+wk.register({ ["<DEL>"] = { [["+]], '' } },  { mode = "n" })
+wk.register({ ["<DEL>"] = { ["<DEL>"] = { [["+yy]], '' } } },  { mode = "n" })
+
 wk.register({
     name = 'etc',
-    ["<F5>"] = { [[:write<cr>:silent Reload<cr>]], 'Reload settings'},
+   ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' }
 },  {
-    mode = "n", prefix = "", buffer = nil, silent = true, noremap = true
+    mode = "n"
 })
 
 wk.register({
     h = { [[<Cmd>Gitsigns select_hunk<cr>]], 'Hunk'},
 }, {
-    mode = "o", prefix = "i", buffer = nil, silent = true, noremap = true
+    mode = "o", prefix = "i"
 })
 
 wk.register({
@@ -48,7 +54,7 @@ wk.register({
         ['/']    = { [[/]], "Search", silent = false}
    }
 }, {
-    mode = "n", prefix = "", buffer = nil, silent = true, noremap = true
+    mode = "n", prefix = ""
 })
 
 wk.register({
@@ -119,7 +125,7 @@ wk.register({
        p    = { [[<cmd>cprev<CR>]], 'previous entry'},
     }
 },  {
-    mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true
+    mode = "n", prefix = "<leader>"
 })
 
 wk.register({
@@ -136,7 +142,7 @@ wk.register({
         }
     }
 },  {
-    mode = "v", prefix = "<leader>", buffer = nil, silent = true, noremap = true
+    mode = "v", prefix = "<leader>"
 })
 
 
@@ -146,7 +152,7 @@ wk.register( {
         c           = { [[<plug>kommentary_line_default]],  [[Toggle Commi]] }
     }
 },  {
-    mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = false
+    mode = "n", prefix = "<leader>", noremap = false
 })
 
 wk.register( {
@@ -155,7 +161,7 @@ wk.register( {
         c           = { [[<plug>kommentary_visual_default<C-c>]],  [[Toggle Commi]] }
     }
 },  {
-    mode = "v", prefix = "<leader>", buffer = nil, silent = true, noremap = false
+    mode = "v", prefix = "<leader>", noremap = false
 })
 
 require'pluginconfig.whichkey.wintab'
@@ -181,7 +187,7 @@ require'pluginconfig.whichkey.hop'
       -- ['<C-e>']     = { [[<Cmd>lua require'cmp'.mapping.close()<cr>]], [[]] }
       -- ['<CR>']      = { [[<Cmd>lua require'cmp'.mapping.confirm( { behavior = require'cmp'.ConfirmBehavior.Insert, select = true})<cr>]], [[]] }
 --     }, {
---     mode = "i", buffer = nil, silent = true, noremap = true
+--     mode = "i"
 -- }) 
 -- wk.register( {
 --     ["<C-Space>"] = { [[compe#complete()]], [[]], expr = true},
@@ -190,5 +196,5 @@ require'pluginconfig.whichkey.hop'
 --     ["<C-j>"]     = { [[compe#scroll  ({ "delta": +4 })]], [[]], expr = true},
 --     ["<C-k>"]     = { [[compe#scroll  ({ "delta": -4 })]], [[]], expr = true}
 -- },  {
---     mode = "i", buffer = nil, silent = true, noremap = true
+--     mode = "i"
 -- })
