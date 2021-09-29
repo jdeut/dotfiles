@@ -6,28 +6,22 @@ wk.register({ ["<DEL>"] = { ["<DEL>"] = { [["+yy]], '' } } },  { mode = "n" })
 
 wk.register({
     name = 'etc',
-   ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' }
-},  {
-    mode = "n"
-})
+    ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' }
+},  { mode = "n" })
 
 wk.register({
     h = { [[<Cmd>Gitsigns select_hunk<cr>]], 'Hunk'},
-}, {
-    mode = "o", prefix = "i"
-})
+}, { mode = "o", prefix = "i" })
 
 wk.register({
-   ['/'] = {
+    ['/'] = {
         name = 'localleader',
         ['/']    = { [[/]], "Search", silent = false}
-   }
-}, {
-    mode = "n", prefix = ""
-})
+    }
+}, { mode = "n", prefix = "" })
 
 wk.register({
-   [":"] = {
+    [":"] = {
         name = 'Exec',
         n    = { [[<Cmd>silent !xdg-open %:p:h<CR>]], "Nautilus" },
         g    = { [[<Cmd>lua require('plenary.job'):new({command = 'gitg'}):start()<CR>]], "Gitg" }
@@ -93,9 +87,7 @@ wk.register({
        n    = { [[<cmd>cnext<CR>]], 'next entry'},
        p    = { [[<cmd>cprev<CR>]], 'previous entry'},
     }
-},  {
-    mode = "n", prefix = "<leader>"
-})
+},  { mode = "n", prefix = "<leader>" })
 
 wk.register({
     e = {
@@ -110,25 +102,18 @@ wk.register({
             j    = { [[:lua require("revj").format_visual()<CR>]], [[RevJ]] } 
         }
     }
-},  {
-    mode = "v", prefix = "<leader>"
-})
-
+},  { mode = "v", prefix = "<leader>" })
 
 wk.register( {
     c = {
-        name        = 'Comment',
-        c           = { [[<plug>kommentary_line_default]],  [[Toggle Commi]] }
+        name = 'Comment',
+        c    = { [[<plug>kommentary_line_default]],  [[Toggle Commi]] }
     }
-},  {
-    mode = "n", prefix = "<leader>", noremap = false
-})
+},  { mode = "n", prefix = "<leader>", noremap = false })
 
 wk.register( {
     c = {
-        name        = 'Comment',
-        c           = { [[<plug>kommentary_visual_default<C-c>]],  [[Toggle Commi]] }
+        name = 'Comment',
+        c    = { [[<plug>kommentary_visual_default<C-c>]],  [[Toggle Commi]] }
     }
-},  {
-    mode = "v", prefix = "<leader>", noremap = false
-})
+},  { mode = "v", prefix = "<leader>", noremap = false })
