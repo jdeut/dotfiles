@@ -81,7 +81,10 @@ local syntax = {
 
     PmenuSbar        = { style = 'bold', fg = 'red', bg = 'green' },
 
-    rnowebChunk      = { fg = '#a85656' },
+    rnowebChunk        = { fg = '#c84656' },
+    rnowebSexpr        = { fg = '#c84656' },
+    rnowebDelimiter    = { fg = vim.g.terminal_color_6 },
+    rnowebDelimiterEnd = { fg = vim.g.terminal_color_6, bg = 'NONE', style = 'bold' },
 
     FloatermBorder   = { bg = 'NONE', fg = '#9696ff', style = 'bold' },
     Floaterm         = { bg = 'black', fg = '#00ff00' },
