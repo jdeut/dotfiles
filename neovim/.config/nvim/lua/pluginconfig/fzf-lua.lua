@@ -84,17 +84,18 @@ require'fzf-lua'.setup({
     git_icons      = true,           -- show git icons?
     file_icons     = true,           -- show file icons?
     color_icons    = true,           -- colorize file|git icons
-    fzf_args       = '',             -- adv: fzf extra args, empty unless adv
-    fzf_binds      = {               -- fzf '--bind=' options
-       ['f2']         = 'toggle-preview',
-       ['f3']         = 'toggle-preview-wrap',
-       ['shift-down'] = 'preview-page-down',
-       ['shift-up']   = 'preview-page-up',
-       ['ctrl-d']     = 'half-page-down',
-       ['ctrl-u']     = 'half-page-up',
-       ['ctrl-a']     = 'toggle-all',
-       ['ctrl-space'] = 'toggle',
-       ['ctrl-l']     = 'clear-query',
+    keymap = {
+        fzf = {               -- fzf '--bind=' options
+            ['f2']         = 'toggle-preview',
+            ['f3']         = 'toggle-preview-wrap',
+            ['shift-down'] = 'preview-page-down',
+            ['shift-up']   = 'preview-page-up',
+            ['ctrl-d']     = 'half-page-down',
+            ['ctrl-u']     = 'half-page-up',
+            ['ctrl-a']     = 'toggle-all',
+            ['ctrl-space'] = 'toggle',
+            ['ctrl-l']     = 'clear-query'
+        }
     },
     winopts = {
         win_border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
