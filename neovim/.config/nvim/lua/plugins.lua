@@ -14,8 +14,8 @@ local p = function()
  
     use { 'wbthomason/packer.nvim' }
     use { 'rktjmp/lush.nvim' } 
-    use {"olimorris/onedark.nvim",
-        requires = {"rktjmp/lush.nvim"},
+    use { 'olimorris/onedark.nvim',
+        requires = {'rktjmp/lush.nvim'},
         config = function() 
             -- print('op')
             --
@@ -54,6 +54,7 @@ local p = function()
     }
 
     use { 'jalvesaq/Nvim-R',
+        alias = 'Nvim-R',
         branch = 'stable',
         config = function() 
             -- print('op')
@@ -208,29 +209,29 @@ local p = function()
             vim.g.openbrowser_browser_commands = {
                 {
                     args = {
-                        "env",
-                        "-i", "DISPLAY=:0", "{browser}",
-                        "-n", "{uri}"
+                        'env',
+                        '-i', 'DISPLAY=:0', '{browser}',
+                        '-n', '{uri}'
                     },
-                    name = "luakit"
+                    name = 'luakit'
                 },
                 {
                     args = {
-                        "{browser}", "-n", "{uri}"
+                        '{browser}', '-n', '{uri}'
                     },
-                    name = "recoll"
+                    name = 'recoll'
                 }
             }
 
             vim.g.openbrowser_search_engines = {
-               wortbuch =        'https://www.dwds.de/?q={query}',
-               loveapiref =      'http://love2d-community.github.io/love-api/#{query}',
-               tex =             'https://www.google.com/search?q=site:tex.stackexchange.com+{query}',
-               googlebooks =     'https://www.google.de/search?hl=de&tbo=p&tbm=bks&q={query}&tbs=,bkv:p,cdr:1,cd_min:01.01.1995&num=50',
+               wortbuch        = 'https://www.dwds.de/?q={query}',
+               loveapiref      = 'http://love2d-community.github.io/love-api/#{query}',
+               tex             = 'https://www.google.com/search?q=site:tex.stackexchange.com+{query}',
+               googlebooks     = 'https://www.google.de/search?hl=de&tbo=p&tbm=bks&q={query}&tbs=,bkv:p,cdr:1,cd_min:01.01.1995&num=50',
                semanticscholar = 'https://www.semanticscholar.org/search?q={query}',
-               googlescholar =   'https://scholar.google.de/scholar?hl=de&q={query}',
-               google =          'https://google.com/search?q={query}',
-               github =          'https://github.com/search?type=code&q={query}'
+               googlescholar   = 'https://scholar.google.de/scholar?hl=de&q={query}',
+               google          = 'https://google.com/search?q={query}',
+               github          = 'https://github.com/search?type=code&q={query}'
             }
        end
     }
@@ -248,7 +249,7 @@ local p = function()
     }
     -- use { 'numtostr/FTerm.nvim',
     --    config = function()
-    --       local fterm = require("FTerm")
+    --       local fterm = require('FTerm')
     --       fterm.setup({
     --           border = 'double'
     --       })
@@ -260,26 +261,35 @@ local p = function()
     use { 'powerman/vim-plugin-AnsiEsc' }
     use { 'Matt-Deacalion/vim-systemd-syntax' }
     use { 'lukas-reineke/indent-blankline.nvim',
-        require("indent_blankline").setup {
+        require('indent_blankline').setup {
             char = '▏',
-            char_highlight_list = { "IndentBlankline" },
-            buftype_exclude = { "terminal", "help", "nofile", "quickfix" }
+            char_highlight_list = { 'IndentBlankline' },
+            buftype_exclude = {
+                'terminal',
+                'help',
+                'nofile',
+                'quickfix'
+            }
       }
     }
     use { 'Pocco81/AutoSave.nvim',
         config = function()
-           local autosave = require("autosave")           vim.g.auto_save_silent = 1
+           local autosave = require('autosave')           vim.g.auto_save_silent = 1
 
            autosave.hook_after_saving = function()
                autosave.setup({
-                  execution_message = "AutoSave: " .. vim.fn.strftime("%H:%M:%S")
+                  execution_message = 'AutoSave: ' .. vim.fn.strftime('%H:%M:%S')
                })
            end
 
            autosave.setup( {
                enabled = true,
-               execution_message = "AutoSave: " .. vim.fn.strftime("%H:%M:%S"),
-               events = {"InsertLeave", "WinLeave", "TextChanged"},
+               execution_message = 'AutoSave: ' .. vim.fn.strftime('%H:%M:%S'),
+               events = {
+                   'InsertLeave',
+                   'WinLeave',
+                   'TextChanged'
+               },
                conditions = {
                    exists = true,
                    filetype_is_not = { 'gitcommit' },
@@ -326,12 +336,12 @@ local p = function()
     }
     use { 'SirVer/ultisnips',
         config = function()
-            -- let g:ulti_expand_or_jump_res = 0 "default value, just set once
+            -- let g:ulti_expand_or_jump_res = 0 'default value, just set once
             -- function! Ulti_ExpandOrJump_and_getRes()
             --    call v:lua.MPairs.disable_filetype_set()
             --    call UltiSnips#ExpandSnippetOrJump()
             --    call v:lua.MPairs.disable_filetype_reset()
-            --    return ""
+            --    return ''
             -- endfunction
            
             vim.g.UltiSnipsSnippetsDir         = '~/.config/nvim/UltiSnips'
@@ -421,8 +431,12 @@ local p = function()
     }
     use { 'stevearc/vim-arduino' }
     use { 'lervag/vimtex' }
-    use { 'vim-pandoc/vim-pandoc' }
-    use { 'vim-pandoc/vim-pandoc-syntax' }
+    use { 'vim-pandoc/vim-pandoc',
+        disable = true
+    }
+    use { 'vim-pandoc/vim-pandoc-syntax',
+        disable = true
+    }
     use { 'WolfgangMehner/perl-support',
         config = function()
            vim.g.Perl_PerlTags = 'on'
@@ -432,9 +446,9 @@ local p = function()
     use { 'davidhalter/jedi-vim' }
     use { 'kynan/dokuvimki',
         config = function()
-            vim.g.DokuVimKi_USER = ""
-            vim.g.DokuVimKi_PASS = ""
-            vim.g.DokuVimKi_URL  = ""
+            vim.g.DokuVimKi_USER = ''
+            vim.g.DokuVimKi_PASS = ''
+            vim.g.DokuVimKi_URL  = ''
         end
     }
     use { 'monaqa/dial.nvim' }
@@ -443,9 +457,10 @@ local p = function()
     use { 'sgur/vim-textobj-parameter',
         requires = { 'kana/vim-textobj-user' }
     }
-    -- use { 'mllg/vim-devtools-plugin',
-    --     ft =  {'r', 'rmd', 'rdoc', 'rnoweb'}
-    -- }
+    use { 'mllg/vim-devtools-plugin',
+        ft =  {'r'},
+        after = { 'Nvim-R' }
+    }
     use { 'davisdude/vim-love-docs',
         run = './src/gen.sh'
     }
@@ -455,10 +470,13 @@ local p = function()
     }
     use {
         'AckslD/nvim-revJ.lua',
-        requires = {'sgur/vim-textobj-parameter'},
+        requires = {'kana/vim-textobj-user', 'sgur/vim-textobj-parameter'},
         config = function()
             require('revj').setup{
-                brackets = {first = '([', last = ')]'},
+                brackets = {
+                    first = '{([',
+                    last  = ')]}'
+                },
                 enable_default_keymaps = false,
                 add_seperator_for_last_parameter = false
             }
