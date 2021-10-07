@@ -1,48 +1,102 @@
 wk = require("which-key")
 
 wk.register({
-    name    = 'Window Movements',
-    l       = { [[<Cmd>silent! wincmd l<cr>]], "right"},
-    h       = { [[<Cmd>silent! wincmd h<cr>]], "left"},
-    j       = { [[<Cmd>silent! wincmd j<cr>]], "down"},
-    k       = { [[<Cmd>silent! wincmd k<cr>]], "up"},
-    s       = { [[<Cmd>silent! wincmd W<cr>]], "switch"},
-    i       = { [[<Cmd>silent! wincmd o<cr>]], "only"},
-    m       = { [[<Cmd>silent! wincmd c<cr>]], "close"},
-    n       = { [[<Cmd>silent! wincmd n<cr>]], "new"},
-    r       = { [[<Cmd>silent! wincmd r<cr>]], ""},
-    v       = { [[<Cmd>silent! vsplit<cr>]], ""},
-    ["<"]   = { [[<Cmd>silent! split<cr>]], ""},
-    ['<leader>'] = {
-        name  = 'move',
-        l     = { [[<Cmd>silent! wincmd L<cr>]], "right" },
-        h     = { [[<Cmd>silent! wincmd H<cr>]], "left" },
-        j     = { [[<Cmd>silent! wincmd J<cr>]], "" },
-        k     = { [[<Cmd>silent! wincmd K<cr>]], "" },
-        s     = { [[<Cmd>silent! e #<cr>]], ""},
-        v     = { [[<Cmd>silent! vsplit #<cr>]], ""},
-        ["<"] = { [[<Cmd>silent! split #<cr>]], ""}
+    s = { function() require('which-key').show('s', { mode = 'n', auto = true }) end, '' }
+}, {
+    mode = "n", silent = true
+})
+
+local function ccmd(cmd, opts)
+    local count = vim.api.nvim_eval('v:count') 
+    local prefix_mod = ''
+
+    count = count > 0 and count or ''
+
+    if opts then
+        prefix_mod = opts.prefix_mod and opts.prefix_mod .. [[ ]] or ''
+    end
+
+    vim.v.errmsg = ''
+
+    vim.cmd( [[silent! ]] .. prefix_mod .. [[ ]] .. count .. cmd)
+
+    if vim.v.errmsg ~= '' then
+        print(vim.v.errmsg)
+        vim.defer_fn( function() vim.cmd('echo ') end, 1400)
+    end
+end
+
+local function wincmd(cmd, opts)
+    ccmd( [[wincmd ]] .. cmd )
+end
+
+wk.register({
+    -- ['<C-j>'] = { function() ccmd('bnext') end, 'Bnext'},
+    ['<C-k>'] = { function() ccmd('b#') end, 'Bprev'},
+    ['<M-C-k>'] = { function() ccmd('vertical sb#') end, 'Bprev'}
+},  {
+    mode = "n" , noremap = false
+})
+
+wk.register({
+    name      = 'Buffer/Window/Tab Management',
+    d         = { function() ccmd('tabnext') end, "Tabnext"},
+    D         = { function() ccmd('tabm+') end, "Move Right"},
+    a         = { function() ccmd('tabprev') end, "Tabprev"},
+    A         = { function() ccmd('tabm-') end, "Move Left"},
+    l         = { function() wincmd('l') end, "right"},
+    h         = { function() wincmd('h') end, "left"},
+    j         = { function() wincmd('j') end, "down"},
+    k         = { function() wincmd('k') end, "up"},
+    -- f         = { function() wincmd('f') end, "Split File Under Cursor"},
+    -- ['<S-f>'] = { function() wincmd('F') end, "Split File Under Cursor"},
+    f = {
+        name = 'Floaterm',
+        ['<C-f>'] = { [[<Cmd>FloatermNew! cd %:p:h ; clear<CR>]], "NewFloaterm in Cwd"},
+        f = { [[<Cmd>FloatermNew --position=top --width=81 --height=0.7<CR>]], "NewFloaterm in Cwd"},
+        i = { require("Fn/floaterm-toggle-size").toggle, "Toggle Size"}
     },
-    g = {
-        name = '',
-        f = { [[<cmd>silent! vsplit <cfile><cr>]], 'split under cursor'}
+    s         = { function() wincmd('W') end, "switch"},
+    i         = { function() wincmd('o') end, "only"},
+    m         = { function() wincmd('c') end, "close"},
+    n         = { function() wincmd('n') end, "new"},
+    N         = { [[<Cmd>rightbelow vnew<cr>]], "new"},
+    K         = { function() wincmd('K') end, "Move Up" },
+    L         = { function() wincmd('L') end, "Move Right" },
+    H         = { function() wincmd('H') end, "Move Left" },
+    J         = { function() wincmd('J') end, "Move Down" },
+    ['=']        = { function() wincmd('=') end, "Equal Size" },
+    ['+']        = { function() wincmd('+') end, "Increase Height" },
+    ['-']        = { function() wincmd('-') end, "Decrease Height" },
+    ['<']        = { function() wincmd('<') end, "Decrease Width" },
+    ['>']        = { function() wincmd('>') end, "Increase Width" },
+    t            = { function() wincmd('t') end, "open in tab"},
+    r            = { function() wincmd('r') end, "rotate right"},
+    ['<S-r>']    = { function() wincmd('R') end, "rotate left"},
+    v            = { function() wincmd('v', { prefix_mod = 'leftabove'}) end, "vsplit"},
+    ['<S-v>']    = { function() wincmd('v', { prefix_mod = 'rightbelow'}) end, "vsplit"},
+    ['%']        = { [[<Cmd>vsplit<cr>]], "vsplit"},
+    ['"']        = { [[<Cmd>split<cr>]], "split"},
+    g            = {
+        name  = 'move',
+        f         = { function() wincmd('gf') end, "Open File Under Cursor in Tab"},
+        ['<S-f>'] = { function() wincmd('gF') end, "Open File Under Cursor in Tab"},
+        s         = { [[<Cmd>silent! e #<cr>]], "Alternate"},
+        v         = { [[<Cmd>silent! vsplit #<cr>]], "Alternate Vsplit"},
+        ["<"]     = { [[<Cmd>silent! split #<cr>]], "Alternate Split"}
     }
 },  {
-    mode = "n", prefix = "s", silent = true, noremap = true
+    mode = "n", prefix = "s", silent = true
 })
 
 
 wk.register({
     s = {
         name = 'Tab movement',
-        l    = { [[<Cmd>silent! +tabnext<cr>]], 'next'},
-        k    = { [[<Cmd>silent! -tabnext<cr>]], 'prev'},
+        l    = { [[<Cmd>tabnext<cr>]], 'next'},
+        h    = { [[<Cmd>tabprev<cr>]], 'prev'},
         n    = { [[<Cmd>silent! tabnew<cr>]], 'new'},
         m    = { [[<Cmd>silent! tabclose!<cr>]], 'close'},
-        g    = {
-            name = 'vsplit',
-            f    = { [[<Cmd>silent! tab vsplit <cfile><cr>]], '<gf> in new tab'}
-        },
         ['<leader>'] = {
             name  = '',
             m     = { [[<Cmd>silent! tabonly!<cr>]], [[close all others]] },

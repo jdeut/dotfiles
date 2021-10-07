@@ -19,13 +19,17 @@ wk.setup {
         align = "center",
     },
     hidden = {
-        "<silent>", 
         "execute", "<cmd>", "<Cmd>", 
         "<CR>", "call", "lua", "^:", "^ "
     },
-    triggers_blacklist = {
-        i = { [[']] }
+    triggers = {
+        '<localleader>', '<leader>', 's', 'z', 'g', ']', '['
     },
+    motions = { count = false },
+    triggers_blacklist = {},
+    -- triggers_blacklist = {
+    --     i = { [[']] }
+    -- },
     show_help = true
 }
 

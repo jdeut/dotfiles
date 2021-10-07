@@ -2,27 +2,39 @@ wk = require("which-key")
 
 wk.register({
     name = 'Hop',
-    w    = { [[<cmd>lua require'hop'.hint_words( { winblend = 0 } )<cr>]], [[ ]]},
-    j    = { [[<cmd>lua require'hop'.hint_lines_skip_whitespace( { winblend = 100 } ) vim.cmd("normal zz")<cr>]], [[Line]] },
-    f    = { [[<cmd>lua require'hop'.hint_char1( { winblend = 0 } )<cr>]], [[ ]] }
+    w = { require'hop'.hint_words, [[Word]] },
+    j = { function()
+            require'hop'.hint_lines_skip_whitespace()
+            vim.cmd("normal zz")
+        end, [[Line]]
+    },
+    f = { require'hop'.hint_char1, [[Char]] }
 },  {
-    mode = "n", prefix = "f", buffer = nil, silent = true, noremap = true
+    mode = "n", prefix = "f"
 })
 
 wk.register({
     name = 'Hop',
-    w    = { [[<cmd>lua require'hop'.hint_words( { winblend = 0 } )<cr>]], [[ ]]},
-    j    = { [[<cmd>lua require'hop'.hint_lines_skip_whitespace( { winblend = 100 } ) vim.cmd("normal zz")<cr>]], [[Line]] },
-    f    = { [[<cmd>lua require'hop'.hint_char1( { winblend = 0 } )<cr>]], [[ ]] }
+    w = { require'hop'.hint_words, [[Word]] },
+    j = { function()
+            require'hop'.hint_lines_skip_whitespace()
+            vim.cmd("normal zz")
+        end, [[Line]]
+    },
+    f = { require'hop'.hint_char1, [[Char]] }
 },  {
-    mode = "v", prefix = "f", buffer = nil, silent = true, noremap = true
+    mode = "v", prefix = "f"
 })
 
 wk.register({
     name = 'Hop',
-    w    = { [[<cmd>lua require'hop'.hint_words( { winblend = 0 } )<cr>]], [[Word]] },
-    j    = { [[<cmd>lua require'hop'.hint_lines_skip_whitespace( { winblend = 100 } ) vim.cmd("normal zz")<cr>]], [[Line]] },
-    f    = { [[<cmd>lua require'hop'.hint_char1( { winblend = 0 } )<cr>]], [[Char]] }
+    w = { require'hop'.hint_words, [[Word]] },
+    j = { function()
+            require'hop'.hint_lines_skip_whitespace()
+            vim.cmd("normal zz")
+        end, [[Line]]
+    },
+    f = { require'hop'.hint_char1, [[Char]] }
 },  {
-    mode = "o", prefix = "f", buffer = nil, silent = true, noremap = true
+    mode = "o", prefix = "f"
 })

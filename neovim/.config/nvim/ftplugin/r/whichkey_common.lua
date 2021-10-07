@@ -1,25 +1,39 @@
 -- "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync() 
 -- "au FileType rnoweb exe "normal ßrf\<CR>"
 
-local mappings = {
+require('which-key').register({
     h = {[[<Plug>RHelp]], 'RHelp'},
+    m = {[[<Cmd>RStop<CR>]], 'Rstop'},
     r = {
         name = 'Nvim-R',
         f = {[[<Plug>RStart]], 'Rstart'},
-        s = {[[<Plug>RStop]], 'Rstop'},
         q = {[[<Plug>RClose]], 'Rclose'}
     },
     a = {
         name = '',
         f = {[[<Plug>RSendFile]], 'RSendFile'},
-        s = {[[<Plug>RStop]], 'Rstop'},
         q = {[[<Plug>RClose]], 'Rclose'}
     }
-}
+}, {
+    buffer = 0,
+    prefix = '<localleader>'
+})
 
-require('which-key').register(
-    mappings, {
-        buffer = 0,
-        prefix = '<localleader>'
+require('which-key').register({
+    ['<C-[>'] = {
+        function()
+            local winid = vim.fn.bufwinid(vim.g.rplugin.R_bufname)
+            if winid == -1 then
+                vim.cmd([[vertical botright sb ]] .. vim.g.rplugin.R_bufname)
+                vim.cmd([[vertical resize 60]])
+                vim.cmd([[normal G]])
+                vim.cmd([[wincmd w]])
+            else
+                vim.fn.win_execute(winid, 'hide')
+            end
+        end, 'R terminal toggle'
     }
-)
+}, {
+    buffer = 0,
+    prefix = ''
+})

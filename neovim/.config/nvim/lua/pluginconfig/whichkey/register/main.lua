@@ -5,9 +5,24 @@ wk.register({ ["<DEL>"] = { [["+]], '' } },  { mode = "n" })
 wk.register({ ["<DEL>"] = { ["<DEL>"] = { [["+yy]], '' } } },  { mode = "n" })
 
 wk.register({
-    name = 'etc',
-    ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' }
+    ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' },
+    ['<Space>'] = { [[:]], 'Enter Command-Line Mode', silent  = false}
 },  { mode = "n" })
+
+wk.register({
+    ['<Space>'] = { [[:]], 'Enter Command-Line Mode', silent = false}
+},  { mode = "v" })
+
+wk.register({
+    n = { vim.lsp.diagnostic.goto_next, "next error"},
+    N = { vim.lsp.diagnostic.goto_prev, "prev error"},
+    i = { vim.lsp.buf.implementation, "code action"},
+    d = { vim.lsp.buf.definition, "go to definition"},
+    D = { vim.lsp.buf.declaration, "go to definition"},
+    h = { vim.lsp.buf.hover, "hover"},
+    r = { vim.lsp.buf.references, "references"},
+    s = { vim.lsp.buf.rename, "rename"},
+}, { mode = "n", prefix = "g" })
 
 wk.register({
     h = { [[<Cmd>Gitsigns select_hunk<cr>]], 'Hunk'},
@@ -33,6 +48,7 @@ wk.register({
     },
     j = {
         name = 'Utils',
+        w = { [[<Cmd>WhichKey<CR>]], 'WhichKey Show All' },
         p = {
             name = 'Packer',
             u    = { [[<Cmd>PackerUpdate<CR>]], 'Update'},
@@ -43,15 +59,10 @@ wk.register({
             name = 'Gutentags',
             g    = { [[:GutentagsUpdate<CR>]], [[Update]] }
         },
-        f = {
-            name = 'Format',
-            a    = { [[:EasyAlign<CR>]], "EasyAlign" },
-            j    = { [[:lua require("revj").format_line()<CR>]], [[RevJ]] }
-        },
         u = {
             name = 'UltiSnips',
             s    = { [[:UltiSnipsEdit<CR>]], [[Edit]]}
-        }
+        },
     },
     i = {
         name = 'Git',
@@ -94,15 +105,48 @@ wk.register({
         name = 'Edit/Sub',
         e    = { [[:s###c<Left><Left><Left>]], [[Substitute]], silent = false }
     },
-    j = {
-        name = 'Utils',
-        f = {
-            name = 'Format',
-            a    = { [[:EasyAlign<CR>]], "EasyAlign" },
-            j    = { [[:lua require("revj").format_visual()<CR>]], [[RevJ]] } 
-        }
+    f = {
+        name  = 'Format',
+        a     = { [[:EasyAlign<CR>]], "EasyAlign" },
+        ['='] = { [[:EasyAlign1=<CR>]], "EasyAlign" },
+        j     = { [[:lua require("revj").format_line()<CR>]], [[RevJ]] }
     }
 },  { mode = "v", prefix = "<leader>" })
+
+wk.register({
+    f = {
+        name = 'Format',
+        a = { [[:EasyAlign<CR>]], "EasyAlign" },
+        j = { [[:lua require("revj").format_line()<CR>]], [[RevJ]] }
+    },
+},  { mode = "v", prefix = "<leader>" })
+
+
+wk.register( {
+    ['<C-Space>'] = { function() vim.cmd([[wincmd p]]) end,  [[Go to previous window]] },
+},  { mode = "t" })
+
+wk.register( {
+    ['<C-Space>'] = { function()
+            vim.cmd([[wincmd p]])
+
+            if vim.bo.buftype == 'terminal' then
+                vim.cmd([[startinsert]])
+            end
+        end,  [[Go to previous window]] },
+},  { mode = "n" })
+
+wk.register( {
+    ['<C-Space>'] = { function()
+            vim.cmd([[wincmd p]])
+
+            if vim.bo.buftype == 'terminal' then
+                vim.cmd([[stopinsert]])
+                vim.cmd([[normal i]])
+            end
+        end,  [[Go to previous window]]
+    },
+},  { mode = "i" })
 
 wk.register( {
     c = {

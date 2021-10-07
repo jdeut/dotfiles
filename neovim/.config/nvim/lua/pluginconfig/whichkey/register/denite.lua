@@ -36,6 +36,21 @@ wk.register({
         m = { [[<Cmd>Denite -winwidth=50 -quick-move=immediately]] ..
               [[ menu:custom<cr>]], [[Menu]] },
 
+        ['8'] = { function()
+                local m = require'fzf-lua.path'
+                local path = vim.fn.expand('%:p:h')
+                local cwd = m.git_root(path, 0)
+
+                if not cwd then
+                    cwd = path
+                end
+
+                require "fzf-lua".grep_cword({
+                    cwd = cwd
+                })
+            end, [[Grep Ftype]]
+        },
+
         ['/'] = { function()
                 local m = require'fzf-lua.path'
                 local path = vim.fn.expand('%:p:h')
@@ -51,35 +66,58 @@ wk.register({
             end, [[Grep Ftype]]
         },
 
-        h = { function() 
-                win_width_abs = 120 
-                win_width = win_width_abs / vim.o.columns
-                preview_width_abs = 80
-                preview_width = math.floor(preview_width_abs / win_width_abs * 100)
+        ['?'] = { function()
+                require'fzf-lua'.grep({
+                    continue_last_search = true
+                })
+            end, [[Grep Ftype]]
+        },
 
-                require'fzf-lua'.help_tags({
-                        winopts = {
-                        win_width = win_width,
-                        win_border = nil
+        ['/'] = { function()
+                local m = require'fzf-lua.path'
+                local path = vim.fn.expand('%:p:h')
+                local cwd = m.git_root(path, 0)
+
+                if not cwd then
+                    cwd = path
+                end
+
+                require "fzf-lua".grep({
+                    cwd = cwd
+                })
+            end, [[Grep Ftype]]
+        },
+
+        f = { function()
+                require'fzf-lua'.buffers({
+                    winopts = {
+                        win_width = '0.4',
                     },
-                    preview_horizontal = 'right:' .. preview_width .. '%'
+                    preview_horizontal = 'right:40%',
+                    ignore_current_buffer = true
                 }) 
             end, 
             [[Help]] 
+        },
+
+        h = { require'fzf-lua'.help_tags, [[Help]] },
+        a = { function()
+                require'pluginconfig.fzf-lua'.custom.git_files{
+                    preview_opt = 'hidden'
+                }
+            end, [[Git Files]]
+        },
+        n = { function() 
+                require'fzf-lua'.oldfiles{ 
+                    preview_opts = 'hidden'
+                } 
+            end, [[Oldfiles]] 
         },
         -- a = { [[<Cmd>DeniteProjectDir -split=tab -buffer-name=files -statusline]] ..
         --       [[ -filter-split-direction=botright -winheight=160]] ..
         --       [[ -matchers=matcher/ignore_current_buffer,]] ..
         --       [[matcher/fruzzy,matcher/ignore_globs]] ..
         --       [[ file/rec/git/tracked<CR>]], [[Project Dir]] },
-
-        a = { function() require'pluginconfig.fzf-lua'.custom.git_files() end, 
-            [[Git Files]] 
-        },
-        n = { function() require'fzf-lua'.oldfiles() end, 
-            [[Oldfiles]] 
-        },
-
         [","] = { [[<Cmd>Denite -resume -cursor-pos=+1 -immediately<CR>]],
                   [[Cursor Down]] },
         ["."] = { [[<Cmd>Denite -resume -cursor-pos=-1 -immediately<CR>]],
