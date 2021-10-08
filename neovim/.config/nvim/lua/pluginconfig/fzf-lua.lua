@@ -79,7 +79,7 @@ end
 
 require'fzf-lua'.setup({
     fzf_args       = '--color=dark,preview-fg:#00ff00',
-    preview_border = 'noborder',
+    preview_border = 'border',
     winopts_raw    = floatArgs,
     git_icons      = true,           -- show git icons?
     file_icons     = true,           -- show file icons?
@@ -98,34 +98,36 @@ require'fzf-lua'.setup({
         }
     },
     winopts = {
-        win_border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-        hl_border  = 'Folded'
+        win_border = false
     },
     git = {
         files = {
-            prompt             = 'GitFiles❯ ',
-            preview_horizontal = 'right:0%',
-            preview_vertical   = 'down:0%',
+            prompt       = 'GitFiles❯ ',
+            preview_opts = 'hidden'
          }
     },
+    buffers = {
+        previewer = 'bat',
+        preview_layout = 'vertical',
+        preview_vertical = 'down:28%',
+        ignore_current_buffer = true,
+        no_term_buffers = false
+    },
     grep = {
-       prompt             = 'Ag❯ ',
-       input_prompt       = 'Grep For❯ ',
-       cmd                = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
-       git_icons          = true,           -- show git icons?
-       file_icons         = true,           -- show file icons?
-       color_icons        = true,           -- colorize file|git icons
-       no_esc             = 2,
-       preview_horizontal = 'right:0%',
-       preview_vertical   = 'down:10%',
+       prompt       = 'Ag❯ ',
+       input_prompt = 'Grep For❯ ',
+       cmd          = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
+       git_icons    = true,           -- show git icons?
+       file_icons   = true,           -- show file icons?
+       color_icons  = true,           -- colorize file|git icons
+       no_esc       = 2,
+       preview_opts = 'hidden',
        actions = {
            ['ctrl-q']  = actions.file_sel_to_qf,
        },
     },
     oldfiles = {
-        preview_horizontal = 'right:0%',
-        preview_vertical   = 'down:0%',
-        cwd                = vim.env.HOME
+        cwd = vim.env.HOME
     }
 })
 
