@@ -88,16 +88,13 @@ wk.register({
             end, [[Grep Ftype]]
         },
 
-        f = { function()
+        f = { require'fzf-lua'.buffers,  [[Buffers]] },
+        ['<C-f>'] = { function()
                 require'fzf-lua'.buffers({
-                    winopts = {
-                        win_width = '0.4',
-                    },
-                    preview_horizontal = 'right:40%',
-                    ignore_current_buffer = true
-                }) 
-            end, 
-            [[Help]] 
+                    cwd_only = true
+                })
+            end,
+            [[Buffers (Cwd Only)]]
         },
 
         h = { require'fzf-lua'.help_tags, [[Help]] },
