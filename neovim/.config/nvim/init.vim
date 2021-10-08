@@ -47,10 +47,11 @@ set nosplitright
 "splitted window will be shown below current one
 set splitbelow
 set foldenable
+"close folds also if it's just one screenline
+" set foldminlines=0
+set foldminlines=2
 set foldmarker=❰❰❰,❱❱❱
 set foldmethod=marker
-"close folds also if it's just one screenline
-set foldminlines=0
 "set foldtext=MyFoldText()
 "hide buffer instead of closing it
 "execute au's like BufRead only once per opened file
@@ -102,7 +103,6 @@ set scrolloff=2
 "show line number relative to the line with the cursor
 set norelativenumber
 set nonumber
-set synmaxcol=200
 "make sure that the statusline is always visible
 set laststatus=2
 "customize statusline
@@ -143,7 +143,7 @@ set switchbuf=useopen,vsplit
 set display=lastline
 "time in ms that is waited for a key sequence to complete
 set timeout
-set timeoutlen=500
+set timeoutlen=1000
 "apply to key codes
 set ttimeoutlen=1
 "set persistent undo
@@ -284,6 +284,7 @@ augroup MY__
     au TermOpen * setlocal winhighlight=Normal:Floaterm
     au TermOpen * setlocal scl=no
     au TermOpen * setlocal nonumber
+    au TermOpen * setlocal nospell
     "au TermOpen * noremap <buffer> <ScrollWheelUp>     <C-b>
     "au TermOpen * noremap <buffer> <2-ScrollWheelUp>   <C-b>
     "au TermOpen * noremap <buffer> <3-ScrollWheelUp>   <C-b>
