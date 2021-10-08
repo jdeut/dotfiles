@@ -149,6 +149,7 @@ local p = function()
                 numhl              = true,
                 linehl             = false,
                 current_line_blame = true,
+                keymaps = {},
                 current_line_blame_opts = {
                     virt_text_pos = 'eol'
                 },
