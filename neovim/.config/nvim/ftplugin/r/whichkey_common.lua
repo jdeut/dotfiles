@@ -2,12 +2,18 @@
 -- "au FileType rnoweb exe "normal ßrf\<CR>"
 
 require('which-key').register({
-    h = {[[<Plug>RHelp]], 'RHelp'},
+    h = {
+        function()
+            vim.cmd([[Rhelp ]] .. vim.fn.expand('<cword>'))
+        end,
+        'RHelp'
+    },
     m = {[[<Cmd>RStop<CR>]], 'Rstop'},
     r = {
         name = 'Nvim-R',
         f = {[[<Plug>RStart]], 'Rstart'},
-        q = {[[<Plug>RClose]], 'Rclose'}
+        q = {[[<Plug>RClose]], 'Rclose'},
+        o = { vim.fn.RObjBrowser, 'Object Browser'}
     },
     a = {
         name = '',

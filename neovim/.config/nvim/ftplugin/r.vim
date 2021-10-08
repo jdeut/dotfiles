@@ -28,7 +28,7 @@ endfunction
 
 let R_auto_start       = 2
 let R_debug            = 0
-let R_hl_term          = 1
+let R_hl_term          = 0
 let R_rconsole_width   = 57
 let R_min_editor_width = 18
 let R_texerr           = 1
@@ -58,7 +58,7 @@ let R_tmpdir           = '/tmp/R_tmp_dir'
 let R_compldir         = '~/.cache/Nvim-R/Compl/'
 let R_buffer_opts      = 'winfixwidth nobuflisted winwidth=10'
 let R_cite_pattern     = '\\\(parencite\|textcite\|textcites\)\S*{'
-let R_user_maps_only   = 1
+let R_user_maps_only   = 0
 "let R_nvimcom_home    = '~/.cache/Nvim-R/Nvimcom'
 "let R_args_in_stline = 1
 "let R_after_start = ['! tmux move-pane -b -s Primary:1.1 -t Secondary:1']
@@ -82,4 +82,56 @@ let R_disable_cmds = [
 \   'RMakeWord',
 \   'RMakeODT',
 \   'RSendLine',
+\   'RDSendLine',
+\   'RSendLAndOpenNewOne',
+\   'RNLeftPart',
+\   'RNRightPart',
+\   'RILeftPart',
+\   'RIRightPart',
+\   'RDSendLineAndInsertOutput',
+\   'RHelp',
+\   'RStart',
+\   'RAction',
+\   'RSpinFile',
+\   'RCustomStart', 
+\   'RCustomStart', 
+\   'RSimpleComment',
+\   'RSimpleUnComment',
+\   'RToggleComment',
+\   'RRightComment',
+\   'RViewDF',
+\   'RViewDFs',
+\   'RViewDFv',
+\   'RViewDFa',
+\   'RIndent',
+\   'RUndebug',
+\   'RDebug',
+\   'RSendMBlock',
+\   'RESendMBlock',
+\   'RDSendMBlock',
+\   'REDSendMBlock',
+\   'RMakeHTML',
+\   'RMakePDF',
+\   'RMakePDFK',
+\   'RMakePDFKb',
+\   'RMakeODT',
+\   'RMakeWord',
+\   'RMakeRmd',
+\   'RMakeAll',
+\   'RUpdateObjBrowser',
+\   'RPlot',
+\   'RSPlot',
+\   'RDputObj',
+\   'RSummary',
+\   'RDSendLineAndInsertOutput',
+\   'RSendFunction',
+\   'RESendFunction',
+\   'RDSendFunction',
+\   'REDSendFunction',
+\   'RSendParagraph',
+\   'RESendParagraph',
+\   'RDSendParagraph',
+\   'REDSendParagraph'
 \ ]
+" \   'RListSpace',
+" \   'RSetwd',
