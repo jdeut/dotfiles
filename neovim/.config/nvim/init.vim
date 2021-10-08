@@ -152,6 +152,7 @@ set undofile
 "change directory to current buffer
 "set autochdir
 set spelllang=de_20
+set guicursor=n:block-blinkon50-Cursor,i-c:ver25-blinkon50-Cursori,v:hor100-blinkon50-Cursori
 "══════════════════════════════════════════════════
 " Gui Options
 "══════════════════════════════════════════════════
