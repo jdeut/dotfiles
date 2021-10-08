@@ -38,6 +38,9 @@ local syntax = {
     IndentBlankline  = { fg = '#f740a4' },
 
     WhichKeyFloat    = { bg = '#bafeba'},
+    WhichKeyGroup    = { fg = '#000000'},
+    WhichKeyValue    = { fg = '#f00000'},
+    WhichKeySeparator = { fg = '#858585'},
 
     WildMenu         = { bg = 'none', fg = '#00ff00', style = 'italic' },
 
@@ -47,9 +50,10 @@ local syntax = {
 
     FloatBorder      = { bg = 'None', fg = 'red' },
 
-    HopNextKey       = { bg = 'none', fg = '#ff4722', style = 'italic' },
-    HopNextKey1      = { bg = 'none', fg = '#00ff00', style = 'italic' },
-    HopNextKey2      = { bg = 'none', fg = '#ff4722', style = 'italic' },
+    HopNextKey       = { bg = '#a4ffa4', fg = '#ff00ff', style = 'bold' },
+    HopNextKey2      = { bg = '#a4ffa4', fg = '#ff0012', style = 'bold' },
+    HopNextKey1      = { bg = '#a4ffa4', fg = '#ff0012', style = 'bold' },
+    HopUnmatched     = { fg = '#ffdfbf' },
 
     ColorColumn      = { bg = '#e9e9e9', fg = 'NONE', style = 'bold' },
 
@@ -71,9 +75,13 @@ local syntax = {
     SpellRare02      = { bg = '#402526', style = 'undercurl', sp = '#3a6a30' },
     SpellRare03      = { bg = '#292426', style = 'undercurl', sp = '#2a5a30' },
 
-    Search           = { fg = 'NONE', bg = '#f0f08a', style = 'bold',  },
+    Search           = { fg = 'NONE', bg = '#f0f08a', style = 'italic' },
+    IncSearch        = { fg = 'NONE', bg = '#ff4f4a', style = 'bold'  },
 
     Whitespace       = { fg = '#353522' },
+
+    Cursor           = { fg = 'NONE', bg = '#12df12', style = 'bold'},
+    Cursori          = { fg = 'NONE', bg = '#000000' },
 
     DeniteCursorLine = { bg = '#483232' },
     DenitePathHead   = { fg = '#3233ff' },
