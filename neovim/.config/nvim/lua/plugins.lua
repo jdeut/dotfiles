@@ -312,7 +312,7 @@ local p = function()
     use { 'phaazon/hop.nvim',
         config = function()
            require'hop'.setup { 
-              keys          = 'asdfjkl;qwnm<',
+              keys          = 'asdfjkl;en',
               term_seq_bias = 0.5
            }
         end
