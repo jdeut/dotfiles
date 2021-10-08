@@ -20,16 +20,16 @@
 "══════════════════════════════════════════════════
 " Look_and_Feel => <Leader>d* 
 
-nnoremap <silent> <leader>dfc
-\   :let &l:foldopen = (&l:foldclose == 'all') ? '' : 'all' <bar>
-\   :let &l:foldclose = (&l:foldclose == 'all') ? '' : 'all' <bar>
-\   if &l:foldclose == 'all' <bar> execute "normal zM" <bar>
-\   else <bar> execute "normal zR" <bar> endif <cr>
-
-nnoremap <silent> <leader>dfo
-\   :let &l:foldopen = (&l:foldopen == 'all') ? '' : 'all' <bar>
-\   if &l:foldopen == '' <bar> execute "normal zM" <bar>
-\   endif <bar> set foldopen? <cr>
+" nnoremap <silent> <leader>dfc
+" \   :let &l:foldopen = (&l:foldclose == 'all') ? '' : 'all' <bar>
+" \   :let &l:foldclose = (&l:foldclose == 'all') ? '' : 'all' <bar>
+" \   if &l:foldclose == 'all' <bar> execute "normal zM" <bar>
+" \   else <bar> execute "normal zR" <bar> endif <cr>
+"
+" nnoremap <silent> <leader>dfo
+" \   :let &l:foldopen = (&l:foldopen == 'all') ? '' : 'all' <bar>
+" \   if &l:foldopen == '' <bar> execute "normal zM" <bar>
+" \   endif <bar> set foldopen? <cr>
 
 "══════════════════════════════════════════════════
 " Favorites 
@@ -51,7 +51,7 @@ tnoremap <2-ScrollWheelDown> <C-\><C-n><C-f>
 tnoremap <3-ScrollWheelDown> <C-\><C-n><C-f>
 tnoremap <4-ScrollWheelDown> <C-\><C-n><C-f>
 
-tnoremap <C-v> <C-\><C-n>"+pi
+" tnoremap <C-v> <C-\><C-n>"+pi
 
 "inoremap <expr> <Tab>
 "\   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -95,7 +95,7 @@ noremap 'i I
 noremap 'o O
 noremap 'g G
 
-noremap <Space> :
+" noremap <Space> :
 noremap! <C-k> <Left>
 noremap! <C-l> <Right>
 
