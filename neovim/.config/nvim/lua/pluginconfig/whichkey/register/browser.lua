@@ -25,7 +25,7 @@ local v_openbrowser = function(s) return {
 
 wk.register({
     o = {
-        name = 'Search <cword>',
+        name = 'Browser Search',
         g = n_openbrowser_cword('google'),
         b = n_openbrowser_cword('googlebooks'),
         s = n_openbrowser_cword('googlescholar'),
@@ -45,7 +45,7 @@ wk.register({
 
 wk.register({
     o = {
-        name = 'Browse',
+        name = 'Browser Search',
         g = v_openbrowser_cword('google'),
         b = v_openbrowser_cword('googlebooks'),
         s = v_openbrowser_cword('googlescholar'),

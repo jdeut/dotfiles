@@ -116,10 +116,9 @@ wk.register({
 wk.register({
     f = {
         name = 'Format',
-        a = { [[:EasyAlign<CR>]], "EasyAlign" },
-        j = { [[:lua require("revj").format_line()<CR>]], [[RevJ]] }
+        j    = { [[:lua require("revj").format_line()<CR>]], [[RevJ]] }
     },
-},  { mode = "v", prefix = "<leader>" })
+},  { mode = "n", prefix = "<leader>" })
 
 
 wk.register( {
