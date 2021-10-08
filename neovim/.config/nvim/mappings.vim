@@ -138,96 +138,95 @@ noremap N Nzvzz
 "══════════════════════════════════════════════════
 " Terminal / Floaterm => <Leader>t* 
 
-nnoremap <silent> <leader>fnj
-\   <Cmd>FloatermNew --position=auto --width=80 --height=20<CR>
+" nnoremap <silent> <leader>fnj
+" \   <Cmd>FloatermNew --width=81 --height=20<CR>
+"
+" nnoremap <silent> <leader>fnk
+" \   <Cmd>FloatermNew --width=80 --height=0.8<CR>
 
-nnoremap <silent> <leader>fnk
-\   <Cmd>FloatermNew --width=80 --height=0.8<CR>
-
-nnoremap <silent> <leader>fL
-\   <Cmd>FloatermUpdate --position=bottomright<CR>
-tnoremap <silent> <leader>fL
-\   <Cmd>FloatermUpdate --position=bottomright<CR>
-nnoremap <silent> <leader>fK
-\   <Cmd>FloatermUpdate --position=top<CR>
-tnoremap <silent> <leader>fK
-\   <Cmd>FloatermUpdate --position=top<CR>
-nnoremap <silent> <leader>fJ
-\   <Cmd>FloatermUpdate --position=bottom<CR>
-tnoremap <silent> <leader>fJ
-\   <Cmd>FloatermUpdate --position=bottom<CR>
-nnoremap <silent> <leader>fH
-\   <Cmd>FloatermUpdate --position=bottomleft<CR>
-tnoremap <silent> <leader>fH
-\   <Cmd>FloatermUpdate --position=bottomleft<CR>
-nnoremap <silent> <leader>fa
-\   <Cmd>FloatermUpdate --position=auto<CR>
-tnoremap <silent> <leader>fa
-\   <Cmd>FloatermUpdate --position=auto<CR>
+" nnoremap <silent> <leader>fL
+" \   <Cmd>FloatermUpdate --position=bottomright<CR>
+" tnoremap <silent> <leader>fL
+" \   <Cmd>FloatermUpdate --position=bottomright<CR>
+" nnoremap <silent> <leader>fK
+" \   <Cmd>FloatermUpdate --position=top<CR>
+" tnoremap <silent> <leader>fK
+" \   <Cmd>FloatermUpdate --position=top<CR>
+" nnoremap <silent> <leader>fJ
+" \   <Cmd>FloatermUpdate --position=bottom<CR>
+" tnoremap <silent> <leader>fJ
+" \   <Cmd>FloatermUpdate --position=bottom<CR>
+" nnoremap <silent> <leader>fH
+" \   <Cmd>FloatermUpdate --position=bottomleft<CR>
+" tnoremap <silent> <leader>fH
+" \   <Cmd>FloatermUpdate --position=bottomleft<CR>
+" nnoremap <silent> <leader>fa
+" \   <Cmd>FloatermUpdate --position=auto<CR>
+" tnoremap <silent> <leader>fa
+" \   <Cmd>FloatermUpdate --position=auto<CR>
 "<C-\><C-N> can be used to got to normal mode. Additionally <C-\><C-N> closes
 "the command line window and switch to normal mode
 "tnoremap <Esc> <C-\><C-n>
+
 tnoremap <leader><Esc> <C-\><C-n>
-
-
 tnoremap <C-ESC> <C-w><C-c>
 
-nnoremap <silent> <leader>f+
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . floaterm#config#get(bufnr(), "width") .
-\   " --height="
-\   . (floaterm#config#get(bufnr(), "height")+4)<CR>
-
-tnoremap <silent> <leader>f+
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . floaterm#config#get(bufnr(), "width") .
-\   " --height="
-\   . (floaterm#config#get(bufnr(), "height")+4)<CR>
-
-nnoremap <silent> <leader>f/
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . floaterm#config#get(bufnr(), "width") .
-\   " --height="
-\   . (floaterm#config#get(bufnr(), "height")-4)<CR>
-
-tnoremap <silent> <leader>f/
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . floaterm#config#get(bufnr(), "width") .
-\   " --height="
-\   . (floaterm#config#get(bufnr(), "height")-4)<CR>
-
-nnoremap <silent> <leader>f<
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . (floaterm#config#get(bufnr(), "width") - 4).
-\   " --height="
-\   . floaterm#config#get(bufnr(), "height")<CR>
-tnoremap <silent> <leader>f<
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . (floaterm#config#get(bufnr(), "width") - 4).
-\   " --height="
-\   . floaterm#config#get(bufnr(), "height")<CR>
-
-nnoremap <silent> <leader>f>
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . (floaterm#config#get(bufnr(), "width") + 4).
-\   " --height="
-\   . floaterm#config#get(bufnr(), "height")<CR>
-tnoremap <silent> <leader>f>
-\   <Cmd>execute "FloatermUpdate".
-\   " --width="
-\   . (floaterm#config#get(bufnr(), "width") + 4).
-\   " --height="
-\   . floaterm#config#get(bufnr(), "height")<CR>
-
-nnoremap <silent> <leader>fi
-\   <Cmd>lua require("Fn/floaterm-toggle-size").toggle()<cr>
-tnoremap <silent> <leader>fi
-\   <Cmd>lua require("Fn/floaterm-toggle-size").toggle()<cr>
-
+" nnoremap <silent> <leader>f+
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . floaterm#config#get(bufnr(), "width") .
+" \   " --height="
+" \   . (floaterm#config#get(bufnr(), "height")+4)<CR>
+"
+" tnoremap <silent> <leader>f+
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . floaterm#config#get(bufnr(), "width") .
+" \   " --height="
+" \   . (floaterm#config#get(bufnr(), "height")+4)<CR>
+"
+" nnoremap <silent> <leader>f/
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . floaterm#config#get(bufnr(), "width") .
+" \   " --height="
+" \   . (floaterm#config#get(bufnr(), "height")-4)<CR>
+"
+" tnoremap <silent> <leader>f/
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . floaterm#config#get(bufnr(), "width") .
+" \   " --height="
+" \   . (floaterm#config#get(bufnr(), "height")-4)<CR>
+"
+" nnoremap <silent> <leader>f<
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . (floaterm#config#get(bufnr(), "width") - 4).
+" \   " --height="
+" \   . floaterm#config#get(bufnr(), "height")<CR>
+" tnoremap <silent> <leader>f<
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . (floaterm#config#get(bufnr(), "width") - 4).
+" \   " --height="
+" \   . floaterm#config#get(bufnr(), "height")<CR>
+"
+" nnoremap <silent> <leader>f>
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . (floaterm#config#get(bufnr(), "width") + 4).
+" \   " --height="
+" \   . floaterm#config#get(bufnr(), "height")<CR>
+" tnoremap <silent> <leader>f>
+" \   <Cmd>execute "FloatermUpdate".
+" \   " --width="
+" \   . (floaterm#config#get(bufnr(), "width") + 4).
+" \   " --height="
+" \   . floaterm#config#get(bufnr(), "height")<CR>
+"
+" nnoremap <silent> <leader>fi
+" \   <Cmd>lua require("Fn/floaterm-toggle-size").toggle()<cr>
+" tnoremap <silent> <leader>fi
+" \   <Cmd>lua require("Fn/floaterm-toggle-size").toggle()<cr>
+"
