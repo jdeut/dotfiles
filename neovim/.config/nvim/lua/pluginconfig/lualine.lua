@@ -7,29 +7,47 @@ local function hide_on_winwidth_cond()
 end
 
 local sections_common = {
-    lualine_c = { [[vim.fn.expand("%")]] },
-    lualine_x = { },
+    lualine_x = {
+        { [[LSP]], cond = function()
+                if #vim.lsp.buf_get_clients() > 0 then return true 
+                else return false end 
+            end
+        },
+    },
     lualine_y = {
-        { [[o:encoding]], cond = hide_on_winwidth_cond }, 
+        { 
+            [["Lsp"]], 
+            cond = function()
+                if #vim.lsp.buf_get_clients() > 0 then return true 
+                else return false end 
+            end,
+            color = {fg = '#00ff00'}
+        },
         { [[bo:filetype]], cond = hide_on_winwidth_cond },
         { [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]], cond = hide_on_winwidth_cond},
         { [[progress]], cond = hide_on_winwidth_cond }
     },
     lualine_z = {{
-       [[location]],
-       cond = hide_on_winwidth_cond
+       [[location]]
     }}
 }
 
 local sections = vim.tbl_deep_extend('error', {
-      lualine_a = {{[[mode]], fmt = function(s) return s:sub(1,1) end }},
-      lualine_b = {{[[branch]], cond = hide_on_winwidth_cond }}
+        lualine_a = {{[[mode]], fmt = function(s) return s:sub(1,1) end }},
+        lualine_c = {
+            [[ vim.fn.expand("%") ]],
+            color = { fg = '#ffffff' }
+        },
+        lualine_b = {{[[branch]], cond = hide_on_winwidth_cond }}
    }, sections_common
 )
 
 local inactive_sections = vim.tbl_deep_extend('keep', {
-      lualine_a = {},
-      lualine_b = {},
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {
+            [[ vim.fn.expand("%") ]]
+        }
    }, sections_common
 )
 
