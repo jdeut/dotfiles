@@ -1,10 +1,21 @@
 # more or less interactive shell configuration
 
 # Antigen setting ❰❰❰
+#
 
-autoload -U compinit colors 
+# set -x
+zmodload zsh/zprof
 
-compinit -d "$HOME/.cache/.zsh/zcompdump"
+autoload -Uz compinit
+autoload -U colors 
+
+# ZVM_INIT_MODE=sourcing
+
+if [[ -n ${HOME}/.cache/.zsh/.zcompdump(#qN.mh+24) ]]; then
+	compinit;
+else
+	compinit -C;
+fi;
 
 ADOTDIR=$HOME/.antigen
 
@@ -14,15 +25,13 @@ source '/usr/share/zsh-antigen/antigen.zsh'
 
 FZF_FINDER_BINDKEY='^F'
 
-antigen bundles <<EOBUNDLES 
-    Aloxaf/fzf-tab
-    zsh-users/zsh-autosuggestions
-    mollifier/cd-gitroot
-    willghatch/zsh-cdr
-    zsh-users/zaw
-    zsh-users/zsh-syntax-highlighting
-    jeffreytse/zsh-vi-mode
-EOBUNDLES
+antigen bundle zsh-users/zaw
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle Aloxaf/fzf-tab
+antigen bundle mollifier/cd-gitroot
+antigen bundle willghatch/zsh-cdr
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle jeffreytse/zsh-vi-mode
 
 #antigen theme michelebologna
 antigen apply
@@ -73,6 +82,7 @@ setopt hist_save_no_dups
 # Key Bindings
 function zvm_after_init() {
     FZF_TMUX=0
+
     source $ZDOTDIR/fzf/fzf.zsh
     # source $ZDOTDIR/fzf/completion.zsh
 
@@ -117,7 +127,61 @@ export LESS=' -R'
 export DESKTOP_SESSION=gnome
 export IDF_PATH=~/iot/esp/esp-idf
 
-eval $($HOME/.local/bin/luarocks --lua-version 5.3 path)
+LUAROCKS=/usr/bin/luarocks
+LUAROCKS_LOCAL=$HOME/.local/bin/luarocks
+
+for i in "5.1" "5.2" "5.3"; do
+
+    if which lua$i >/dev/null 2>&1; then
+
+        if lua$i $LUAROCKS > /dev/null 2>&1 ; then
+            # echo GLOBAL $i
+            LUA_LIBDIR_CPATH=$(lua$i $LUAROCKS config --lua-libdir)/lua
+            LUA_CPATH="$LUA_CPATH;$LUA_LIBDIR_CPATH"
+            #
+            eval "LUA_PATH_${i:s/\./_/}=\"\$LUA_PATH_${i:s/\./_/};$(lua$i $LUAROCKS path --lr-path)\""
+            eval "LUA_CPATH_${i:s/\./_/}=\"\$LUA_CPATH_${i:s/\./_/};$(lua$i $LUAROCKS path --lr-cpath)\""
+        fi
+
+        if [[ -x $LUAROCKS_LOCAL ]] ; then
+            LUA_LIBDIR_CPATH_LOCAL=$($LUAROCKS_LOCAL --lua-version $i config --lua-libdir)/lua
+            LUA_CPATH="$LUA_CPATH;$LUA_LIBDIR_CPATH_LOCA"
+
+            # echo LOCAL $LUA_CPATH
+ 
+            eval "LUA_PATH_${i:s/\./_/}=\"\$LUA_PATH_${i:s/\./_/};$($LUAROCKS_LOCAL --local --lua-version $i path --lr-path)\""
+            eval "LUA_CPATH_${i:s/\./_/}=\"\$LUA_CPATH_${i:s/\./_/};$($LUAROCKS_LOCAL --local --lua-version $i path --lr-cpath)\""
+        fi
+        #
+        # A=$($LUAROCKS --lua-version $i path --lr-path)
+        # B=$($LUAROCKS_LOCAL --lua-version $i path --lr-path)
+        #
+        # echo $i $A
+        # echo $i $B
+        #
+
+        eval "LUA_PATH_${i:s/\./_/}=\"\$LUA_PATH_${i:s/\./_/};./?.lua\""
+        eval "LUA_CPATH_${i:s/\./_/}=\"\$LUA_CPATH_${i:s/\./_/};./?.so\""
+
+        export "LUA_CPATH_${i:s/\./_/}"
+        export "LUA_PATH_${i:s/\./_/}"
+
+
+        # if [[ -d "$LUA_DIR/$i" ]]; then
+        #     echo "_LUA_PATH_OLD=\${LUA_PATH_${i:s/\./_/}:+;\$LUA_PATH_${i:s/\./_/}}"
+        #     eval "_LUA_PATH_OLD=\${LUA_PATH_${i:s/\./_/}:+;\$LUA_PATH_${i:s/\./_/}}"
+        #     LUA_PATH_5_1="$LUA_DIR/$i/?.lua"
+        # fi
+        #
+        # if [[ -d "$LUA_LIBDIR_CPATH/$i" ]]; then
+        #     echo "_LUA_CPATH_OLD=\${LUA_CPATH_${i:s/\./_/}:+;\$LUA_CPATH_${i:s/\./_/}}"
+        #     export "_LUA_CPATH_OLD=\${LUA_CPATH_${i:s/\./_/}:+;\$LUA_CPATH_${i:s/\./_/}}"
+        #     eval "LUA_CPATH_${i:s/\./_/}=\"$LUA_LIBDIR_CPATH/$i/?.so${_LUA_CPATH_OLD}\""
+        # fi
+    fi
+done
+# eval $($LUAROCKS --lua-version 5.3 path --append)
+# LUA_CPATH="$LUA_LIBDIR_CPATH;$LUA_CPATH"
 #export LUA_PATH=";;/usr/share/lua/?/luarocks/;$(lua5.3 /usr/bin/luarocks path --lr-path)"
 #export LUA_CPATH="$(lua5.3 /usr/bin/luarocks path --lr-cpath)"
 #export LUA_CPATH="$(luarocks path --lr-cpath)"
