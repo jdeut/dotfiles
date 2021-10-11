@@ -53,6 +53,25 @@ local p = function()
         end
     }
 
+    use { 'kevinhwang91/rnvimr',
+        config = function()
+            vim.g.rnvimr_enable_ex = 1
+            vim.g.rnvimr_bw_enable = 1
+
+            vim.g.rnvimr_shadow_winblend = 60
+
+            vim.g.rnvimr_layout = {
+                relative = 'editor',
+                width = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.columns)),
+                height = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.lines)),
+                col = vim.fn.float2nr(vim.fn.round(0.05 * vim.o.columns)),
+                row = vim.fn.float2nr(vim.fn.round(0.02 * vim.o.lines)),
+                style = 'minimal' 
+            }
+        end
+    }
+
+    -- branch = 'stable',
     use { 'jalvesaq/Nvim-R',
         alias = 'Nvim-R',
         branch = 'stable',
