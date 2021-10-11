@@ -168,8 +168,6 @@ noremap N Nzvzz
 "the command line window and switch to normal mode
 "tnoremap <Esc> <C-\><C-n>
 
-tnoremap <leader><Esc> <C-\><C-n>
-tnoremap <C-ESC> <C-w><C-c>
 
 " nnoremap <silent> <leader>f+
 " \   <Cmd>execute "FloatermUpdate".
