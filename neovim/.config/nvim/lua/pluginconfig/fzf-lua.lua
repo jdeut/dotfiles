@@ -7,74 +7,75 @@ t.custom = {}
 
 t.custom.git_files = function(opts)
 
-   local merged_opts
-   local default_opts = {
-      prompt             = 'GitFiles❯ ',
-      git_icons          = true,           -- show git icons?
-      file_icons         = true,           -- show file icons?
-      color_icons        = true,           -- colorize file|git icons
-      preview_horizontal = 'right:0%',
-      preview_vertical   = 'down:0%',
-   }
+    local merged_opts
 
-   if not type(opts) == 'table' then
-      merged_opts = default_opts
-   else
-      merged_opts = vim.tbl_deep_extend('force', default_opts, opts or {})
-   end
+    local default_opts = {
+        prompt             = 'GitFiles❯ ',
+        git_icons          = true,           -- show git icons?
+        file_icons         = true,           -- show file icons?
+        color_icons        = true,           -- colorize file|git icons
+        preview_horizontal = 'right:0%',
+        preview_vertical   = 'down:0%',
+    }
 
-   if not merged_opts.cwd then
-      merged_opts.cwd = path.git_root(vim.fn.expand('%:h:.'))
+    if not type(opts) == 'table' then
+        merged_opts = default_opts
+    else
+        merged_opts = vim.tbl_deep_extend('force', default_opts, opts or {})
+    end
 
-      if not merged_opts.cwd then
+    if not merged_opts.cwd then
+        merged_opts.cwd = path.git_root(vim.fn.expand('%:h:.'))
+
+        if not merged_opts.cwd then
          return
-      end
-   end
+        end
+    end
 
-   local exclude = not vim.fn.expand('%:.') == ''
-      and '--exclude "' .. vim.fn.expand('%:.') .. '" '
-      or ''
+    local exclude = not vim.fn.expand('%:.') == ''
+        and '--exclude "' .. vim.fn.expand('%:.') .. '" '
+        or ''
 
-   merged_opts.cmd = table.concat({
-      'fdfind -t f -H ',
-      exclude,
-      '--base-directory "', merged_opts.cwd or vim.env.PWD , '" ',
-      '--exec stat --printf="%Y\t%n\n"',
-      ' | sort -r -k 1 | cut -f 2'
-   })
+    merged_opts.cmd = table.concat({
+        'fdfind -t f -H ',
+        exclude,
+        '--base-directory "', merged_opts.cwd or vim.env.PWD , '" ',
+        '--exec stat --printf="%Y\t%n\n"',
+        ' | sort -r -k 1 | cut -f 2'
+    })
 
-   -- print(vim.inspect(merged_opts))
+    -- print(vim.inspect(merged_opts))
 
-   require'fzf-lua'.files(merged_opts)
+    require'fzf-lua'.files(merged_opts)
 end
 
 local floatArgs = function()
 
-   local columns = vim.o.columns
-   local lines = vim.o.lines
+    local columns = vim.o.columns
+    local lines = vim.o.lines
 
-   local width = math.floor(columns - (columns * 1 / 10))
-   local height = lines - 5
+    local width = math.floor(columns - (columns * 1 / 10))
+    local height = lines - 5
 
-   local row = lines
+    local row = lines
 
-   if columns < 100 then
+    if columns < 100 then
      width = columns -- math.floor(columns - (columns * 1 / 5))
-   end
+    end
 
-   if lines < 30 then
+    if lines < 30 then
       height = lines - 3
-   end
+    end
 
-   return {
-      relative = 'editor',
-      row      = 1,
-      col      = math.floor((columns - width) / 2),
-      width    = width,
-      height   = height,
-      style    = 'minimal',
-      border   = nil
-   }
+    return {
+        relative = 'editor',
+        row      = 1,
+        col      = math.floor((columns - width) / 2),
+        width    = width,
+        height   = height,
+        style    = 'minimal',
+        border   = nil
+    }
 end
 
 require'fzf-lua'.setup({
@@ -104,7 +105,7 @@ require'fzf-lua'.setup({
         files = {
             prompt       = 'GitFiles❯ ',
             preview_opts = 'hidden'
-         }
+        }
     },
     buffers = {
         previewer = 'bat',
@@ -114,17 +115,17 @@ require'fzf-lua'.setup({
         no_term_buffers = false
     },
     grep = {
-       prompt       = 'Ag❯ ',
-       input_prompt = 'Grep For❯ ',
-       cmd          = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
-       git_icons    = true,           -- show git icons?
-       file_icons   = true,           -- show file icons?
-       color_icons  = true,           -- colorize file|git icons
-       no_esc       = 2,
-       preview_opts = 'hidden',
-       actions = {
-           ['ctrl-q']  = actions.file_sel_to_qf,
-       },
+        prompt       = 'Ag❯ ',
+        input_prompt = 'Grep For❯ ',
+        cmd          = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
+        git_icons    = true,           -- show git icons?
+        file_icons   = true,           -- show file icons?
+        color_icons  = true,           -- colorize file|git icons
+        no_esc       = 2,
+        preview_opts = 'hidden',
+        actions = {
+            ['ctrl-q']  = actions.file_sel_to_qf,
+        },
     },
     oldfiles = {
         cwd = vim.env.HOME
