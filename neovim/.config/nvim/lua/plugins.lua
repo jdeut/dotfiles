@@ -17,31 +17,29 @@ local p = function()
     use { 'olimorris/onedark.nvim',
         requires = {'rktjmp/lush.nvim'},
         config = function() 
-            -- print('op')
-            --
+
             vim.cmd( [[
                augroup AuCustomizeColorScheme
                    autocmd!
                    au ColorScheme * lua require('au-hook-colorscheme').hook()
                augroup END
-            ]])
+            ]] )
 
             local onedark = require('onedark')
 
             onedark.setup({
                 theme = 'onelight',
                 colors = {
-                   fg = '#000000', 
-                   bg = '#ffffff',
-                   white = '#ffffff',
-                   yellow = '#bf8200',
-                   -- purple = '#ffffff',
-                   purple = '#9a12cf',
-                   black = '#000000',
-                   gray = '#2c2c2c',
-                   cyan = '#00949e',
-                   green = '#1d9a0d',
-                   red = '#ba3621',
+                   fg      = '#000000',
+                   bg      = '#ffffff',
+                   white   = '#ffffff',
+                   yellow  = '#bf8200',
+                   purple  = '#9a12cf',
+                   black   = '#000000',
+                   gray    = '#2c2c2c',
+                   cyan    = '#00949e',
+                   green   = '#1d9a0d',
+                   red     = '#ba3621',
                    comment = '#797979',
                 }, 
                 styles = {
@@ -62,11 +60,11 @@ local p = function()
 
             vim.g.rnvimr_layout = {
                 relative = 'editor',
-                width = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.columns)),
-                height = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.lines)),
-                col = vim.fn.float2nr(vim.fn.round(0.05 * vim.o.columns)),
-                row = vim.fn.float2nr(vim.fn.round(0.02 * vim.o.lines)),
-                style = 'minimal' 
+                width    = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.columns)),
+                height   = vim.fn.float2nr(vim.fn.round(0.9 * vim.o.lines)),
+                col      = vim.fn.float2nr(vim.fn.round(0.05 * vim.o.columns)),
+                row      = vim.fn.float2nr(vim.fn.round(0.02 * vim.o.lines)),
+                style    = 'minimal'
             }
         end
     }
@@ -146,7 +144,7 @@ local p = function()
         config = function()
             require'clipboard-image'.setup {
                 default = {
-                    img_dir = 'img',
+                    img_dir     = 'img',
                     img_dir_txt = 'img',
                     img_name = function () 
                         return vim.fn.input('Image filename: ')
@@ -301,8 +299,12 @@ local p = function()
            end
 
            autosave.setup( {
-               enabled = true,
-               execution_message = 'AutoSave: ' .. vim.fn.strftime('%H:%M:%S'),
+               enabled                     = true,
+               debounce_delay              = 50,
+               on_off_commands             = true,
+               execution_message           = 'AutoSave: ' .. vim.fn.strftime('%H:%M:%S'),
+               write_all_buffers           = false,
+               clean_command_line_interval = 3000,
                events = {
                    'InsertLeave',
                    'WinLeave',
@@ -312,11 +314,7 @@ local p = function()
                    exists = true,
                    filetype_is_not = { 'gitcommit' },
                    modifiable = true
-               },
-               write_all_buffers = false,
-               on_off_commands = true,
-               clean_command_line_interval = 3000,
-               debounce_delay = 50
+               }
            } )
         end
     }
