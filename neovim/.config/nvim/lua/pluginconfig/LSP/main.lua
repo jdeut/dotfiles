@@ -3,6 +3,18 @@ require'lspinstall'.setup()
 local lua_settings = require('pluginconfig.LSP.lua-settings')
 local servers      = require('lspinstall').installed_servers()
 
+vim.fn.sign_define("DiagnosticSignError",
+    { text = "ᵉ", texthl = "DiagnosticSignError" }
+)
+vim.fn.sign_define("DiagnosticSignWarn",
+    { text = "ʷ", texthl = "DiagnosticSignWarn" }
+)
+vim.fn.sign_define("DiagnosticSignInfo",
+    { text = "ⁱ", texthl = "DiagnosticSignInfo" }
+)
+vim.fn.sign_define("DiagnosticSignHint",
+    { text = "ʰ", texthl = "DiagnosticSignHint" }
+)
 
 local custom_attach = function(_, bufnr)
     local function buf_map(...) 

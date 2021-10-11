@@ -12,6 +12,11 @@ t.get_hl_group_colors = function (hl_gr)
     return tbl_color
 end
 
+local colors = {
+    SignColumn = { bg = '#504945' }
+    -- SignColumn = { bg = '#00ff45' }
+}
+
 
 vim.g.terminal_color_0  = '#2e3436'
 vim.g.terminal_color_1  = '#cc0000'
@@ -55,6 +60,11 @@ local syntax = {
     HopNextKey1      = { bg = '#a4ffa4', fg = '#ff0012', style = 'bold' },
     HopUnmatched     = { fg = '#ffdfbf' },
 
+    -- DiagnosticError = { fg = '#ff00ff' },
+    -- DiagnosticWarn  = { fg = '#ff0012' },
+    -- DiagnosticInfo  = { fg = '#ff0012' },
+    -- DiagnosticHint  = { fg = '#ff0012' },
+
     ColorColumn      = { bg = '#e9e9e9', fg = 'NONE', style = 'bold' },
 
     rainbowcol1      = { fg = '#ff2a2f' },
@@ -87,6 +97,8 @@ local syntax = {
     DenitePathHead   = { fg = '#3233ff' },
     DenitePathTail   = { fg = '#ff7032' },
 
+    SpecialKey       = { fg = '#ff9002' },
+
     PmenuSbar        = { style = 'bold', fg = 'red', bg = 'green' },
 
     rnowebChunk        = { fg = '#c84656' },
@@ -94,27 +106,31 @@ local syntax = {
     rnowebDelimiter    = { fg = vim.g.terminal_color_6 },
     rnowebDelimiterEnd = { fg = vim.g.terminal_color_6, bg = 'NONE', style = 'bold' },
 
-    FloatermBorder   = { bg = 'NONE', fg = '#9696ff', style = 'bold' },
-    Floaterm         = { bg = 'black', fg = '#00ff00' },
-    MYQFNormal       = { fg = '#d8d8d2', bg = '#121212' },
-    MYQFLineNr       = { fg = '#f0f08a', bg = '#674842' },
-    LineNr           = { fg = '#90908a', bg = '#3c3d37', style = 'italic' },
+    FloatermBorder = { bg = 'NONE', fg = '#9696ff', style = 'bold' },
+    Floaterm       = { bg = 'black', fg = '#00ff00' },
+    Ranger         = { bg = 'black', fg = '#ffffff' },
+    RnvimrNormal   = { bg = 'black', fg = '#ffffff' },
+    RnvimrCurses   = { bg = 'black', fg = '#dcdcdc' },
+    MYQFNormal     = { fg = '#d8d8d2', bg = '#121212' },
+    MYQFLineNr     = { fg = '#f0f08a', bg = '#674842' },
+    LineNr         = { fg = '#90908a', bg = '#3c3d37', style = 'italic' },
 
-    LspDiagnosticsSignError       = { fg = '#ff7780', bg = '#504945', style = 'bold' },
-    LspDiagnosticsSignWarning     = { fg = '#ff7780', bg = '#504945', style = 'bold' },
-    LspDiagnosticsSignInformation = { fg = '#ff7780', bg = '#504945', style = 'bold' },
-    LspDiagnosticsSignHint        = { fg = '#ff7780', bg = '#504945', style = 'bold' },
+    SignColumn               = { fg = 'NONE', bg = colors.SignColumn.bg },
 
-    SignColumn                    = { fg = 'NONE', bg = '#504945' },
+    DiagnosticSignError      = { fg = '#ff0000', bg = colors.SignColumn.bg },
+    DiagnosticSignWarn       = { fg = '#ffaa12', bg = colors.SignColumn.bg },
+    DiagnosticSignInfo       = { fg = '#1383ff', bg = colors.SignColumn.bg },
+    DiagnosticSignHint       = { fg = '#1383ff', bg = colors.SignColumn.bg },
 
-    GitSignsAdd                   = { fg = '#00ff00', bg = '#504945', style = 'bold' },
-    GitSignsDelete                = { fg = '#ee1022', bg = '#504945', style = 'bold' },
-    GitSignsChange                = { fg = '#ffff00', bg = '#504945', style = 'bold' },
-    GitSignsCurrentLineBlame      = { fg = '#504945', style = 'italic' },
+    GitSignsAdd              = { fg = '#00ff00', style = 'bold', bg = colors.SignColumn.bg },
+    GitSignsDelete           = { fg = '#ee1022', style = 'bold', bg = colors.SignColumn.bg },
+    GitSignsChange           = { fg = '#ffff00', style = 'bold', bg = colors.SignColumn.bg },
 
-    GitSignsAddLn                 = { fg = 'NONE', bg = '#acffac' },
-    GitSignsChangeLn              = { fg = 'NONE', bg = '#ffff8c' },
-    GitSignsDeleteLn              = { fg = 'NONE', bg = '#ffdfdf' }
+    GitSignsCurrentLineBlame = { fg = '#504945', style = 'italic', bg = 'NONE' },
+
+    GitSignsAddLn            = { fg = 'NONE', bg = '#acffac' },
+    GitSignsChangeLn         = { fg = 'NONE', bg = '#ffff8c' },
+    GitSignsDeleteLn         = { fg = 'NONE', bg = '#ffdfdf' }
 }
 
 local function highlight(group, color)
