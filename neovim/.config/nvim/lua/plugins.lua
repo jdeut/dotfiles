@@ -74,7 +74,6 @@ local p = function()
     -- branch = 'stable',
     use { 'jalvesaq/Nvim-R',
         alias = 'Nvim-R',
-        branch = 'stable',
         config = function() 
             -- print('op')
         end,
