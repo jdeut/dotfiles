@@ -17,6 +17,8 @@ local p = function()
     use { 'olimorris/onedark.nvim',
         requires = {'rktjmp/lush.nvim'},
         config = function() 
+            local colors  = require('au-hook-colorscheme').onedark_colors
+            local onedark = require('onedark')
 
             vim.cmd( [[
                augroup AuCustomizeColorScheme
@@ -25,23 +27,9 @@ local p = function()
                augroup END
             ]] )
 
-            local onedark = require('onedark')
-
             onedark.setup({
                 theme = 'onelight',
-                colors = {
-                   fg      = '#000000',
-                   bg      = '#ffffff',
-                   white   = '#ffffff',
-                   yellow  = '#bf8200',
-                   purple  = '#9a12cf',
-                   black   = '#000000',
-                   gray    = '#2c2c2c',
-                   cyan    = '#00949e',
-                   green   = '#1d9a0d',
-                   red     = '#ba3621',
-                   comment = '#797979',
-                }, 
+                colors = colors, 
                 styles = {
                    comments = 'italic',
                    keywords = 'bold'

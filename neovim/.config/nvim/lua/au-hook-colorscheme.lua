@@ -1,5 +1,7 @@
 local t = {}
 
+local tbind = vim.fn.extend
+
 t.get_hl_group_colors = function (hl_gr) 
     local tbl_color = {}
 
@@ -12,11 +14,35 @@ t.get_hl_group_colors = function (hl_gr)
     return tbl_color
 end
 
-local colors = {
-    SignColumn = { bg = '#504945' }
-    -- SignColumn = { bg = '#00ff45' }
+t.onedark_colors = {
+    fg      = '#111111',
+    bg      = '#ffffff',
+    white   = '#ffffff',
+    yellow  = '#ff8000',
+    purple  = '#9a12cf',
+    black   = '#000000',
+    gray    = '#2c2c2c',
+    cyan    = '#00949e',
+    green   = '#1d9a0d',
+    red     = '#bb1611',
+    comment = '#797979'
 }
 
+t.colors = tbind(
+    t.onedark_colors,
+    {
+        darkyellow  = '#ff3200',
+        lightyellow = '#ffffaa',
+        lightred    = '#ffc5c5',
+        lightgreen  = '#b4ffb4',
+        lightgreen2 = '#d4ffd4',
+        lightgray   = '#f3f4f2'
+    }
+)
+
+local histyle = {
+    SignColumn = { bg = t.colors.gray }
+}
 
 vim.g.terminal_color_0  = '#2e3436'
 vim.g.terminal_color_1  = '#cc0000'
@@ -36,101 +62,100 @@ vim.g.terminal_color_14 = '#00f5e9'
 vim.g.terminal_color_15 = '#eeeeec'
 
 local syntax = {
-    Folded           = { fg = '#000000', bg = '#bfbfbf', style = 'italic' },
-    FoldColumn       = { fg = 'red', bg = 'blue', style = 'bold' },
-    VertSplit        = { bg = '#a7a7a7', fg = '#b000a0', style = 'bold' },
+    Folded           = { fg = t.colors.black, bg = '#bfbfbf', style = 'italic' },
+    FoldColumn       = { fg = t.colors.red, bg = 'blue', style = 'bold' },
+    VertSplit        = tbind({ fg = t.colors.black, style = 'bold' }, histyle.SignColumn),
 
-    IndentBlankline  = { fg = '#f740a4' },
+    IndentBlankline  = { fg = t.colors.purple },
 
-    WhichKeyFloat    = { bg = '#bafeba'},
-    WhichKeyGroup    = { fg = '#000000'},
-    WhichKeyValue    = { fg = '#f00000'},
-    WhichKeySeparator = { fg = '#858585'},
+    WhichKeyFloat     = { bg = t.colors.lightgreen },
+    WhichKeyGroup     = { fg = t.colors.black },
+    WhichKeyValue     = { fg = t.colors.red },
+    WhichKeySeparator = { fg = t.colors.comment },
 
-    WildMenu         = { bg = 'none', fg = '#00ff00', style = 'italic' },
+    FloatBorder = { fg = t.colors.red, bg = t.colors.lightgreen },
 
-    RegTitle         = { fg = '#00ff00', style = 'italic' },
-    RegName          = { fg = '#00ff00', style = 'italic' },
-    RegPrefix        = { fg = '#00ff00', style = 'italic' },
+    WildMenu    = { fg = t.colors.green, style = 'italic' },
 
-    FloatBorder      = { bg = 'None', fg = 'red' },
+    RegTitle  = { fg = t.colors.green, style = 'italic' },
+    RegName   = { fg = t.colors.green, style = 'italic' },
+    RegPrefix = { fg = t.colors.green, style = 'italic' },
 
-    HopNextKey       = { bg = '#a4ffa4', fg = '#ff00ff', style = 'bold' },
-    HopNextKey2      = { bg = '#a4ffa4', fg = '#ff0012', style = 'bold' },
-    HopNextKey1      = { bg = '#a4ffa4', fg = '#ff0012', style = 'bold' },
-    HopUnmatched     = { fg = '#ffdfbf' },
+    HopNextKey   = { bg = t.colors.lightyellow, fg = t.colors.black, style = 'bold' },
+    HopNextKey1  = { bg = t.colors.lightgreen, fg = t.colors.red, style = 'bold' },
+    HopNextKey2  = { bg = t.colors.lightglightgreen2, fg = t.colors.red },
+    HopUnmatched = { fg = t.colors.comment },
 
     -- DiagnosticError = { fg = '#ff00ff' },
     -- DiagnosticWarn  = { fg = '#ff0012' },
     -- DiagnosticInfo  = { fg = '#ff0012' },
     -- DiagnosticHint  = { fg = '#ff0012' },
 
-    ColorColumn      = { bg = '#e9e9e9', fg = 'NONE', style = 'bold' },
+    ColorColumn = { bg = t.colors.lightgray },
 
-    rainbowcol1      = { fg = '#ff2a2f' },
-    rainbowcol2      = { fg = '#073de6' },
-    rainbowcol3      = { fg = '#12d22e' },
-    rainbowcol4      = { fg = '#ff9900' },
-    rainbowcol5      = { fg = '#ae81ff' },
-    rainbowcol6      = { fg = '#d70084' },
-    rainbowcol7      = { fg = '#00adad' },
+    rainbowcol1 = { fg = '#c400f3', style = 'bold' },
+    rainbowcol2 = { fg = '#5b0092', style = 'bold' },
+    rainbowcol3 = { fg = '#0000aa', style = 'bold' },
+    rainbowcol4 = { fg = t.colors.green, style = 'bold' },
+    rainbowcol5 = { fg = t.colors.darkyellow, style = 'bold' },
+    rainbowcol6 = { fg = '#bb6f00', style = 'bold' },
+    rainbowcol7 = { fg = '#aa0000', style = 'bold' },
 
-
-    TabLineSel       = { fg = '#000000', bg = '#ffffff' },
-    TabLine          = { fg = '#abb2bf', bg = '#3e4452' },
+    TabLineSel       = { fg = t.colors.black, bg = t.colors.white },
+    TabLine          = { fg = t.colors.comment, bg = '#3e4452' },
     TabLineFill      = { bg = '#3e4452' },
 
-    SpellBad         = { style = 'undercurl', sp = '#5aaa60' },
+    SpellBad         = { style = 'undercurl', sp = t.colors.green },
     SpellRare01      = { bg = '#552525', style = 'undercurl', sp = '#5aaa60' },
     SpellRare02      = { bg = '#402526', style = 'undercurl', sp = '#3a6a30' },
     SpellRare03      = { bg = '#292426', style = 'undercurl', sp = '#2a5a30' },
 
-    Search           = { fg = 'NONE', bg = '#f0f08a', style = 'italic' },
-    IncSearch        = { fg = 'NONE', bg = '#ff4f4a', style = 'bold'  },
+    Search           = { bg = t.colors.lightyellow, style = 'italic' },
+    IncSearch        = { bg = t.colors.lightred, style = 'bold'  },
 
     Whitespace       = { fg = '#353522' },
 
-    Cursor           = { fg = 'NONE', bg = '#12df12', style = 'bold'},
-    Cursori          = { fg = 'NONE', bg = '#000000' },
+    Cursor           = { bg = '#22f022', style = 'bold'},
+    Cursori          = { bg = t.colors.black },
 
     DeniteCursorLine = { bg = '#483232' },
     DenitePathHead   = { fg = '#3233ff' },
     DenitePathTail   = { fg = '#ff7032' },
 
-    SpecialKey       = { fg = '#ff9002' },
+    SpecialKey = { fg = t.colors.darkyellow },
 
-    PmenuSbar        = { style = 'bold', fg = 'red', bg = 'green' },
+    PmenuSbar  = { fg = t.colors.red, bg = t.colors.lightgreen, style = 'bold' },
 
-    rnowebChunk        = { fg = '#c84656' },
-    rnowebSexpr        = { fg = '#c84656' },
+    rnowebChunk        = { fg = t.colors.red },
+    rnowebSexpr        = { fg = t.colors.red },
     rnowebDelimiter    = { fg = vim.g.terminal_color_6 },
-    rnowebDelimiterEnd = { fg = vim.g.terminal_color_6, bg = 'NONE', style = 'bold' },
+    rnowebDelimiterEnd = { fg = vim.g.terminal_color_6, style = 'bold' },
 
-    FloatermBorder = { bg = 'NONE', fg = '#9696ff', style = 'bold' },
-    Floaterm       = { bg = 'black', fg = '#00ff00' },
-    Ranger         = { bg = 'black', fg = '#ffffff' },
-    RnvimrNormal   = { bg = 'black', fg = '#ffffff' },
-    RnvimrCurses   = { bg = 'black', fg = '#dcdcdc' },
+    FloatermBorder = { fg = '#9696ff', style = 'bold' },
+    Floaterm       = { bg = t.colors.black, fg = '#00ff00' },
+    Ranger         = { bg = t.colors.black, fg = '#ffffff' },
+    RnvimrNormal   = { bg = t.colors.black, fg = '#ffffff' },
+    RnvimrCurses   = { bg = t.colors.black, fg = '#ececec' },
     MYQFNormal     = { fg = '#d8d8d2', bg = '#121212' },
     MYQFLineNr     = { fg = '#f0f08a', bg = '#674842' },
-    LineNr         = { fg = '#90908a', bg = '#3c3d37', style = 'italic' },
 
-    SignColumn               = { fg = 'NONE', bg = colors.SignColumn.bg },
+    SignColumn = { bg = histyle.SignColumn.bg },
+    LineNr     = tbind({ fg = '#90908a', style = 'bold' }, histyle.SignColumn),
 
-    DiagnosticSignError      = { fg = '#ff0000', bg = colors.SignColumn.bg },
-    DiagnosticSignWarn       = { fg = '#ffaa12', bg = colors.SignColumn.bg },
-    DiagnosticSignInfo       = { fg = '#1383ff', bg = colors.SignColumn.bg },
-    DiagnosticSignHint       = { fg = '#1383ff', bg = colors.SignColumn.bg },
+    DiagnosticSignError = tbind({ fg = t.colors.red }, histyle.SignColumn ),
+    DiagnosticSignWarn  = tbind({ fg = t.colors.yellow }, histyle.SignColumn ),
+    DiagnosticSignInfo  = tbind({ fg = t.colors.cyan }, histyle.SignColumn ),
+    DiagnosticSignHint  = tbind({ fg = t.colors.cyan }, histyle.SignColumn ),
 
-    GitSignsAdd              = { fg = '#00ff00', style = 'bold', bg = colors.SignColumn.bg },
-    GitSignsDelete           = { fg = '#ee1022', style = 'bold', bg = colors.SignColumn.bg },
-    GitSignsChange           = { fg = '#ffff00', style = 'bold', bg = colors.SignColumn.bg },
+    GitSignsAdd    = tbind({ fg = t.colors.green, style = 'bold' }, histyle.SignColumn ),
+    GitSignsDelete = tbind({ fg = t.colors.red, style = 'bold'}, histyle.SignColumn ),
+    GitSignsChange = tbind({ fg = t.colors.yellow, style = 'bold'}, histyle.SignColumn ),
 
-    GitSignsCurrentLineBlame = { fg = '#504945', style = 'italic', bg = 'NONE' },
+    GitSignsCurrentLineBlame = { fg = '#504945', style = 'italic' },
 
-    GitSignsAddLn            = { fg = 'NONE', bg = '#acffac' },
-    GitSignsChangeLn         = { fg = 'NONE', bg = '#ffff8c' },
-    GitSignsDeleteLn         = { fg = 'NONE', bg = '#ffdfdf' }
+    GitSignsAddLn            = { bg = '#acffac' },
+    GitSignsChangeLn         = { bg = '#ffff8c' },
+    GitSignsDeleteLn         = { bg = '#ffdfdf' }
 }
 
 local function highlight(group, color)
@@ -150,33 +175,9 @@ vim.cmd('au FileType denite-filter setlocal winhighlight=Normal:Folded')
 vim.cmd('au FileType denite,denite-filter setlocal winhighlight=CursorLine:DeniteCursorLine')
 
 t.hook = function()
-    for group,colors in pairs(syntax) do
-        highlight(group,colors)
+    for group,histyle in pairs(syntax) do
+        highlight(group, histyle)
     end
 end
 
 return t
-
--- " Normal #272822
--- "hi Normal guifg=#ffffff guibg=#191918
---
--- " hi EasyMotionTarget guibg=none guifg=#00ff00 gui=italic
--- " hi EasyMotionTarget2First guibg=none guifg=#ffff00 gui=italic
--- " hi EasyMotionTarget2Second guibg=none guifg=#ff4722 gui=italic
--- "hi EasyMotionShade  ctermbg=none ctermfg=blue
---
--- "hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
--- "
--- "hi MatchBackground guibg=#ff4702
---
--- "hi EasyMotionMoveHL ctermbg=green ctermfg=black
--- "hi EasyMotionIncSearch ctermbg=green ctermfg=black
--- "hi LspDiagnosticsDefaultError guifg=BrightRed guibg=Grey gui=bold
--- ",undercurl guisp=#ff4aff
--- "hi CursorLine guibg=#292929
--- "hi DeniteNormal guifg=Grey guibg=#000000
--- "hi DenitePrompt gui=bold guifg=#33FF11 guibg=Grey
--- "hi DeniteSignColumn guibg=Grey
--- "hi Pmenu gui=NONE guibg=#000000 guifg=#f7f7f7
--- "hi DeniteHighlightMatchedChar gui=italic guifg=red guibg=#000000
--- "hi DeniteHighlightMatchedRange gui=NONE guifg=NONE guibg=#000000
