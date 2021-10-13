@@ -76,7 +76,7 @@ set encoding=utf-8
 set matchpairs+=<:>,\':\',\":\"
 set colorcolumn=80
 set shada='400,/40,s10,<50,h
-set shortmess=a
+set shortmess=aF
 " Do not force a memory flush to speedup manual writes.
 set nofsync
 "configure backspace to work like in other programs
