@@ -55,7 +55,7 @@ set foldmethod=marker
 "set foldtext=MyFoldText()
 "hide buffer instead of closing it
 "execute au's like BufRead only once per opened file
-set fillchars=vert:▏,foldclose:┣
+set fillchars=vert:▏,foldclose:┣,eob:~
 "▍
 set hidden
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ "$(git rev-parse --show-toplevel)/.gitignore"
