@@ -20,21 +20,21 @@ wk.register({
 
     ["<leader>"] = {
 
-        name = 'Denite',
-        s = { [[<Cmd>DeniteProjectDir -buffer-name=files -winheight=35]] ..
-              [[ -winwidth=69 -matchers=matcher/ignore_current_buffer,]] ..
-              [[matcher/fruzzy]], [[Project Dir 2]] },
+        name = 'Fzf',
+        -- s = { [[<Cmd>DeniteProjectDir -buffer-name=files -winheight=35]] ..
+        --       [[ -winwidth=69 -matchers=matcher/ignore_current_buffer,]] ..
+        --       [[matcher/fruzzy]], [[Project Dir 2]] },
         -- x = { [[:FloatermNew --name=browse_git_dirs --opener=vsplit --autoclose=2]] ..
         --       [[ --width=0.8 --height=0.8 <C-R>=g:nvim_config_home<CR>]] ..
         --       [[/shscripts/mrcgitdirs.sh<CR>]], [[Recent Projects]] },
         -- n = { [[<Cmd>Denite -buffer-name=files]] ..
         --       [[ -matchers=matcher/ignore_current_buffer file/old<CR>]],
         --       [[Recent Files]] },
-        b = { [[<Cmd>Denite -matchers=matcher/ignore_current_buffer,]] ..
-              [[matcher/substring buffer<CR>]], [[Buffer]] },
-        d = { [[<Cmd>Denite -resume<CR>]], [[Resume]] },
-        m = { [[<Cmd>Denite -winwidth=50 -quick-move=immediately]] ..
-              [[ menu:custom<cr>]], [[Menu]] },
+        -- b = { [[<Cmd>Denite -matchers=matcher/ignore_current_buffer,]] ..
+        --       [[matcher/substring buffer<CR>]], [[Buffer]] },
+        -- d = { [[<Cmd>Denite -resume<CR>]], [[Resume]] },
+        -- m = { [[<Cmd>Denite -winwidth=50 -quick-move=immediately]] ..
+        --       [[ menu:custom<cr>]], [[Menu]] },
 
         ['8'] = { function()
                 local m = require'fzf-lua.path'
@@ -66,7 +66,7 @@ wk.register({
             end, [[Grep Ftype]]
         },
 
-        ['?'] = { function()
+        ['<C-_>'] = { function()
                 require'fzf-lua'.grep({
                     continue_last_search = true
                 })
@@ -89,6 +89,7 @@ wk.register({
         },
 
         f = { require'fzf-lua'.buffers,  [[Buffers]] },
+
         ['<C-f>'] = { function()
                 require'fzf-lua'.buffers({
                     cwd_only = true
@@ -98,12 +99,14 @@ wk.register({
         },
 
         h = { require'fzf-lua'.help_tags, [[Help]] },
+
         a = { function()
                 require'pluginconfig.fzf-lua'.custom.git_files{
                     preview_opt = 'hidden'
                 }
             end, [[Git Files]]
         },
+
         n = { function() 
                 require'fzf-lua'.oldfiles{ 
                     preview_opts = 'hidden'
@@ -115,19 +118,17 @@ wk.register({
         --       [[ -matchers=matcher/ignore_current_buffer,]] ..
         --       [[matcher/fruzzy,matcher/ignore_globs]] ..
         --       [[ file/rec/git/tracked<CR>]], [[Project Dir]] },
-        [","] = { [[<Cmd>Denite -resume -cursor-pos=+1 -immediately<CR>]],
-                  [[Cursor Down]] },
-        ["."] = { [[<Cmd>Denite -resume -cursor-pos=-1 -immediately<CR>]],
-                  [[Cursor Up]] },
-
-        ["<space>"] = { [[<Cmd>Denite -winwidth=70 command_history<cr>]],
-                        [[Command Hist]] },
-
-        ["<leader>"] = {
-            name = "Specific",
-            g = { [[:DeniteCursorWord grep::]], [[Grep Generic]] },
-            h = { [[<Cmd>DeniteCursorWord help<cr>]], [[Help]] }
-        }
+        -- [","] = { [[<Cmd>Denite -resume -cursor-pos=+1 -immediately<CR>]],
+        --           [[Cursor Down]] },
+        -- ["."] = { [[<Cmd>Denite -resume -cursor-pos=-1 -immediately<CR>]],
+        --           [[Cursor Up]] },
+        -- ["<space>"] = { [[<Cmd>Denite -winwidth=70 command_history<cr>]],
+        --                 [[Command Hist]] },
+        -- ["<leader>"] = {
+        --     name = "Specific",
+        --     g = { [[:DeniteCursorWord grep::]], [[Grep Generic]] },
+        --     h = { [[<Cmd>DeniteCursorWord help<cr>]], [[Help]] }
+        -- }
     }
 },  {
     mode = "n", prefix = "<leader>", buffer = nil, silent = false, noremap = true

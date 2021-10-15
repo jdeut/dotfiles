@@ -6,6 +6,24 @@ wk.register({ ["<DEL>"] = { ["<DEL>"] = { [["+yy]], '' } } },  { mode = "n" })
 
 wk.register({
     ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' },
+    ['<F2>']  = { function()
+            local line, col, r = vim.fn.line("."), vim.fn.col("."), {}
+            -- print(line .. [[  ]] .. col)
+
+            print(vim.fn.synIDattr(vim.fn.synID(line, col, true), "name"))
+
+            -- for id in pairs(vim.fn.synstack(line, col, true)) do
+            --     local attr = vim.fn.synIDattr(
+            --         vim.fn.synIDtrans(id),
+            --         "name"
+            --     )
+            --
+            --     table.insert(r, attr)
+            -- end
+
+            -- print(table.concat(r, ", "))
+        end, 'Show Syntax Info'
+    },
     ['<Space>'] = { [[:]], 'Enter Command-Line Mode', silent  = false}
 },  { mode = "n" })
 
@@ -36,6 +54,7 @@ wk.register({
 }, { mode = "n", prefix = "" })
 
 wk.register({
+    r = { [[<Cmd>RnvimrToggle<CR>]], 'Ranger' },
     [":"] = {
         name = 'Exec',
         n    = { [[<Cmd>silent !xdg-open %:p:h<CR>]], "Nautilus" },

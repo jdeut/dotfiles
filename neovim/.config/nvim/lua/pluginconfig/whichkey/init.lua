@@ -4,7 +4,7 @@ require'which-key.plugins.registers'.registers =  '+"-:.%/#=_adfjkn0123789'
 
 wk.setup {
     plugins = {
-        marks = true,
+        marks = false,
         registers = true,
     },
     window = {
@@ -23,13 +23,11 @@ wk.setup {
         "<CR>", "call", "lua", "^:", "^ "
     },
     triggers = {
-        '<localleader>', '<leader>', 's', 'z', 'g', ']', '['
+        '<localleader>', '<leader>', 'z', 'g', ']', '[', [[']], [[`]]
     },
-    motions = { count = false },
     triggers_blacklist = {},
-    -- triggers_blacklist = {
-    --     i = { [[']] }
-    -- },
+    ignore_missing = true,
+    motions = { count = false },
     show_help = true
 }
 
@@ -41,3 +39,4 @@ require'pluginconfig.whichkey.register.denite'
 require'pluginconfig.whichkey.register.hop'
 require'pluginconfig.whichkey.register.floaterm'
 require'pluginconfig.whichkey.register.terminal'
+require'pluginconfig.whichkey.register.cimap'

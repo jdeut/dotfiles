@@ -23,6 +23,20 @@ local v_openbrowser = function(s) return {
         [[ <C-r>=init_custom_fn#get_selected_text()<CR>]] , s
 } end
 
+local zeal_cword = function()
+    local s = vim.fn.expand('<cword>')
+
+    if vim.bo.filetype then
+        s = vim.bo.filetype .. [[:]] .. s
+    end
+    
+    vim.fn.jobstart([[zeal ]] .. s)
+end
+
+local zeal_interactive = function()
+    return [[<Esc>:lua vim.fn.jobstart('zeal ]]
+end
+
 wk.register({
     o = {
         name = 'Browser Search',
@@ -32,12 +46,15 @@ wk.register({
         w = n_openbrowser_cword('wortbuch'),
         e = n_openbrowser_cword('sematicscholar'),
         i = n_openbrowser_cword('github'),
-        ['<S-g>'] = n_openbrowser_query('google'),
-        ['<S-b>'] = n_openbrowser_query('googlebooks'),
-        ['<S-s>'] = n_openbrowser_query('googlescholar'),
-        ['<S-w>'] = n_openbrowser_query('wortbuch'),
-        ['<S-e>'] = n_openbrowser_query('sematicscholar'),
-        ['<S-i>'] = n_openbrowser_query('github')
+        z = { zeal_cword, [[Zeal]] },
+
+        G = n_openbrowser_query('google'),
+        B = n_openbrowser_query('googlebooks'),
+        S = n_openbrowser_query('googlescholar'),
+        W = n_openbrowser_query('wortbuch'),
+        E = n_openbrowser_query('sematicscholar'),
+        I = n_openbrowser_query('github'),
+        Z = { zeal_interactive, [[Zeal]], silent = false},
     }
 }, {
     mode = "n", prefix = "<leader>", buffer = nil, silent = true, noremap = true

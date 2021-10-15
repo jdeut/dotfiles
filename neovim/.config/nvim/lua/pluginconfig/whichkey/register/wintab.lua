@@ -80,7 +80,8 @@ wk.register({
     g            = {
         name  = 'move',
         f         = { function() wincmd('gf') end, "Open File Under Cursor in Tab"},
-        ['<S-f>'] = { function() wincmd('gF') end, "Open File Under Cursor in Tab"},
+        F         = { function() vim.cmd('vsplit <cfile>') end, "Create File Under Cursor in Tab"},
+        ['<C-f>'] = { function() wincmd('gF') end, "Open File Under Cursor in Tab"},
         s         = { [[<Cmd>silent! e #<cr>]], "Alternate"},
         v         = { [[<Cmd>silent! vsplit #<cr>]], "Alternate Vsplit"},
         ["<"]     = { [[<Cmd>silent! split #<cr>]], "Alternate Split"}
