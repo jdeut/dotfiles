@@ -64,40 +64,39 @@ tnoremap <4-ScrollWheelDown> <C-\><C-n><C-f>
 "inoremap <expr> <S-d> pumvisible() ? "\<PageUp>" : "\<S-d>"
 "inoremap <expr> <S-f> pumvisible() ? "\<PageDown>" : "\<S-f>"
 
-cnoremap <C-k> <Right>
-cnoremap <C-j> <Left>
-cnoremap ;; <cr>
+" cnoremap <C-k> <Right>
+" cnoremap <C-j> <Left>
+" cnoremap ;; <cr>
 
     " Normal mode command(s) go… --v <-- here
     "cnoremap <C-w> <S-Right>
-
 "cnoremap <C-h> <Left>
 "cnoremap <C-l> <Right>
 "cnoremap <C-Space> <S-Left>
 "cnoremap <C-j> <CR>
 
-noremap! 'o ö
-noremap! 'u ü
-noremap! 'a ä
-noremap! '- ß
-noremap! ''o Ö
-noremap! ''u Ü
-noremap! ''a Ä
+" noremap! 'o ö
+" noremap! 'u ü
+" noremap! 'a ä
+" noremap! '- ß
+" noremap! ''o Ö
+" noremap! ''u Ü
+" noremap! ''a Ä
 
-noremap! ''9 ❰
-noremap! ''0 ❱
+" noremap! ''9 ❰
+" noremap! ''0 ❱
 
-noremap 'c C
-noremap 'd D
-noremap 'y Y
-noremap 'a A
-noremap 'i I
-noremap 'o O
-noremap 'g G
+" noremap 'c C
+" noremap 'd D
+" noremap 'y Y
+" noremap 'a A
+" noremap 'i I
+" noremap 'o O
+" noremap 'g G
 
 " noremap <Space> :
-noremap! <C-k> <Left>
-noremap! <C-l> <Right>
+" noremap! <C-k> <Left>
+" noremap! <C-l> <Right>
 
 "snoremap <silent> <C-f> <Cmd>call UltiSnips#JumpForwards()<CR>
 
@@ -122,11 +121,9 @@ noremap! <C-l> <Right>
 "return g:ulti_expand_or_jump_res
 noremap vv V
 
-noremap! <C-9> ❰
-noremap! <C-0> ❱
-
-nnoremap <silent> <leader><F2> <Cmd>call SynStack()<cr>
-
+" noremap! <C-9> ❰
+" noremap! <C-0> ❱
+"
 "══════════════════════════════════════════════════
 " Substitute / Edit commands => <Leader>e* 
 
