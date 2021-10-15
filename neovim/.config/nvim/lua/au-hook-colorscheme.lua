@@ -32,6 +32,8 @@ t.colors = tbind(
     t.onedark_colors,
     {
         darkyellow  = '#ff3200',
+        darkblue    = '#0000aa',
+        darkgray    = '#121212',
         lightyellow = '#ffffaa',
         lightred    = '#ffc5c5',
         lightgreen  = '#b4ffb4',
@@ -40,7 +42,7 @@ t.colors = tbind(
     }
 )
 
-local histyle = {
+local hi = {
     SignColumn = { bg = t.colors.gray }
 }
 
@@ -62,14 +64,18 @@ vim.g.terminal_color_14 = '#00f5e9'
 vim.g.terminal_color_15 = '#eeeeec'
 
 local syntax = {
-    Folded           = { fg = t.colors.black, bg = '#bfbfbf', style = 'italic' },
+    Folded           = { fg = t.colors.black, bg = t.colors.lightgreen, style = 'italic' },
     FoldColumn       = { fg = t.colors.red, bg = 'blue', style = 'bold' },
-    VertSplit        = tbind({ fg = t.colors.black, style = 'bold' }, histyle.SignColumn),
+    VertSplit        = tbind({ fg = t.colors.black, style = 'bold' }, hi.SignColumn),
+
+    EndOfBuffer      = { bg = t.colors.lightgray, fg = t.colors.cyan, style = 'italic' },
 
     IndentBlankline  = { fg = t.colors.purple },
 
+    WhichKey          = { fg = t.colors.darkyellow, style = 'bold' },
     WhichKeyFloat     = { bg = t.colors.lightgreen },
-    WhichKeyGroup     = { fg = t.colors.black },
+    WhichKeyGroup     = { fg = t.colors.darkblue },
+    WhichKeyDesc      = { fg = t.colors.darkgray },
     WhichKeyValue     = { fg = t.colors.red },
     WhichKeySeparator = { fg = t.colors.comment },
 
@@ -85,11 +91,6 @@ local syntax = {
     HopNextKey1  = { bg = t.colors.lightgreen, fg = t.colors.red, style = 'bold' },
     HopNextKey2  = { bg = t.colors.lightglightgreen2, fg = t.colors.red },
     HopUnmatched = { fg = t.colors.comment },
-
-    -- DiagnosticError = { fg = '#ff00ff' },
-    -- DiagnosticWarn  = { fg = '#ff0012' },
-    -- DiagnosticInfo  = { fg = '#ff0012' },
-    -- DiagnosticHint  = { fg = '#ff0012' },
 
     ColorColumn = { bg = t.colors.lightgray },
 
@@ -128,28 +129,37 @@ local syntax = {
 
     rnowebChunk        = { fg = t.colors.red },
     rnowebSexpr        = { fg = t.colors.red },
-    rnowebDelimiter    = { fg = vim.g.terminal_color_6 },
-    rnowebDelimiterEnd = { fg = vim.g.terminal_color_6, style = 'bold' },
+    rnowebDelimiter    = { fg = t.colors.cyan },
+    rnowebDelimiterEnd = { fg = t.colors.cyan, style = 'bold' },
 
-    FloatermBorder = { fg = '#9696ff', style = 'bold' },
+    TermCursorNC   = { bg = t.colors.cyan },
+    FloatermBorder = { fg = '#9696ff', bg = t.colors.black, style = 'bold' },
     Floaterm       = { bg = t.colors.black, fg = '#00ff00' },
     Ranger         = { bg = t.colors.black, fg = '#ffffff' },
     RnvimrNormal   = { bg = t.colors.black, fg = '#ffffff' },
     RnvimrCurses   = { bg = t.colors.black, fg = '#ececec' },
-    MYQFNormal     = { fg = '#d8d8d2', bg = '#121212' },
-    MYQFLineNr     = { fg = '#f0f08a', bg = '#674842' },
 
-    SignColumn = { bg = histyle.SignColumn.bg },
-    LineNr     = tbind({ fg = '#90908a', style = 'bold' }, histyle.SignColumn),
+    MyQfNormal      = { fg = '#d8d8d2', bg = '#323232' },
+    MyQfLineNr      = { fg = '#f0f08a', bg = '#674842' },
+    MyQfEndOfBuffer = { fg = t.colors.red, bg = t.colors.yellow },
+    MyQfNonText     = { fg = t.colors.cyan, style = 'italic' },
 
-    DiagnosticSignError = tbind({ fg = t.colors.red }, histyle.SignColumn ),
-    DiagnosticSignWarn  = tbind({ fg = t.colors.yellow }, histyle.SignColumn ),
-    DiagnosticSignInfo  = tbind({ fg = t.colors.cyan }, histyle.SignColumn ),
-    DiagnosticSignHint  = tbind({ fg = t.colors.cyan }, histyle.SignColumn ),
+    qfFileName = { fg = t.colors.purble },
+    qfLineNr = { fg = t.colors.purble, bg = t.colors.bg },
+    qfSeparator = { fg = t.colors.black },
+    QuickFixLine = { bg = t.colors.lightred },
 
-    GitSignsAdd    = tbind({ fg = t.colors.green, style = 'bold' }, histyle.SignColumn ),
-    GitSignsDelete = tbind({ fg = t.colors.red, style = 'bold'}, histyle.SignColumn ),
-    GitSignsChange = tbind({ fg = t.colors.yellow, style = 'bold'}, histyle.SignColumn ),
+    SignColumn = { bg = hi.SignColumn.bg },
+    LineNr     = tbind({ fg = '#90908a', style = 'bold' }, hi.SignColumn),
+
+    DiagnosticSignError = tbind({ fg = t.colors.red }, hi.SignColumn ),
+    DiagnosticSignWarn  = tbind({ fg = t.colors.yellow }, hi.SignColumn ),
+    DiagnosticSignInfo  = tbind({ fg = t.colors.cyan }, hi.SignColumn ),
+    DiagnosticSignHint  = tbind({ fg = t.colors.cyan }, hi.SignColumn ),
+
+    GitSignsAdd    = tbind({ fg = t.colors.green, style = 'bold' }, hi.SignColumn ),
+    GitSignsDelete = tbind({ fg = t.colors.red, style = 'bold'}, hi.SignColumn ),
+    GitSignsChange = tbind({ fg = t.colors.yellow, style = 'bold'}, hi.SignColumn ),
 
     GitSignsCurrentLineBlame = { fg = '#504945', style = 'italic' },
 
@@ -175,8 +185,8 @@ vim.cmd('au FileType denite-filter setlocal winhighlight=Normal:Folded')
 vim.cmd('au FileType denite,denite-filter setlocal winhighlight=CursorLine:DeniteCursorLine')
 
 t.hook = function()
-    for group,histyle in pairs(syntax) do
-        highlight(group, histyle)
+    for group,hi in pairs(syntax) do
+        highlight(group, hi)
     end
 end
 
