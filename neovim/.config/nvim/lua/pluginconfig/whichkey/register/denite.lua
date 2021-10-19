@@ -84,7 +84,14 @@ wk.register({
          [[Buffers (Cwd Only)]]
       },
 
-      h = { require'fzf-lua'.help_tags, [[Help]] },
+      h = { function()
+            require'fzf-lua'.help_tags({
+               fzf_opts = {
+                  ['--tiebreak'] = 'begin'
+               }
+            })
+         end, [[Help]]
+      },
 
       a = { function()
             require'pluginconfig.fzf-lua'.custom.git_files{
@@ -93,15 +100,15 @@ wk.register({
          end, [[Git Files]]
       },
 
-   n = { function() 
-         require'fzf-lua'.oldfiles{
-            preview_opts = 'hidden',
-            fzf_opts = {
-               ['--tiebreak'] = 'begin,end',
-            }
-         } end, [[Oldfiles]]
-      },
-   }
+      n = { function() 
+            require'fzf-lua'.oldfiles{
+               preview_opts = 'hidden',
+               fzf_opts = {
+                  ['--tiebreak'] = 'begin,end'
+               }
+            } end, [[Oldfiles]]
+         },
+      }
 },  {
    mode = "n", prefix = "<leader>", buffer = nil, silent = false, noremap = true
 })
