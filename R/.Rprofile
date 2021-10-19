@@ -3,7 +3,7 @@ library(magrittr)
 library(stringr)
 
 .First <- function() {
-    .libPaths = .libPaths( c("/home/johannes/Bildung/Sandbox/Rprojects/", .libPaths()) )
+    # .libPaths = .libPaths( c("/home/johannes/Bildung/Sandbox/Rprojects/", .libPaths()) )
 }
 
 if(interactive()){
@@ -29,5 +29,5 @@ options(
         Version = "0.0.0.9000"
     ),
     usethis.destdir = "~/Bildung/Sandbox/Rprojects/",
-    testthat.default_check_reporter = "ParallelProgress"
+    testthat.default_check_reporter = "tap"
 )

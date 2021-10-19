@@ -111,6 +111,8 @@ set laststatus=2
 set expandtab
 "Use tabstop value for shift operations
 set shiftwidth=0
+"Round indent to multiple of 'shiftwidth'.
+set shiftround
 set tabstop=4
 set softtabstop=4
 set autoindent
