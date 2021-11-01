@@ -1,53 +1,92 @@
+local function tex_logfilename()
+   local state = vim.fn['vimtex#state#get'](vim.b.vimtex_id)
+   local outfile = string.gsub(state.viewer.outfile, [["]], '')
+   local logfile = vim.fn.fnamemodify(outfile, [[:p:r:s?$?.log?]])
+
+   assert(
+      vim.fn.filereadable(logfile) == 1,
+      string.format(
+         [[Try to open logfile: '%s' does not exist]],
+         logfile
+      )
+   )
+
+   return logfile
+end
+
 local mappings = {
-    k = {[[:VimtexDocPackage<CR>]], 'vimtex-info-full'},
-    ['<F6>'] = {
-        function()
-            require('plenary.job'):new({command = 'gxmessage', args = { 'test' } }):sync()
-        end,
-        'test'
-    },
-    e = {
-       name = 'VimtexInfo',
-       i = {[[<plug>(vimtex-info-full)]], 'vimtex-info-full'},
-       m = {[[<plug>(vimtex-toggle-main)]], 'vimtex-toggle-main'}
-    },
-    g = {
-       name = 'browser',
-       t = {[[<Cmd>execute "OpenBrowserSmartSearch -tex ".expand('<cword>')<CR>]], 'tex'}
-    },
-    l = {
-       name = 'Build related',
-       l = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'}
-    },
-    r = {
-        name = 'Run related',
-        l = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'},
-        b = { function()
-            require('plenary.job'):new({
-                command = 'zathura',
-                args = { [[--fork]],
-                    vim.fn.expand('%:h') .. [[/]] .. 
-                    vim.b.ftype_tex_build_dir .. [[/]] .. 
-                    vim.fn.expand('%:t:r') .. [[.pdf]],
-                }
-            }):sync()
-        end, 'open'
-        },
-        g = { function()
-                local x = vim.b.vimtex.compiler
-                vim.cmd(
-                [[botright vsplit ]] .. x.root .. 
-                [[/]] .. x.build_dir .. 
-                [[/]] .. x.target:gsub(".tex$", ".log")
-                )
-            end, 'open'
-       },
-    }
+   k = {[[:VimtexDocPackage<CR>]], 'vimtex-info-full'},
+   ['<F6>'] = {
+      function()
+         require('plenary.job'):new({command = 'gxmessage', args = { 'test' } }):sync()
+      end,
+      'test'
+   },
+   e = {
+      name = 'VimtexInfo',
+      i = {[[<plug>(vimtex-info-full)]], 'vimtex-info-full'},
+      m = {[[<plug>(vimtex-toggle-main)]], 'vimtex-toggle-main'}
+   },
+   g = {
+      name = 'browser',
+      t = {[[<Cmd>execute "OpenBrowserSmartSearch -tex ".expand('<cword>')<CR>]], 'tex'},
+      f = { function()
+            local head = vim.fn.expand('%:.:h')
+            local cfile = vim.fn.expand('<cfile>')
+            vim.cmd("tabnew " .. head .. '/' .. cfile)
+         end,
+         'create file rel. to filepath'
+      }
+   },
+   l = {
+      name = 'Build related',
+      V = { function()
+            -- vim.cmd([[VimtexView]])
+            vim.fn.jobstart({'run-raise-bridge.sh', 'okular' }, { detach = 1 })
+            -- vim.fn.jobstart({
+            --    'run-raise-bridge.sh',
+            --    'nvim'
+            -- }, {
+            --    detach = 1 
+            -- })
+         end, 'Compile'
+      },
+      l = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'},
+      g = { function()
+            vim.cmd(
+               [[botright vsplit ]] .. 
+               tex_logfilename()
+            )
+         end, 'Open Log'
+      },
+      G = { function()
+         vim.cmd(
+            [[tabnew ]] .. 
+            tex_logfilename()
+            )
+         end, 'Open Log'
+      }
+   },
+   r = {
+      name = 'Run related',
+      -- l = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'},
+      b = { function()
+         require('plenary.job'):new({
+            command = 'zathura',
+            args = { [[--fork]],
+               vim.fn.expand('%:h') .. [[/]] .. 
+               vim.b.ftype_tex_build_dir .. [[/]] .. 
+               vim.fn.expand('%:t:r') .. [[.pdf]],
+            }
+         }):sync()
+      end, 'open'
+      }
+   }
 }
 
 require('which-key').register(
-    mappings, {
-        buffer = 0,
-        prefix = '<localleader>'
-    }
+   mappings, {
+      buffer = 0,
+      prefix = '<localleader>'
+   }
 )

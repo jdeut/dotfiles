@@ -1,0 +1,2 @@
+
+vim.o.spell = true

@@ -12,37 +12,71 @@ endfunction
 au BufNewFile,BufRead *.cls set syntax=tex
 
 "call vimtex#syntax#p#mycustom#load()
+"
+augroup vimtex_event_4
+    au!
+    au User VimtexEventViewReverse call jobstart(['run-raise-bridge.sh', 'nvim'], {'detach': v:true })
+    au User VimtexEventViewReverse normal! zMzvzz
+    au User VimtexEventViewReverse normal! zR
+    " au User VimtexEventViewReverse call jobstart(['gxmessage', 'hui'], {'detach': v:true })
+augroup END
 
+let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_compiler_latexmk = {
+\ 'build_dir' : 'compiled',
+\ 'callback' : 1,
+\ 'continuous' : 0,
+\ 'exeutable' : 'latexmk',
+\ 'hooks' : [],
+\ 'options' : [
+\   '-verbose',
+\   '-file-line-error',
+\   '-synctex=1',
+\   '-interaction=nonstopmode',
+\ ],
+\}
+
+let g:vimtex_view_general_viewer = 'okular'
+let g:vimtex_view_general_options = '--noraise --unique file:@pdf#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_view_forward_search_on_start = 1
+
+" let g:vimtex_view_general_viewer                 = 'zathura'
+" let g:vimtex_view_zathura_check_libsynctex       = v:true
+let g:vimtex_view_enabled                        = 1
+let g:vimtex_view_method                         = 'general'
+let g:vimtex_view_automatic                      = 1
+let g:vimtex_view_automatic_xwin                 = 0 
+
+let g:vimtex_imaps_enabled = 0
+
+let g:vimtex_syntax_enabled                      = 1
+let g:tex_no_error                               = 1
 let g:vimtex_syntax_nospell_comments             = 1
 let g:vimtex_quickfix_autoclose_after_keystrokes = 3
 let g:vimtex_quickfix_open_on_warning            = 0
 let g:vimtex_text_obj_variant                    = 'vimtex'
 let g:vimtex_motion_enabled                      = 1
-let g:vimtex_view_forward_search_on_start        = 0
-let g:vimtex_view_zathura_check_libsynctex       = v:false
-let g:vimtex_syntax_enabled                      = 1
-let g:tex_no_error                               = 1
-let g:tex_flavor                                 = 'latex'
-let g:vimtex_compiler_method                     = 'latexmk'
 let g:vimtex_fold_enabled                        = 0
-let g:vimtex_compiler_progname                   = 'nvr'
-let g:vimtex_syntax_conceal_default              = 0
-let g:vimtex_view_method                         = 'zathura'
-let g:vimtex_view_enabled                        = 1
-let g:vimtex_view_automatic                      = 0
 let g:vimtex_quicktex_open_on_warning            = 0
-let g:vimtex_view_general_viewer                 = 'evince'
 let g:vimtex_doc_handlers                        = ['MyHandler']
-let g:vimtex_subfile_start_local                 = 0
+let g:vimtex_subfile_start_local                 = 1
+" let g:vimtex_subfile_start_local                 = 0
+" let g:vimtex_syntax_conceal_default              = 0
 " let g:vimtex_doc_handlers                        = ['MyTexdocHandler']
-"let g:vimtex_subfile_start_local = 1
 "let g:vimtex_view_general_viewer = 'evince'
+" let g:vimtex_compiler_progname                   = 'nvr'
 
-"let g:vimtex_syntax_custom_cmds = [
-"\   { 'name': 'adjustbox', 'argstyle': 'ital' },
-"\   { 'name': 'arraycolor', 'argstyle': 'ital' },
-"\   { 'name': 'color', 'argstyle': 'ital' }
-"\ ]
+let g:vimtex_syntax_custom_cmds = [
+\   { 'name': 'adjustbox', 'argstyle': 'ital' },
+\   { 'name': 'arraycolor', 'argstyle': 'ital' },
+\   { 'name': 'color', 'argstyle': 'ital' },
+\   { 'name': 'frametitle', 'argstyle': 'bold' },
+\   { 'name': 'subfile', 'argstyle': 'bold' }
+\ ]
+
+hi link texCFrametitleArg VimtexFrametitle
+hi link texCSubfileArg VimtexFrametitle
 
 "let g:vimtex_syntax_conceal = {
 "\   'accents': g:vimtex_syntax_conceal_default,
@@ -57,15 +91,18 @@ let g:vimtex_subfile_start_local                 = 0
 "\   'cites': g:vimtex_syntax_conceal_default,
 "\ }
 
-"let g:vimtex_syntax_packages = {
-"\   'mycustom': {'load': 2},
-"\   'hyperref': {'load': 2},
-"\   'natbib': {'load': 2},
-"\   'babel': {'conceal': g:vimtex_syntax_conceal_default},
-"\   'biblatex': {'load': 2},
-"\   'tikz': {'load': 2},
-"\   'tcolorbox': {'load': 2},
-"\ }
+let g:vimtex_syntax_packages = {
+\   'mycustom': {'load': 2}
+\ }
+
+" let g:vimtex_syntax_packages = {
+" \   'hyperref': {'load': 2},
+" \   'natbib': {'load': 2},
+" \   'babel': {'conceal': g:vimtex_syntax_conceal_default},
+" \   'biblatex': {'load': 2},
+" \   'tikz': {'load': 2},
+" \   'tcolorbox': {'load': 2},
+" \ }
 
 
 " let g:vimtex_complete_ref = { 
@@ -132,15 +169,6 @@ let g:vimtex_quickfix_ignore_filters  = [
 \   'Package typearea Warning: Bad type area settings!',
 \ ] 
 
-
-" let g:vimtex_compiler_latexmk         = { 
-let g:vimtex_compiler_latexmk         = {
-\   'backend' : 'nvim',
-\   'callback' : 0,
-\   'continuous' : 0,
-\   'options' : [
-\       '-synctex=0',
-\ ]}  
  " 
 
 " let g:vimtex_syntax_nospell_commands = [ 

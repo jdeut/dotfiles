@@ -29,6 +29,7 @@ endfunction
 let R_auto_start       = 2
 let R_debug            = 0
 let R_hl_term          = 0
+let R_esc_term         = 0
 let R_rconsole_width   = 57
 let R_min_editor_width = 18
 let R_texerr           = 1
@@ -44,13 +45,14 @@ let R_help_w           = 80
 let R_texerr           = 1
 let R_synctex          = 0
 let R_openhtml         = 1
+let R_editing_mode     = "vi"
 let R_clear_line       = 1
 let r_syntax_folding   = 0
 let rrst_syn_hl_chunk  = 1
 let rmd_syn_hl_chunk   = 1
 let R_cmd              = 'R'
 let R_app              = 'radian'
-let R_pdfviewer        = 'zathura'
+let R_pdfviewer        = 'okular'
 let R_nvimpager        = 'vertical'
 let R_latex_build_dir  = 'compiled'
 let R_latexcmd         = ['latexmk']
@@ -59,6 +61,7 @@ let R_compldir         = '~/.cache/Nvim-R/Compl/'
 let R_buffer_opts      = 'winfixwidth nobuflisted winwidth=10'
 let R_cite_pattern     = '\\\(parencite\|textcite\|textcites\)\S*{'
 let R_user_maps_only   = 0
+
 "let R_nvimcom_home    = '~/.cache/Nvim-R/Nvimcom'
 "let R_args_in_stline = 1
 "let R_after_start = ['! tmux move-pane -b -s Primary:1.1 -t Secondary:1']

@@ -1,4 +1,4 @@
-vim.opt_local.tabstop    = 4
+vim.opt_local.tabstop    = 3
 
 vim.opt_local.foldlevel  = 2
 vim.opt_local.foldmethod = 'expr'

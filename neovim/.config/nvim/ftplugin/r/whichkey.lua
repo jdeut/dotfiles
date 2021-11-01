@@ -27,19 +27,34 @@ local function snapshot_review(test)
     -- tmpmsg(fmt('Review Testcase:: %s', test))
 end
 
-local function testthat_file(test)
+local function delete_snapshot_junk()
     vim.fn.system([[fdfind -I '^.*\.new\.svg$' . --exec rm {}]])
     vim.fn.system([[fdfind -I '^.*\.slnc$' . --exec rm {}]])
     vim.fn.system([[fdfind -I '^.*\.log$' . --exec rm {}]])
-    vim.cmd([[silent RTestPackage . ]] .. [["]] .. test .. [[$"]])
-    
-   -- tmpmsg(fmt('Testthat:: %s', test))
+end
+
+local function testthat_file(test, reporter)
+
+    reporter = reporter == nil and 'multi' or reporter
+
+    delete_snapshot_junk()
+
+    local gitroot = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+
+    vim.cmd(
+        [[silent! RSend]] .. [[ ]] ..
+        [[testthat::test_local("]] .. 
+            gitroot .. [[",]] ..
+            [[filter = "]] .. vim.g.r_tt_selected_test .. [[", ]] ..
+            [[reporter = ']] .. reporter .. [[']] ..
+        [[)]]
+    )
 end
 
 
-local function testthat_fi()
+local function testthat_fi(reporter)
     if vim.g.r_tt_selected_test then
-        testthat_file(vim.g.r_tt_selected_test)
+        testthat_file(vim.g.r_tt_selected_test, reporter)
     else
         testthat_file(testnamemodify(vim.fn.expand('%'))) 
     end
@@ -78,13 +93,26 @@ local mappings = {
         r = { function()
                 vim.cmd([[RStop]])
                 
-                local output = vim.fn.system(
-                    'fdfind "^test.*$" -t f --exec stat --printf "%Y\t%n\n" {} | sort -nr | cut -f2 | head -1'
-                )
                 testthat_fi()
                 snapshot_rev()
             end,
-            'Test Recently Mod File'
+            'Test Selected Testcase (Default)'
+        },
+        ['<C-r>'] = { function()
+                vim.cmd([[RStop]])
+
+                local winid0 = vim.fn.bufwinid(vim.fn.bufnr())
+                local winid1 = vim.fn.bufwinid(vim.fn.bufnr(vim.g.rplugin.R_bufname))
+
+                -- vim.cmd([[!gxmessage "]] .. winid0 .. [[ ]] .. winid1 .. [["]])
+
+                vim.fn.win_gotoid(winid1)
+                testthat_fi("debug")
+                vim.cmd([[startinsert]])
+                -- snapshot_rev()
+                -- vim.cmd([[RSend system("nvr --remote-expr 'win_gotoid(]] .. winid0 .. [[)'")]])
+            end,
+            'Test Selected Testcase (DEBUG)'
         },
         e = { function()
                 local fopts = require'fzf-lua.config'.globals.files
