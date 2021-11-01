@@ -1,6 +1,4 @@
-wk = require("which-key")
-
-wk.register({
+local mappings = {
     w = { [[<Plug>WordMotion_w]], "WordMotion w"},
     e = { [[<Plug>WordMotion_e]], "WordMotion e"},
     b = { [[<Plug>WordMotion_b]], "WordMotion b"},
@@ -8,6 +6,8 @@ wk.register({
         name = 'g',
         e = { [[<Plug>WordMotion_ge]], "WordMotion ge"}
     }
-}, {
-    mode = "n", prefix = "'"
-})
+}
+
+for _,v in ipairs({'n', 'o', 'x'}) do
+   require'which-key'.register(mappings , { mode = v, prefix = "'" })
+end

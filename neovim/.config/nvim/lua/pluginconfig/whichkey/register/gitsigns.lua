@@ -26,5 +26,8 @@ local mappings = {
 }
 
 for _,v in ipairs({'o', 'x'}) do
-   require'which-key'.register(mappings, { mode = v, prefix = '', noremap = true })
+   require'which-key'.register(
+      mappings,
+      { mode = v, prefix = '', noremap = true }
+   )
 end

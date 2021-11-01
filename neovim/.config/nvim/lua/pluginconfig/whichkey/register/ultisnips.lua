@@ -1,4 +1,4 @@
-wk.register({
+require'which-key'.register({
    j = {
       name = 'Utils',
       u = {

@@ -62,12 +62,6 @@ wk.register({
    V         = { function() wincmd('v', { prefix_mod = 'rightbelow'}) end, "vsplit"},
    ['%']     = { [[<Cmd>vsplit<cr>]], "vsplit"},
    ['"']     = { [[<Cmd>split<cr>]], "split"},
-   f = {
-      name = 'Floaterm',
-      ['<C-f>'] = { [[<Cmd>FloatermNew! cd %:p:h ; clear<CR>]], "NewFloaterm in Cwd"},
-      n         = { [[<Cmd>FloatermNew --position=top --width=81 --height=0.7<CR>]], "NewFloaterm in Cwd"},
-      i         = { require("Fn/floaterm-toggle-size").toggle, "Toggle Size"}
-   },
    g = {
       name = 'Alternate',
       f         = { function() wincmd('gf') end, "Open File Under Cursor in Tab"},

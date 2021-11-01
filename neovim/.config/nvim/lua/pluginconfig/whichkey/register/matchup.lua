@@ -7,15 +7,14 @@ require'which-key'.register({
    }
 }, { mode = 'n' })
 
-local mappings = {
-   a = {
-      ['k'] = { [[<Plug>(matchup-a%)]], 'Matchup a%' }
-   },
-   i = {
-      ['k'] = { [[<Plug>(matchup-i%)]], 'Matchup a%' }
-   }
-}
-
 for _,v in ipairs({'o', 'x'}) do
-   require'which-key'.register(mappings, { mode = v, prefix = '', noremap = true })
+   require'which-key'.register( {
+         a = {
+            ['k'] = { [[<Plug>(matchup-a%)]], 'Matchup a%' }
+         },
+         i = {
+            ['k'] = { [[<Plug>(matchup-i%)]], 'Matchup a%' }
+         }
+      }, { mode = v, prefix = '', noremap = true }
+   )
 end
