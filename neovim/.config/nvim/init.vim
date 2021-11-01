@@ -14,6 +14,8 @@ runtime ftplugin/man.vim
 
 set printoptions=paper:A4,duplex:off,collate:n,syntax:n,header:0
 
+let loaded_matchit               = 1
+
 let &printdevice='HP_Color_LaserJet_Pro_MFP_M177fw'
 
 let &printexpr= "system(" .
@@ -75,7 +77,7 @@ set cpoptions-=n
 set encoding=utf-8
 set matchpairs+=<:>,\':\',\":\"
 set colorcolumn=80
-set shada='400,/40,s10,<50,h
+set shada='400,/40,s100,<50,h
 set shortmess=aF
 " Do not force a memory flush to speedup manual writes.
 set nofsync
@@ -134,6 +136,7 @@ set completeopt=menuone,noselect
 "set complete=.,w,k,t
 "show info of the typed command in the lower-right corner
 set showcmd
+set noshowmode
 "options for sessions
 "do not save empty windows
 "do not save all options and settings
@@ -145,7 +148,7 @@ set switchbuf=useopen,vsplit
 set display=lastline
 "time in ms that is waited for a key sequence to complete
 set timeout
-set timeoutlen=1000
+set timeoutlen=300
 "apply to key codes
 set ttimeoutlen=1
 "set persistent undo
@@ -154,7 +157,7 @@ set undofile
 "change directory to current buffer
 "set autochdir
 set spelllang=de_20
-set guicursor=n:block-blinkon50-Cursor,i-c:ver25-blinkon50-Cursori,v:hor100-blinkon50-Cursori
+set guicursor=n:block-blinkon50-Cursor,i-c:ver100-blinkon50-Cursori,v:hor100-blinkon50-Cursori
 "══════════════════════════════════════════════════
 " Gui Options
 "══════════════════════════════════════════════════
@@ -182,6 +185,7 @@ packadd termdebug
 
 "let g:loaded_netrw               = 1
 "let g:loaded_netrwPlugin         = 1
+
 
 let loaded_gzip                  = 1
 let g:c_syntax_for_h             = 1
@@ -235,15 +239,7 @@ function! SetSqlSyntaxHi()
     "hi pandocDelimitedCodeBlock_sql guifg=#057705
 endfunction
 
-function! SynStack()
-    if !exists("*synstack")
-        return
-    endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
 
 "══════════════════════════════════════════════════════════════════
 " Autocommands (FileType specific settings, mappings, etc.) 
