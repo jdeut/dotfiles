@@ -94,6 +94,8 @@ local quickmarks = require "quickmarks"
 -- Add session saving/loading support
 local session = require "session"
 
+require'undoclose'
+
 -- Add command to list closed tabs & bind to open closed tabs
 local undoclose = require "undoclose"
 
