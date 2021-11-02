@@ -13,23 +13,28 @@ local p = function()
    -- Packer can manage itself
 
    use { 'wbthomason/packer.nvim' }
-   use { 'rktjmp/lush.nvim' } 
-   use { 'olimorris/onedark.nvim',
+   use { 'folke/which-key.nvim',
+      config = function()
+         require('pluginconfig.whichkey')
+      end
+   }
+   use { 'rktjmp/lush.nvim' }
+   use { 'olimorris/onedarkpro.nvim',
       requires = {'rktjmp/lush.nvim'},
-      config = function() 
-         local colors  = require('au-hook-colorscheme').onedark_colors
-         local onedark = require('onedark')
-         
+      config = function()
+         local colors  = require('mycolors').onedark_colors
+         local onedark = require('onedarkpro')
+
          vim.cmd( [[
             augroup AuCustomizeColorScheme
                autocmd!
-               au ColorScheme * lua require('au-hook-colorscheme').hook()
+               au ColorScheme * lua require('mycolors').hook()
             augroup END
          ]] )
 
          onedark.setup({
             theme = 'onelight',
-            colors = colors, 
+            colors = colors,
             styles = {
                comments = 'italic',
                keywords = 'bold'
@@ -38,7 +43,6 @@ local p = function()
          onedark.load()
       end
    }
-
    use { 'kevinhwang91/rnvimr',
       config = function()
          vim.g.rnvimr_enable_ex = 1
@@ -64,60 +68,21 @@ local p = function()
             nearest_only = false,
             nearest_float_when = 'never'
          })
-
-         require("which-key").register({
-            n = { function()
-                  vim.cmd([[normal! ]] .. vim.v.count1 .. [[n]])
-                  require'hlslens'.start()
-               end, "n"
-            },
-            N = { function()
-                  vim.cmd([[normal! ]] .. vim.v.count1 .. [[N]])
-                  require'hlslens'.start()
-               end, "N"
-            }
-         },
-         { mode = 'n', silent = true, noremap = true })
-
-      end,
-      requires = { 'folke/which-key.nvim' }
+      end
    }
-
-   -- branch = 'stable',
    use { 'jalvesaq/Nvim-R',
       alias = 'Nvim-R',
-      config = function() 
+      config = function()
          -- print('op')
       end,
       -- disable = false,
       -- disable = true
    }
-
-   use { 'Shougo/denite.nvim',
+   use { 'gelguy/wilder.nvim',
       config = function()
-         local cmd = 
-            [[source ]] .. 
-            vim.fn.stdpath('config') .. 
-            [[/Denite/init.vim]]
-
-         vim.cmd (cmd)
-      end
-   }
-   use { 'matsui54/denite-nvim-lsp' }
-   use { 'delphinus/denite-floaterm',
-      config = function() 
-         vim.g.floaterm_autoclose   = 2
-         vim.g.floaterm_title       = ' $1/$2 '
-         vim.g.floaterm_borderchars = {
-            '', '', '', '', '', '', '', '' 
-         }
-      end
-   }
-   use { 'raghur/fruzzy',
-      run = function () vim.fn['fruzzy#install']() end,
-      config = function() 
-         vim.g['fruzzy#usenative']   = 1
-         vim.g['fruzzy#sortonempty'] = 0
+         vim.fn['wilder#setup']({
+            modes = {':', '/', '?'}
+         })
       end
    }
    use { 'ibhagwan/fzf-lua',
@@ -145,30 +110,39 @@ local p = function()
          vim.cmd([[autocmd FileType rnvimr lua require('cmp').setup.buffer { enabled = false }]])
       end
    }
-   use { 'vigoux/oak' }
+   use { 'andymass/vim-matchup',
+      setup = function()
+         vim.g.matchup_mappings_enabled = false
+      end,
+      config = function()
+         vim.g.matchup_matchparen_hi_background = 0
+         vim.g.matchup_matchparen_offscreen = {
+            method = 'popup'
+         }
+      end
+   }
    use { 'famiu/nvim-reload',
       config = function()
-         require('nvim-reload').vim_reload_dirs = 
+         require('nvim-reload').vim_reload_dirs =
                { vim.fn.stdpath('config') .. '/*' }
-
-         require('nvim-reload').lua_reload_dirs = 
+         require('nvim-reload').lua_reload_dirs =
                { vim.fn.stdpath('config') }
       end
    }
    use { 'ekickx/clipboard-image.nvim',
       config = function()
          require'clipboard-image'.setup {
-               default = {
-                  img_dir     = 'img',
-                  img_dir_txt = 'img',
-                  img_name = function () 
-                     return vim.fn.input('Image filename: ')
-                  end,
-                  affix = '%s'
-                  },
-               tex = {
-                  affix = '\\includegraphics{%s}'
+            default = {
+               img_dir     = 'img',
+               img_dir_txt = 'img',
+               img_name = function ()
+                  return vim.fn.input('Image filename: ')
+               end,
+               affix = '%s'
                },
+            tex = {
+               affix = '\\includegraphics{%s}'
+            },
          }
       end
    }
@@ -178,13 +152,13 @@ local p = function()
          require('gitsigns').setup( {
             numhl              = true,
             linehl             = false,
-            current_line_blame = true,
+            current_line_blame = false,
             keymaps = {},
             current_line_blame_opts = {
                virt_text_pos = 'eol'
             },
             watch_gitdir = {
-               interval = 100,
+               interval = 500,
                follow_files = true
             },
             signs = {
@@ -237,12 +211,9 @@ local p = function()
    }
    use { 'tyru/open-browser.vim',
       config = function()
-         vim.g.openbrowser_browser_commands = {
-            {
+         vim.g.openbrowser_browser_commands = { {
                args = {
-                  'env',
-                  '-i', 'DISPLAY=:0', '{browser}',
-                  '-n', '{uri}'
+                  '{browser}', '-n', '{uri_noesc}'
                },
                name = 'luakit'
             },
@@ -251,18 +222,17 @@ local p = function()
                   '{browser}', '-n', '{uri}'
                },
                name = 'recoll'
-            }
-         }
+         } }
 
          vim.g.openbrowser_search_engines = {
-            wortbuch        = 'https://www.dwds.de/?q={query}',
-            loveapiref      = 'http://love2d-community.github.io/love-api/#{query}',
-            tex             = 'https://www.google.com/search?q=site:tex.stackexchange.com+{query}',
-            googlebooks     = 'https://www.google.de/search?hl=de&tbo=p&tbm=bks&q={query}&tbs=,bkv:p,cdr:1,cd_min:01.01.1995&num=50',
-            semanticscholar = 'https://www.semanticscholar.org/search?q={query}',
-            googlescholar   = 'https://scholar.google.de/scholar?hl=de&q={query}',
-            google          = 'https://google.com/search?q={query}',
-            github          = 'https://github.com/search?type=code&q={query}'
+wortbuch        = 'https://www.dwds.de/?q={query}',
+loveapiref      = 'http://love2d-community.github.io/love-api/#{query}',
+tex             = 'https://www.google.com/search?q=site:tex.stackexchange.com+{query}',
+googlebooks     = 'https://www.google.de/search?hl=de&tbo=p&tbm=bks&q={query}&tbs=,bkv:p,cdr:1,cd_min:01.01.1995&num=50',
+semanticscholar = 'https://www.semanticscholar.org/search?q={query}',
+googlescholar   = 'https://scholar.google.de/scholar?hl=de&q={query}',
+google          = 'https://google.com/search?q={query}',
+github          = 'https://github.com/search?type=code&q={query}'
          }
       end
    }
@@ -273,24 +243,10 @@ local p = function()
          }
       end
    }
-   use { 'folke/which-key.nvim',
-      config = function()
-         require('pluginconfig.whichkey')
-      end
-   }
-   -- use { 'numtostr/FTerm.nvim',
-   --    config = function()
-   --       local fterm = require('FTerm')
-   --       fterm.setup({
-   --           border = 'double'
-   --       })
-   --    end
-   -- }
    use { 'voldikss/vim-floaterm',
       disable = false
    }
    use { 'powerman/vim-plugin-AnsiEsc' }
-   use { 'Matt-Deacalion/vim-systemd-syntax' }
    use { 'lukas-reineke/indent-blankline.nvim',
       config = function()
          require('indent_blankline').setup {
@@ -335,7 +291,6 @@ local p = function()
          } )
       end
    }
-   use { 'glts/vim-texlog' }
    use { 'jghauser/mkdir.nvim',
       config = function()
          require('mkdir')
@@ -343,7 +298,7 @@ local p = function()
    }
    use { 'phaazon/hop.nvim',
       config = function()
-         require'hop'.setup { 
+         require'hop'.setup {
             keys          = 'asdfjkl;en',
             term_seq_bias = 0.5
          }
@@ -368,7 +323,7 @@ local p = function()
       end
    }
    use { 'SirVer/ultisnips',
-      config = function()
+      setup = function()
          -- let g:ulti_expand_or_jump_res = 0 'default value, just set once
          -- function! Ulti_ExpandOrJump_and_getRes()
          --    call v:lua.MPairs.disable_filetype_set()
@@ -376,7 +331,7 @@ local p = function()
          --    call v:lua.MPairs.disable_filetype_reset()
          --    return ''
          -- endfunction
-         
+
          vim.g.UltiSnipsSnippetsDir         = '~/.config/nvim/UltiSnips'
          vim.g.UltiSnipsEditSplit           = 'vertical'
          vim.g.UltiSnipsListSnippets        = '<Nop>'
@@ -386,7 +341,7 @@ local p = function()
       end
    }
    use { 'ludovicchabant/vim-gutentags',
-      config = function()
+      setup = function()
          vim.g.gutentags_define_advanced_commands = 1
          vim.g.gutentags_file_list_command = {
             markers =  {
@@ -402,15 +357,13 @@ local p = function()
       end
    }
    use { 'chaoren/vim-wordmotion',
-      config = function()
-         require'pluginconfig.whichkey.register.wordmotion'
+      setup = function()
+         vim.g.wordmotion_nomap = 1
 
          vim.g.wordmotion_uppercase_spaces = {
             '"', "'", '[', ']', '(', ')', '{', '}',
             '/', [[\]], '_', '-', '.', ',', ':'
          }
-
-         vim.g.wordmotion_nomap = 1
 
          -- vim.g.wordmotion_mappings = {
          --     W = [[''w]], B = [[''b]],
@@ -423,7 +376,7 @@ local p = function()
       end
    }
    use { 'airblade/vim-rooter',
-      config = function()
+      setup = function()
          vim.g.rooter_change_directory_for_non_project_files = 'current'
       end
    }
@@ -433,20 +386,34 @@ local p = function()
       config = function()
          p = require('lspconfig')
 
-         p.texlab.setup{}
+         -- p.texlab.setup{}
          p.r_language_server.setup{}
          p.zk.setup{}
+      end
+   }
+   use {
+      'williamboman/nvim-lsp-installer',
+      config = function()
+         local lsp_installer = require("nvim-lsp-installer")
+
+         lsp_installer.on_server_ready(function(server)
+            local opts = {}
+
+            -- (optional) Customize the options passed to the server
+            -- if server.name == "tsserver" then
+            --     opts.root_dir = function() ... end
+            -- end
+
+            -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+            server:setup(opts)
+            vim.cmd [[ do User LspAttachBuffers ]]
+         end)
       end
    }
    use {
       'onsails/lspkind-nvim',
       config = function()
          require('lspkind').init {}
-      end
-   }
-   use { 'kabouzeid/nvim-lspinstall',
-      config = function()
-         require('pluginconfig.LSP.main')
       end
    }
    use { 'p00f/nvim-ts-rainbow',
@@ -461,36 +428,34 @@ local p = function()
       end,
       disable = false
    }
-   use { 'euclidianAce/BetterLua.vim' }
    use { 'akinsho/nvim-toggleterm.lua',
       config = function()
          require('pluginconfig.toggleterm')
       end
    }
    use { 'stevearc/vim-arduino' }
-   use { 'lervag/vimtex' }
+   use { 'lervag/vimtex',
+      setup = function()
+         vim.g.vimtex_imaps_enabled = 0
+      end
+   }
    use { 'vim-pandoc/vim-pandoc',
       disable = true
    }
-   use { 'vim-pandoc/vim-pandoc-syntax',
-      disable = true
-   }
    use { 'WolfgangMehner/perl-support',
-      config = function()
+      setup = function()
          vim.g.Perl_PerlTags = 'on'
       end
    }
    use { 'liuchengxu/graphviz.vim' }
-   use { 'davidhalter/jedi-vim' }
    use { 'kynan/dokuvimki',
-      config = function()
+      setup = function()
          vim.g.DokuVimKi_USER = ''
          vim.g.DokuVimKi_PASS = ''
          vim.g.DokuVimKi_URL  = ''
       end
    }
    use { 'monaqa/dial.nvim' }
-   use { 'NLKNguyen/papercolor-theme' }
 
    use { 'sgur/vim-textobj-parameter',
       requires = { 'kana/vim-textobj-user' }
@@ -504,10 +469,9 @@ local p = function()
    }
    use { 'rrethy/vim-hexokinase',
       run = 'make hexokinase',
-      config = function() vim.g.Hexokinase_ftDisabled = {'denite', 'denite-filter'} end
+      config = function()  end
    }
-   use {
-      'AckslD/nvim-revJ.lua',
+   use { 'AckslD/nvim-revJ.lua',
       requires = {'kana/vim-textobj-user', 'sgur/vim-textobj-parameter'},
       config = function()
          require('revj').setup{
@@ -526,43 +490,31 @@ local p = function()
          vim.o.tabline = '%!v:lua.require\'luatab\'.tabline()'
       end
    }
-   use { 'shadmansaleh/lualine.nvim',
+   use { 'nvim-lualine/lualine.nvim',
       requires = {
-         'kyazdani42/nvim-web-devicons', opt = true 
+         'kyazdani42/nvim-web-devicons', opt = true
       },
       config = function()
          require('pluginconfig.lualine')
       end
    }
 
+   -- Syntax
+
+   use { 'Matt-Deacalion/vim-systemd-syntax' }
+   use { 'euclidianAce/BetterLua.vim' }
+   use { 'glts/vim-texlog' }
+   use { 'vim-pandoc/vim-pandoc-syntax',
+      disable = true
+   }
+
    -- DISABLED
 
-   use { 'Shougo/neoyank.vim',
-      requires = 'Shougo/denite.nvim',
-      disable = 1,
-      config = function()
-         vim.g['neoyank#limit']          = 2
-         vim.g['neoyank#save_registers'] = {'"', '0', '+', '*'}
-         vim.g['neoyank#save_registers'] = {'"', '0', '+', '*'}
-         vim.g['neoyank#disable_write']  = 1
-         vim.g['neoyank#file'] = 
-            '/home/johannes/.cache/nvim/yankring.txt'
-      end
-   }
-   use { 'f-person/git-blame.nvim',
-      disable = 1
-   }
    use { 'windwp/nvim-autopairs.git' ,
       requires = 'nvim-treesitter/nvim-treesitter',
       disable = 1
    }
-   use { 'vim-airline/vim-airline',
-      disable = 1
-   }
    use { 'vim-airline/vim-airline-themes',
-      disable = 1
-   }
-   use { 'Shougo/deoplete.nvim',
       disable = 1
    }
    use { 'yasukotelin/shirotelin' }

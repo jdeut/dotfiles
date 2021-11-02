@@ -30,6 +30,7 @@ wk.register( {
          end
       end,  [[Go to previous window]]
    },
+   vv = { [[V]], 'linewise visual'}
 }, { mode = 'n' })
 
 

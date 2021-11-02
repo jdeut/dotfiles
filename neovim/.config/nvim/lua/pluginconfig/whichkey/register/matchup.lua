@@ -1,20 +1,20 @@
 require'which-key'.register({
+   ['<Tab>'] = { [[<Plug>(matchup-%)]], 'matchup %' },
    g = {
-      k = { [[<Plug>(matchup-g%)]], 'matchup g%' }
+      ['<Tab>'] = { [[<Plug>(matchup-g%)]], 'matchup g%' }
    },
-   z = {
-      k = { [[<Plug>(matchup-z%)]], 'matchup z%' }
+   ['<leader>'] = {
+      ['<Tab>'] = { [[<Plug>(matchup-z%)]], 'matchup z%' }
    }
 }, { mode = 'n' })
 
 for _,v in ipairs({'o', 'x'}) do
    require'which-key'.register( {
-         a = {
-            ['k'] = { [[<Plug>(matchup-a%)]], 'Matchup a%' }
-         },
-         i = {
-            ['k'] = { [[<Plug>(matchup-i%)]], 'Matchup a%' }
-         }
-      }, { mode = v, prefix = '', noremap = true }
-   )
+      a = {
+         ['<Tab>'] = { [[<Plug>(matchup-a%)]], 'Matchup a%' }
+      },
+      i = {
+         ['<Tab>'] = { [[<Plug>(matchup-i%)]], 'Matchup a%' }
+      }
+   }, { mode = v, prefix = '', noremap = true })
 end
