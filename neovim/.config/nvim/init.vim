@@ -299,8 +299,3 @@ augroup MY__
     "au WinEnter term://* startinsert
 
 augroup END
-
-"══════════════════════════════════════════════════════════════════
-" Mappings 
-
-lua vim.cmd([[source ]] .. vim.fn.stdpath('config') .. [[/mappings.vim]])
