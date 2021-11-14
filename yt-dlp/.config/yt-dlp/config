@@ -1,0 +1,18 @@
+--no-mtime
+
+--embed-thumbnail
+--embed-subs
+
+--audio-format "mp3"
+
+--format "bestvideo[ext=webm]+251/bestvideo[ext=mp4]+(258/256/140)/bestvideo[ext=webm]+(250/249)/best"
+
+--geo-bypass 
+
+--progress 
+
+--restrict-filenames
+
+# --print-traffic
+
+-o ~/Videos/yt-dlp/%(duration>%H-%M-%S)s-%(title).20s.%(ext)s

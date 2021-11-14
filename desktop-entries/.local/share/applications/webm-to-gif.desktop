@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=WebpToGif
+GenericName=WebpToGif
+Comment=WebpToGif
+Exec=bash -c "$HOME/.local/bin/ffmpeg-webm-to-gif.sh %f"
+Terminal=true
+Type=Application
+Keywords=Text;editor;
+Categories=Utility;TextEditor;
+StartupNotify=false
+MimeType=video
