@@ -20,6 +20,7 @@ local p = function()
    }
    use { 'rktjmp/lush.nvim' }
    use { 'olimorris/onedarkpro.nvim',
+      -- disable = true,
       requires = {'rktjmp/lush.nvim'},
       config = function()
          local colors  = require('mycolors').onedark_colors
@@ -78,13 +79,13 @@ local p = function()
       -- disable = false,
       -- disable = true
    }
-   use { 'gelguy/wilder.nvim',
-      config = function()
-         vim.fn['wilder#setup']({
-            modes = {':', '/', '?'}
-         })
-      end
-   }
+   -- use { 'gelguy/wilder.nvim',
+   --    config = function()
+   --       vim.fn['wilder#setup']({
+   --          modes = {':', '/', '?'}
+   --       })
+   --    end
+   -- }
    use { 'ibhagwan/fzf-lua',
       requires = {
          'vijaymarupudi/nvim-fzf',
@@ -111,8 +112,10 @@ local p = function()
       end
    }
    use { 'andymass/vim-matchup',
+      -- disable = true,
       setup = function()
          vim.g.matchup_mappings_enabled = false
+         vim.g.matchup_override_vimtex = 1
       end,
       config = function()
          vim.g.matchup_matchparen_hi_background = 0
@@ -232,7 +235,8 @@ googlebooks     = 'https://www.google.de/search?hl=de&tbo=p&tbm=bks&q={query}&tb
 semanticscholar = 'https://www.semanticscholar.org/search?q={query}',
 googlescholar   = 'https://scholar.google.de/scholar?hl=de&q={query}',
 google          = 'https://google.com/search?q={query}',
-github          = 'https://github.com/search?type=code&q={query}'
+github          = 'https://github.com/search?type=code&q={query}',
+linguee_eng_ger = 'https://www.linguee.com/english-german/search?source=auto&query={query}'
          }
       end
    }
@@ -300,7 +304,8 @@ github          = 'https://github.com/search?type=code&q={query}'
       config = function()
          require'hop'.setup {
             keys          = 'asdfjkl;en',
-            term_seq_bias = 0.5
+            term_seq_bias = 0.5,
+            uppercase_labels = true
          }
       end
    }
@@ -456,7 +461,12 @@ github          = 'https://github.com/search?type=code&q={query}'
       end
    }
    use { 'monaqa/dial.nvim' }
-
+   use { 'kana/vim-textobj-indent',
+      requires = { 'kana/vim-textobj-user' }
+   }
+   use { 'glts/vim-textobj-comment',
+      requires = { 'kana/vim-textobj-user' }
+   }
    use { 'sgur/vim-textobj-parameter',
       requires = { 'kana/vim-textobj-user' }
    }
@@ -469,7 +479,8 @@ github          = 'https://github.com/search?type=code&q={query}'
    }
    use { 'rrethy/vim-hexokinase',
       run = 'make hexokinase',
-      config = function()  end
+      config = function()
+      end
    }
    use { 'AckslD/nvim-revJ.lua',
       requires = {'kana/vim-textobj-user', 'sgur/vim-textobj-parameter'},
@@ -487,7 +498,7 @@ github          = 'https://github.com/search?type=code&q={query}'
    use { 'alvarosevilla95/luatab.nvim',
       requires = 'kyazdani42/nvim-web-devicons',
       config = function()
-         vim.o.tabline = '%!v:lua.require\'luatab\'.tabline()'
+         require('luatab').setup({})
       end
    }
    use { 'nvim-lualine/lualine.nvim',
