@@ -5,8 +5,24 @@ require'which-key'.register({
    },
    ['<leader>'] = {
       ['<Tab>'] = { [[<Plug>(matchup-z%)]], 'matchup z%' }
+   },
+   ['['] = {
+      ['<Tab>'] = { [[<Plug>(matchup-[%)]], 'matchup [%' }
+   },
+   [']'] = {
+      ['<Tab>'] = { [[<Plug>(matchup-]%)]], 'matchup ]%' }
    }
 }, { mode = 'n' })
+
+require'which-key'.register({
+   ['<Tab>'] = { [[<Plug>(matchup-%)]], 'matchup %' },
+   ['['] = {
+      ['<Tab>'] = { [[<Plug>(matchup-[%)]], 'matchup [%' }
+   },
+   [']'] = {
+      ['<Tab>'] = { [[<Plug>(matchup-]%)]], 'matchup ]%' }
+   }
+}, { mode = 'x' })
 
 for _,v in ipairs({'o', 'x'}) do
    require'which-key'.register( {

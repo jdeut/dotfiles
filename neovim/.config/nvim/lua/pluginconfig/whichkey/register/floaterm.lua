@@ -6,5 +6,5 @@ require'which-key'.register({
       i         = { require("Fn/floaterm-toggle-size").toggle, "Toggle Size"}
    }
 },  {
-   mode = "n", prefix = "s", silent = true
+   mode = "n", prefix = "s"
 })

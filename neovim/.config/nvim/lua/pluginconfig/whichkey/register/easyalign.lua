@@ -2,8 +2,9 @@ local mappings = {
    ['<leader>'] = {
       f = {
          name  = 'Format',
-         a = { [[<Cmd>EasyAlign<CR>]], 'EasyAlign' },
-         ['='] = { [[:EasyAlign1=<CR>]], 'EasyAlign = ' }
+         a = { [[<Plug>(EasyAlign)]], 'EasyAlign', silent = false },
+         l = { [[<Plug>(LiveEasyAlign)]], 'EasyAlign', silent = false },
+         ['='] = { [[:EasyAlign1=<CR>]], 'EasyAlign = '}
       }
    }
 }

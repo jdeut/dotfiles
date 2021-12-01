@@ -4,18 +4,40 @@ local xn_related = {
    ['<DEL>']      = { [["+]], 'Select + Reg' },
    ['<DEL><DEL>'] = { [["+y]], 'Yank + Reg' },
    ['<Space>']    = { [[:]], 'Enter Command-Line Mode', silent  = false},
-   ['<leader>']   = {
-      e = {
-         name = 'Edit/Sub',
-         e    = { [[:%s###c<Left><Left><Left>]], [[Substitute]], silent = false },
-         w    = { [[:%s#=expand('<cword>')<cr>##c<Left><Left>]], [[ ]], silent = false }
-      }
-   }
 }
 
 for _, v in ipairs({'x', 'n'}) do
    wk.register(xn_related,  { mode = v })
 end
+
+wk.register( {
+   ['<leader>']   = {
+      e = {
+         name = 'Edit/Sub',
+         e    = { [[:s###c<Left><Left><Left>]], [[Substitute]], silent = false },
+         w    = { [[:s#=expand('<cword>')<cr>##c<Left><Left>]], [[ ]], silent = false }
+      }
+   }
+},  { mode = 'x', silet = false})
+
+wk.register( {
+   ['<leader>']   = {
+      e = {
+         name = 'Edit/Sub',
+         e    = { [[:%s###c<Left><Left><Left>]], [[Substitute]], silent = false },
+         w    = { [[:%s#=expand('<cword>')<cr>##c<Left><Left>]], [[ ]], silent = false }
+      },
+      w = {
+         f = { function()
+            require'plenary.job':new({
+               command = 'xdg-open',
+               args = { vim.fn.expand('<cfile>')},
+            }):start()
+         end
+         , [[xdg-open]] }
+      }
+   }
+},  { mode = 'n', silent = false})
 
 wk.register( {
    ['<C-Space>'] = { function() vim.cmd([[wincmd p]]) end,  [[Go to previous window]] },

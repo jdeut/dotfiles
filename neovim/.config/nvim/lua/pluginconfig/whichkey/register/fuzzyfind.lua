@@ -68,9 +68,14 @@ wk.register({
                cwd = path
             end
 
-            require "fzf-lua".grep({
+            require "fzf-lua".live_grep({
                cwd = cwd
             })
+         end, [[Grep Ftype]]
+      },
+
+      ['?'] = { function()
+            require "fzf-lua".live_grep_resume({ })
          end, [[Grep Ftype]]
       },
 

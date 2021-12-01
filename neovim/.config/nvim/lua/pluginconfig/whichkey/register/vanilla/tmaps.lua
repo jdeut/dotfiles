@@ -1,4 +1,4 @@
-wk = require('which-key')
+wk = require'which-key'
 
 -- tnoremap <leader><Esc> <C-\><C-n>
 -- tnoremap <C-ESC> <C-w><C-c>
@@ -9,17 +9,11 @@ local function t(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
--- wk.register({
---     ['<leader>'] = { function() require('which-key').show('<leader>', { mode = 't', auto = true }) end, 'ok' }
--- }, {
---     mode = "t", silent = true
--- })
-
 wk.register({
     ['<Esc>'] = { function() vim.cmd([[silent! stopinsert]]) end, [[Quit Terminal Mode]] },
     ['<leader>'] = {
         ['<Esc>'] = { t([[<C-\><C-N>:wincmd w<CR>]]), [[Quit Terminal Mode]] }
     }
 },  {
-    mode = 't', prefix = '<leader>', silent = true
+    mode = 't', prefix = '<leader>'
 })

@@ -15,7 +15,8 @@ wk.setup {
    window = {
       margin = { 0, 10, 4, 10 },
       padding = { 0, 0, 0, 0 },
-      border = 'single'
+      border = 'single',
+      winblend = 40
    },
    layout = {
       height = { min = 4, max = 22 }, -- 

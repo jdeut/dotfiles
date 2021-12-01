@@ -47,6 +47,7 @@ wk.register({
    s         = { function() wincmd('W') end, "Switch"},
    i         = { function() wincmd('o') end, "Only"},
    m         = { function() wincmd('c') end, "Close"},
+   ['[']     = { function() wincmd('c') end, "Close"},
    n         = { function() wincmd('n') end, "New"},
    N         = { [[<Cmd>topleft vnew<cr>]], "New Vertical"},
    ['<C-n>'] = { function() ccmd('tabnew') end, "New Tab"},
@@ -55,6 +56,7 @@ wk.register({
    ['-']     = { function() wincmd('-') end, "Decrease Height" },
    ['<']     = { function() wincmd('<') end, "Decrease Width" },
    ['>']     = { function() wincmd('>') end, "Increase Width" },
+   ['<Space>'] = { [[<Cmd>silent! e #<cr>]], "Alternate"},
    t         = { function() wincmd('T') end, "Move to New Tab"},
    r         = { function() wincmd('r') end, "Rotate Right"},
    R         = { function() wincmd('R') end, "Rotate Left"},
@@ -67,7 +69,6 @@ wk.register({
       f         = { function() wincmd('gf') end, "Open File Under Cursor in Tab"},
       F         = { function() vim.cmd('vsplit <cfile>') end, "Create File Under Cursor in Tab"},
       ['<C-f>'] = { function() wincmd('gF') end, "Open File Under Cursor in Tab"},
-      s         = { [[<Cmd>silent! e #<cr>]], "Alternate"},
       v         = { [[<Cmd>silent! vsplit #<cr>]], "Alternate Vsplit"},
       ["<"]     = { [[<Cmd>silent! split #<cr>]], "Alternate Split"}
    }
