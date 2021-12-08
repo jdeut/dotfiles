@@ -401,17 +401,58 @@ linguee_eng_ger = 'https://www.linguee.com/english-german/search?source=auto&que
       config = function()
          local lsp_installer = require("nvim-lsp-installer")
 
+         vim.fn.sign_define("DiagnosticSignError",
+            { text = "ᵉ", texthl = "DiagnosticSignError" }
+         )
+         vim.fn.sign_define("DiagnosticSignWarn",
+            { text = "ʷ", texthl = "DiagnosticSignWarn" }
+         )
+         vim.fn.sign_define("DiagnosticSignInfo",
+            { text = "ⁱ", texthl = "DiagnosticSignInfo" }
+         )
+         vim.fn.sign_define("DiagnosticSignHint",
+            { text = "ʰ", texthl = "DiagnosticSignHint" }
+         )
+
+         local custom_attach = function(_, bufnr)
+            local function buf_map(...)
+               vim.api.nvim_buf_set_keymap(bufnr, ...)
+            end
+
+            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+         end
+
          lsp_installer.on_server_ready(function(server)
-            local opts = {}
+            local default_opts = {
+               on_attach = custom_attach
+            }
 
-            -- (optional) Customize the options passed to the server
-            -- if server.name == "tsserver" then
-            --     opts.root_dir = function() ... end
-            -- end
+            local server_opts = {
+               ["sumneko_lua"] = function()
+                  default_opts.settings = {
+                     Lua = {
+                        diagnostics = { -- recognize the `vim` global
+                           globals = {'vim','require','use'},
+                           enable = true
+                        },
+                        workspace = { -- Make the server aware of Neovim runtime files
+                           library = {
+                              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+                           },
+                        },
+                        telemetry = { -- Do not send telemetry data 
+                           enable = false,
+                        }
+                     }
+                  }
+               end,
+            }
 
-            -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
-            server:setup(opts)
-            vim.cmd [[ do User LspAttachBuffers ]]
+            local server_options = server_opts[server.name]
+               and server_opts[server.name]() or default_opts
+
+            server:setup(server_options)
          end)
       end
    }
