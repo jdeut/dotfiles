@@ -98,7 +98,8 @@ local mappings = {
             }
          }):sync()
       end, 'open'
-      }
+      },
+      r = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'}
    }
 }
 

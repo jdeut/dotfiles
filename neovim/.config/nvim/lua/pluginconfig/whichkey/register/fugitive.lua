@@ -3,6 +3,7 @@ require'which-key'.register({
       name = 'Git',
       i    = { [[<Cmd>cclose <bar> tab Git<CR>]], [[Git]] },
       w    = { [[<Cmd>Gwrite<CR>]], [[Git Write]] },
+      r    = { [[<Cmd>Gread<CR>]], [[Git Checkout/Read]] },
       m    = { [[:GMove <C-r>%]], [[Git Move]], silent = false},
       d    = { [[<Cmd>GDelete<CR>]], [[Git Delete file]] },
       c    = { [[<Cmd>Git commit --quiet<CR>]], [[Git Commit]] },

@@ -11,6 +11,13 @@ local mappings = {
          end,
          'Exec in Term'
       },
+      R = { 
+         function()
+            tt():restart()
+            tt():send({cmd = 'lua5.3'})
+         end,
+         'Exec in Term'
+      },
       j = { function()
             tt():send({cmd = 'env LUA_PATH=$LUA_PATH_5_1 LUA_CPATH=$LUA_CPATH_5_1 luajit'})
             -- local filename = vim.fn.expand('%')
@@ -19,6 +26,22 @@ local mappings = {
             -- vim.cmd([[FloatermSend --name=luajit export LUA_CPATH=$LUA_CPATH_5_1]])
             -- vim.cmd([[FloatermSend --name=luajit luajit ]] .. filename)
          end, 'Run with LuaJIT'
+      },
+      J = { function()
+            tt():restart()
+            tt():send({cmd = 'env LUA_PATH=$LUA_PATH_5_1 LUA_CPATH=$LUA_CPATH_5_1 luajit'})
+            -- local filename = vim.fn.expand('%')
+            -- vim.cmd([[FloatermNew --name=luajit]])
+            -- vim.cmd([[FloatermSend --name=luajit export LUA_PATH=$LUA_PATH_5_1]])
+            -- vim.cmd([[FloatermSend --name=luajit export LUA_CPATH=$LUA_CPATH_5_1]])
+            -- vim.cmd([[FloatermSend --name=luajit luajit ]] .. filename)
+         end, 'Run with LuaJIT'
+      },
+      w = { function()
+            local s = vim.fn.expand('<cword>')
+
+            vim.fn.jobstart([[devhelp --search=]] .. s)
+         end, 'LGI devhelp'
       }
    }
 }

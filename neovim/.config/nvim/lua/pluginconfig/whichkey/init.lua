@@ -19,13 +19,13 @@ wk.setup {
       winblend = 40
    },
    layout = {
-      height = { min = 4, max = 22 }, -- 
-      width = { min = 5, max = 40 }, -- 
+      height = { min = 4, max = 22 }, --
+      width = { min = 5, max = 40 }, --
       spacing = 5, -- spacing between columns
       align = "center",
    },
    hidden = {
-      "execute", "<cmd>", "<Cmd>", 
+      "execute", "<cmd>", "<Cmd>",
       "<CR>", "call", "lua", "^:", "^ "
    },
    -- triggers = {
@@ -40,14 +40,26 @@ wk.setup {
 local luapath = path:new(vim.fn.stdpath('config')):joinpath('lua')
 local wkpath = luapath:joinpath('pluginconfig/whichkey/register')
 
+-- vim.cmd([[echomsg "]] .. tostring(wkpath) .. [["]])
+-- vim.cmd([[echomsg "]] .. tostring(luapath) .. [["]])
+
 scan.scan_dir(
    wkpath:absolute(), {
       search_pattern = 'lua$',
       on_insert = function(entry, typ)
          if typ == 'file' then
-            p = path:new(entry):make_relative(luapath:absolute())
+            local p = path:new(entry):make_relative(luapath:absolute())
 
-            p = vim.fn.fnamemodify(p, ':p:r'):gsub('/', '.')
+            -- vim.cmd([[echomsg "]] .. tostring(p) .. [["]])
+
+            --assert(
+            --   tostring(p):match([[\.]]),
+            --   tostring(p):format("\ndot in path >>%s<< is not valid", p)
+            --)
+
+            p = vim.fn.fnamemodify(p, ':r'):gsub('/', '.')
+
+            -- vim.cmd([[echomsg "]] .. p .. [["]])
 
             require(p)
          end

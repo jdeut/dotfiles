@@ -5,6 +5,6 @@ require'which-key'.register({
       n         = { [[<Cmd>FloatermNew --position=top --width=81 --height=0.7<CR>]], "NewFloaterm in Cwd"},
       i         = { require("Fn/floaterm-toggle-size").toggle, "Toggle Size"}
    }
-},  {
+}, {
    mode = "n", prefix = "s"
 })
