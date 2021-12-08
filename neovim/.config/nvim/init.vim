@@ -261,6 +261,13 @@ augroup MY__
     " press <C-c> to leave the command-line window
     autocmd CmdwinEnter * noremap <buffer> <C-c> <C-\><C-N>
 
+    
+
+    " set ` mark to cursor position at mode change from [*] -> [visual]
+    au ModeChanged *:[vV]* lua p = vim.api.nvim_win_get_cursor(0) vim.api.nvim_buf_set_mark(0, '`', p[1], p[2], {})
+    " test with -->
+    "   au ModeChanged * echomsg printf('the old mode was: %s, the new mode is: %s', v:event.old_mode, v:event.new_mode)
+
     "autocmd WinEnter * lua 
     "\   local fts = { 'denite', 'denite-filter' } ;
     "\   local ret = vim.tbl_contains(fts, vim.bo.filetype) 
