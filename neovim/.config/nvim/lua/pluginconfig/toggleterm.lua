@@ -150,6 +150,15 @@ function Toggleterminals:close()
    end
 end
 
+function Toggleterminals:restart()
+   self:jump_to_term_normal()
+
+   vim.fn.jobstop(vim.b.terminal_job_id)
+   vim.cmd([[bdelete! ]] .. self.terminal.bufnr)
+   self:jump_to_term_normal()
+   self:jump_back()
+end
+
 function Toggleterminals:send(opts)
 
    winnr = self.winnr0

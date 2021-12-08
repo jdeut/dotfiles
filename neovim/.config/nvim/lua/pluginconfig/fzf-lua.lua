@@ -91,12 +91,12 @@ require'fzf-lua'.setup({
       fzf = {               -- fzf '--bind=' options
          ['f2']         = 'toggle-preview',
          ['f3']         = 'toggle-preview-wrap',
-         ['shift-down'] = 'preview-page-down',
-         ['shift-up']   = 'preview-page-up',
          ['ctrl-d']     = 'half-page-down',
          ['ctrl-u']     = 'half-page-up',
          ['ctrl-a']     = 'toggle-all',
          ['ctrl-space'] = 'toggle',
+         ['ctrl-j']     = 'down',
+         ['ctrl-k']     = 'up',
          ['ctrl-l']     = 'clear-query'
       }
    },
@@ -107,12 +107,31 @@ require'fzf-lua'.setup({
          border = 'Folded'
       },
       preview = {
-         default = 'cat',
-         border = 'border',
-         hidden = 'nohidden',
+         default        = 'cat',
+         border         = 'border',
+         hidden         = 'nohidden',
          preview_layout = 'horizontal',
-         vertical = 'down:20%'
-      }
+         vertical       = 'down:20%',
+         scrollbar      = 'border'
+      },
+      on_create = function()
+            mappings = {
+               ['<S-PageUp>'] = { function()
+                     require'fzf-lua.win'.preview_scroll(-1)
+                  end, ''
+               },
+               ['<S-PageDown>'] = { function()
+                     require'fzf-lua.win'.preview_scroll(1)
+                  end, ''
+               }
+            }
+
+            require('which-key').register(mappings, {
+               buffer = 0,
+               mode = 't',
+               noremap = true
+            })
+         end
    },
    previewers = {
       cat = {
@@ -151,16 +170,44 @@ require'fzf-lua'.setup({
       }
    },
    grep = {
-      prompt       = 'Ag❯ ',
+      prompt       = 'Rg❯ ',
       input_prompt = 'Grep For❯ ',
-      cmd          = 'rg -i --color=always --hidden --vimgrep --no-multiline --',
+      rg_opts      = "--hidden --column --line-number --no-heading " ..
+                     "--color=always --smart-case -g '!{.git,node_modules}/*'",
       git_icons    = true,           -- show git icons?
       file_icons   = true,           -- show file icons?
       color_icons  = true,           -- colorize file|git icons
       no_esc       = 2,
       -- preview_opts = 'hidden',
-      actions = {
+      actions      = {
          ['ctrl-q']  = actions.file_sel_to_qf,
+      },
+      winopts = {
+         preview = {
+            default = 'bat',
+            title = false,
+            hidden = 'nohidden',
+            border = 'border',
+            layout = 'vertical',
+            vertical = 'down:25%'
+         }
+      }
+   },
+   lsp = {
+      prompt            = '❯ ',
+      -- cwd               = vim.loop.cwd(),
+      cwd_only          = false,      -- LSP/diagnostics for cwd only?
+      async_or_timeout  = true,       -- timeout(ms) or false for blocking calls
+      file_icons        = true,
+      git_icons         = false,
+      lsp_icons         = true,
+      severity          = "hint",
+      fzf_opts = { ['--keep-right'] = '' },
+      icons = {
+         ["Error"]       = { icon = "", color = "red" },       -- error
+         ["Warning"]     = { icon = "", color = "yellow" },    -- warning
+         ["Information"] = { icon = "", color = "blue" },      -- info
+         ["Hint"]        = { icon = "", color = "magenta" },   -- hint
       },
       winopts = {
          preview = {

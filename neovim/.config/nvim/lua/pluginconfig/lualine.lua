@@ -1,30 +1,43 @@
 local function hide_on_winwidth_cond()
    if vim.fn.winwidth(0) < 80 then
       return false
-   else 
-      return true 
-   end 
+   else
+      return true
+   end
 end
 
 local sections_common = {
     lualine_x = {
         { [[LSP]], cond = function()
                 if #vim.lsp.buf_get_clients() > 0 then return true 
-                else return false end 
+                else return false end
             end
         },
     },
-    lualine_y = {
-        { [["Lsp"]], 
-            cond = function()
-                if #vim.lsp.buf_get_clients() > 0 then return true 
-                else return false end 
-            end,
-            color = { fg = '#00ff00' }
-        },
-        { [[bo:filetype]], cond = hide_on_winwidth_cond },
-        { [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]], cond = hide_on_winwidth_cond},
-        { [[progress]], cond = hide_on_winwidth_cond }
+   lualine_y = {
+      {  [["Lsp"]],
+         cond = function()
+            if #vim.lsp.buf_get_clients() > 0 then return true 
+            else return false end 
+         end,
+         color = { fg = '#00ff00' }
+      },
+      {
+         function()
+            return ({"⟳", "✓", "✗"})[vim.b.vimtex and vim.b.vimtex.compiler.status]
+         end,
+         cond = function()
+            if vim.b.vimtex then
+               return true
+            else
+               return false
+            end
+         end,
+         type = 'lua_expr'
+      },
+      { [[bo:filetype]], cond = hide_on_winwidth_cond },
+      { [["w" .. vim.fn.winnr() .. "b" .. vim.fn.bufnr()]], cond = hide_on_winwidth_cond},
+      { [[progress]], cond = hide_on_winwidth_cond }
     },
     lualine_z = {{ [[location]] }}
 }
