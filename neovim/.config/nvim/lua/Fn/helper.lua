@@ -13,4 +13,11 @@ t.windowclose = function()
     end
 end
 
+t.gxmessage = function(text)
+   require('plenary.job'):new({
+      command = 'gxmessage',
+      args = {text}}
+   ):sync()
+end
+
 return t
