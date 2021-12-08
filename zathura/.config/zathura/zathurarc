@@ -1,5 +1,8 @@
+set dbus-service true
+set dbus-raise-window true
 set synctex true
-set synctex-editor-command "nvr --remote-silent %f -c %l"
+#set synctex-editor-command "nvr --remote-silent %f -c %l"
+
 set highlight-transparency 0.4
 set statusbar-home-tilde true
 set statusbar-basename true
