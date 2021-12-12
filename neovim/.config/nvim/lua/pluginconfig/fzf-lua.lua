@@ -19,7 +19,7 @@ t.custom.git_files = function(opts)
             hidden = 'nohidden',
             layout = 'vertical'
          }
-      } 
+      }
    }
 
    if not type(opts) == 'table' then
@@ -47,34 +47,34 @@ t.custom.git_files = function(opts)
       '--exec stat --printf="%Y\t%n\n"',
       ' | sort -r -k 1 | cut -f 2'
    })
-   
-   -- print(vim.inspect(merged_opts))
-   
+
+   --
+   --
    require'fzf-lua'.files(merged_opts)
 end
 
 local floatArgs = function()
-
    local columns = vim.o.columns
    local lines = vim.o.lines
 
-   local width = math.floor(columns - (columns * 1 / 10))
-   local height = lines - 8
+   local crow, ccol = require'Fn.helper'.get_screen_cursor_position()
 
-   local row = lines
+   local width = columns < 110
+      and math.floor(columns - (columns * 1 / 10))
+      or 110
 
-   if columns < 100 then
-   width = columns -- math.floor(columns - (columns * 1 / 5))
-   end
+   local height = lines < 25
+      and lines - 10
+      or  25 - 10
 
-   if lines < 30 then
-   height = lines - 3
-   end
+   local mcol = columns - math.floor( width / 2 )
+
+   local col =  ( math.abs(ccol - mcol) > 40 and ccol or mcol ) - .5 * width
 
    return {
       relative = 'editor',
-      row      = 1,
-      col      = math.floor((columns - width) / 2),
+      row      = crow,
+      col      = col,
       width    = width,
       height   = height,
       style    = 'minimal'
