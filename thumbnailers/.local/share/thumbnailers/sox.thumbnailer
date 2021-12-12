@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=/home/johannes/.local/bin/soxthumbnailer
+Exec=/home/johannes/.local/bin/soxthumbnailer %i %o %s
+MimeType=audio/x-wav;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-vorbis+ogg;audio/ogg;application/ogg;application/x-ogg;
