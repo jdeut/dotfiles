@@ -67,14 +67,15 @@ local floatArgs = function()
       and lines - 10
       or  25 - 10
 
-   local mcol = columns - math.floor( width / 2 )
+   local col =  ( math.abs(ccol - .5 * columns) > 25 and ccol or .5 * columns ) - .5 * width
+   local row =  crow  - .5 * height
 
-   local col =  ( math.abs(ccol - mcol) > 40 and ccol or mcol ) - .5 * width
+   print(row)
 
    return {
       relative = 'editor',
-      row      = crow,
-      col      = col,
+      row      = row,
+      col      = math.floor(col),
       width    = width,
       height   = height,
       style    = 'minimal'
