@@ -1,1 +1,1 @@
-`stow` symlinks everything in the right path
+`stow` symlinks everything to the right location
