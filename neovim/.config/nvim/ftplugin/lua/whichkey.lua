@@ -36,7 +36,10 @@ local mappings = {
             -- vim.cmd([[FloatermSend --name=luajit export LUA_CPATH=$LUA_CPATH_5_1]])
             -- vim.cmd([[FloatermSend --name=luajit luajit ]] .. filename)
          end, 'Run with LuaJIT'
-      },
+      }
+   },
+   w = {
+      name = 'Search',
       w = { function()
             local s = vim.fn.expand('<cword>')
 

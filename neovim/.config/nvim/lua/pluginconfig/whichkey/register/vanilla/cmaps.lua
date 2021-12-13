@@ -1,0 +1,12 @@
+-- local mappings = {
+--    ['<C-Space>'] = {
+--       name = 'mody mody',
+--       p = {[[<C-R>=expand('%:.')<CR>]], [[expand path]]}
+--    },
+--    ['<C-t>'] = {
+--       name = 'mody mody',
+--       p = {[[<C-R>=expand('%:.')<CR>]], [[expand path]]}
+--    }
+-- }
+--
+-- wk.register(mappings, { mode = 'c' })
