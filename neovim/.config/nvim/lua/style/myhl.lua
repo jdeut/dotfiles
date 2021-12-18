@@ -4,7 +4,7 @@ local cols = require'style.mycols'
 
 local tbind = vim.fn.extend
 
--- t.Normal = { fg = 'green', bg = 'red' }
+t.Normal = { fg = '#111111', bg = '#ffffff' }
 
 t.NonText    = { fg = cols.fg, bg = cols.bg }
 t.Folded     = { fg = cols.black, bg = cols.lightgreen, style = 'italic' }
@@ -106,16 +106,50 @@ t.GitSignsAddLn    = { bg = '#acffac' }
 t.GitSignsChangeLn = { bg = '#ffff8c' }
 t.GitSignsDeleteLn = { bg = '#ffdfdf' }
 
+t.IndentBlanklineIndent1 = { fg = '#ff4C45', style = 'bold' }
+t.IndentBlanklineIndent2 = { fg = '#E5a02B', style = 'bold' }
+t.IndentBlanklineIndent3 = { fg = '#20e339', style = 'bold' }
+t.IndentBlanklineIndent4 = { fg = '#6606ff', style = 'bold' }
+t.IndentBlanklineIndent5 = { fg = '#01cFfF', style = 'bold' }
+t.IndentBlanklineIndent6 = { fg = '#f608fD', style = 'bold' }
+
+t.LspDiagnosticsVirtualTextError       = { fg = 'red', style = 'italic' }
+t.LspDiagnosticsVirtualTextWarning     = { fg = 'red', style = 'italic' }
+t.LspDiagnosticsVirtualTextHint        = { fg = 'red', style = 'italic' }
+t.LspDiagnosticsVirtualTextInformation = { fg = cols.cyan, style = 'italic' }
+
+t.MyFzfLuaDefault = t.Normal
+t.MyFzfLuaBorder = t.Normal
+
+t.MyFzfBg = { bg = cols.black }
+t.MyFzfFg = { fg = cols.orange }
+t.MyFzfHigh = { fg = cols.purple }
+
+t.MyFzfBgPlus = { bg = cols.gray }
+t.MyFzfFgPlus = { fg = cols.brightcyan }
+t.MyFzfHighPlus = { fg = cols.brightpurple }
+
+t.MyFzfPrompt = { fg = cols.brightgreen }
+t.MyFzfSpinner = { fg = cols.brightcyan }
+
+t.MyFzfGutter = { bg = cols.cyan }
+
+t.MyFzfInfo = { fg = cols.brightyellow, style = 'bold' }
+t.MyFzfMarker = { fg = cols.lightgreen }
+t.MyFzfPointer = { fg = cols.brightcyan }
+
+t.MyModifiable = { bg = cols.lightorange }
+
 t.SignColumn = { bg = cols.gray }
 
 do
    t.VertSplit           = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
    t.LineNr              = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
 
-   t.DiagnosticSignError = tbind({ fg = cols.red }, t.SignColumn )
-   t.DiagnosticSignWarn  = tbind({ fg = cols.yellow }, t.SignColumn )
-   t.DiagnosticSignInfo  = tbind({ fg = cols.cyan }, t.SignColumn )
-   t.DiagnosticSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
+   -- t.DiagnosticSignError = tbind({ fg = cols.red }, t.SignColumn )
+   -- t.DiagnosticSignWarn  = tbind({ fg = cols.yellow }, t.SignColumn )
+   -- t.DiagnosticSignInfo  = tbind({ fg = cols.cyan }, t.SignColumn )
+   -- t.DiagnosticSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
 
    t.LspDiagnosticsSignError = tbind({ fg = cols.red }, t.SignColumn )
    t.LspDiagnosticsSignWarning  = tbind({ fg = cols.yellow }, t.SignColumn )
