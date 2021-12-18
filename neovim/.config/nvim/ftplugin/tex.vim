@@ -1,3 +1,12 @@
+" let g:vimtex_syntax_packages = {
+" \   'hyperref': {'load': 2},
+" \   'mycustom': {'load': 2}
+" \   'natbib': {'load': 2},
+" \   'babel': {'conceal': 0},
+" \   'biblatex': {'load': 2},
+" \   'tikz': {'load': 2},
+" \   'tcolorbox': {'load': 2}
+" \ }
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync()
 "breaks by word rather than character
 
@@ -43,15 +52,14 @@ let g:vimtex_view_forward_search_on_start = 1
 
 " let g:vimtex_view_general_viewer                 = 'zathura'
 " let g:vimtex_view_zathura_check_libsynctex       = v:true
-let g:vimtex_view_enabled                        = 1
-let g:vimtex_view_method                         = 'general'
-let g:vimtex_view_automatic                      = 1
-let g:vimtex_view_automatic_xwin                 = 0 
+let g:vimtex_view_enabled        = 1
+let g:vimtex_view_method         = 'general'
+let g:vimtex_view_automatic      = 1
+let g:vimtex_view_automatic_xwin = 0
+let g:vimtex_imaps_enabled       = 0
 
-let g:vimtex_imaps_enabled = 0
-
-let g:vimtex_syntax_enabled                      = 1
 let g:tex_no_error                               = 1
+let g:vimtex_syntax_enabled                      = 1
 let g:vimtex_syntax_nospell_comments             = 1
 let g:vimtex_quickfix_autoclose_after_keystrokes = 3
 let g:vimtex_quickfix_open_on_warning            = 0
@@ -67,42 +75,8 @@ let g:vimtex_subfile_start_local                 = 1
 "let g:vimtex_view_general_viewer = 'evince'
 " let g:vimtex_compiler_progname                   = 'nvr'
 
-" let g:vimtex_syntax_custom_cmds = [
-" \   { 'name': 'adjustbox', 'argstyle': 'ital' },
-" \   { 'name': 'arraycolor', 'argstyle': 'ital' },
-" \   { 'name': 'color', 'argstyle': 'ital' },
-" \   { 'name': 'frametitle', 'argstyle': 'bold' },
-" \   { 'name': 'subfile', 'argstyle': 'bold' }
-" \ ]
-
 hi link texCFrametitleArg VimtexFrametitle
 hi link texCSubfileArg VimtexFrametitle
-
-"let g:vimtex_syntax_conceal = {
-"\   'accents': g:vimtex_syntax_conceal_default,
-"\   'fancy': 1,
-"\   'greek': g:vimtex_syntax_conceal_default,
-"\   'math_bounds': g:vimtex_syntax_conceal_default,
-"\   'math_delimiters': g:vimtex_syntax_conceal_default,
-"\   'math_fracs': g:vimtex_syntax_conceal_default,
-"\   'math_super_sub': g:vimtex_syntax_conceal_default,
-"\   'math_symbols': g:vimtex_syntax_conceal_default,
-"\   'styles': g:vimtex_syntax_conceal_default,
-"\   'cites': g:vimtex_syntax_conceal_default,
-"\ }
-
-let g:vimtex_syntax_packages = {
-\   'mycustom': {'load': 2}
-\ }
-
-let g:vimtex_syntax_packages = {
-\   'hyperref': {'load': 2},
-\   'natbib': {'load': 2},
-\   'babel': {'conceal': 0},
-\   'biblatex': {'load': 2},
-\   'tikz': {'load': 2},
-\   'tcolorbox': {'load': 2},
-\ }
 
 
 " let g:vimtex_complete_ref = { 
@@ -126,8 +100,7 @@ let g:vimtex_grammar_textidote        = {
 \ }
 " 
 
-" let g:vimtex_fold_types               = { 
-let g:vimtex_fold_types               = {
+let g:vimtex_fold_types = {
 \   'cmd_single' : {
 \       'cmds' : [
 \           'ctikzset',
@@ -190,6 +163,9 @@ let g:vimtex_syntax_custom_cmds = [
 \  { 'name' : 'matrix', 'argspell' : 0 },
 \  { 'name' : 'newadjustimage', 'argspell' : 0 },
 \  { 'name' : 'node', 'argspell' : 0 },
+\  { 'name' : 'rowcolor', 'argspell' : 0 },
+\  { 'name' : 'NiceTabular', 'argspell' : 0 },
+\  { 'name' : 'NiceTabularX', 'argspell' : 0 },
 \  { 'name' : 'KOMAoptions', 'argspell' : 0 },
 \  { 'name' : 'automark', 'argspell' : 0 },
 \  { 'name' : 'defaultfontfeatures', 'argspell' : 0 },

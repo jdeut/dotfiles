@@ -1,8 +1,9 @@
 vim.wo.winhighlight = 'Normal:WhichKeyGroup'
 
+vim.cmd([[IndentBlanklineDisable]])
+
 vim.defer_fn( function()
-        print('Timeout')
-        vim.wo.wrap = true
-    end,
-    100
+      vim.wo.wrap = true
+   end,
+   100
 )
