@@ -24,7 +24,6 @@ t.git_get_root_or_cwd  = function()
    return t.git_is_valid() and t.git_get_root() or vim.fn.expand('%:p:h')
 end
 
-
 t.windowclose = function()
    local ret = vim.fn.win_findbuf(vim.fn.winbufnr(0))
    if vim.fn.winnr('$') == 1 and #ret == 1 then
@@ -50,6 +49,27 @@ end
 t.feedkeys_after_termcodes = function(key)
    local tkey = vim.api.nvim_replace_termcodes(key, 'n', {})
    vim.api.nvim_feedkeys(tkey, 'n', {})
+end
+
+t.get_last_visual_selection = function()
+   if vim.fn.mode() == 'v' or vim.fn.mode() == 'V' then
+      local key = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+      vim.api.nvim_feedkeys(key, 'x', true)
+   end
+   local row0, col0 = unpack(vim.api.nvim_buf_get_mark(0, '<'))
+   local row1, col1 = unpack(vim.api.nvim_buf_get_mark(0, '>'))
+   local lines = vim.api.nvim_buf_get_lines(0, row0 - 1, row1, false)
+
+   col1 = col1 == 2147483647 and -1 or col1 + 1
+
+   if #lines == 1 then
+      lines[1] = string.sub(lines[1], col0 + 1, col1)
+   elseif #lines > 1 then
+      lines[1] = string.sub(lines[1], col0 + 1, -1)
+      lines[#lines] = string.sub(lines[#lines], 0, col1)
+   end
+
+   return table.concat(lines,"\n")
 end
 
 t.gxmessage = function(text)
