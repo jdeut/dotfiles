@@ -1,27 +1,32 @@
 wk = require("which-key")
+helper = require'myhelper'
 
 local n_openbrowser_query = function(s)
    return {
       [[:OpenBrowserSmartSearch -]] ..  s ..  [[ ]] ,
-      s,
+      s .. [[ (input)]],
       silent = false
    }
 end
 
-local n_openbrowser_cword = function(s) return {
-   [[<Cmd>execute "OpenBrowserSmartSearch -]] ..  s ..
-   [[ " . expand('<cword>')<CR>]] , s
-} end
+local openbrowser_cword = function(s)
+   return {
+      function()
+         vim.cmd([[OpenBrowserSmartSearch -]] ..  s .. [[ ]] .. vim.fn.expand('<cword>'))
+      end,
+      s .. ' (cword)'
+   }
+end
 
-local v_openbrowser_cword = function(s) return {
-   [[<Esc>:OpenBrowserSmartSearch -]] ..  s ..
-   [[ "<C-r>=init_custom_fn#get_selected_text()<CR>"<CR>]] , s
-} end
-
-local v_openbrowser = function(s) return {
-   [[<Esc>:OpenBrowserSmartSearch -]] ..  s ..
-   [[ <C-r>=init_custom_fn#get_selected_text()<CR>]] , s
-} end
+local v_openbrowser = function(s)
+   return {
+      function()
+         local u = helper.get_last_visual_selection()
+         vim.cmd([[OpenBrowserSmartSearch -]] ..  s .. [[ ]] .. u)
+      end,
+      s .. ' (Visual Sel.)'
+   }
+end
 
 local zeal_cword = function()
    local s = vim.fn.expand('<cword>')
@@ -40,13 +45,12 @@ end
 wk.register({
    w = {
       name = 'Browser Search',
-      g = n_openbrowser_cword('google'),
-      b = n_openbrowser_cword('googlebooks'),
-      s = n_openbrowser_cword('googlescholar'),
-      w = n_openbrowser_cword('wortbuch'),
-      e = n_openbrowser_cword('sematicscholar'),
-      i = n_openbrowser_cword('github'),
-      l = n_openbrowser_cword('linguee_eng_ger'),
+      g = openbrowser_cword('google'),
+      b = openbrowser_cword('googlebooks'),
+      s = openbrowser_cword('googlescholar'),
+      w = openbrowser_cword('wortbuch'),
+      e = openbrowser_cword('sematicscholar'),
+      l = openbrowser_cword('linguee_eng_ger'),
       z = { zeal_cword, [[Zeal]] },
 
       G = n_openbrowser_query('google'),
@@ -54,9 +58,17 @@ wk.register({
       S = n_openbrowser_query('googlescholar'),
       W = n_openbrowser_query('wortbuch'),
       E = n_openbrowser_query('sematicscholar'),
-      I = n_openbrowser_query('github'),
       L = n_openbrowser_query('linguee_eng_ger'),
       Z = { zeal_interactive, [[Zeal]], silent = false},
+      i = {
+         name = 'Github',
+         i = openbrowser_cword('github'),
+         c = openbrowser_cword('github_code'),
+         w = openbrowser_cword('github_wiki'),
+         I = n_openbrowser_query('github'),
+         C = n_openbrowser_query('github_code'),
+         W = n_openbrowser_query('github_wiki'),
+      }
    }
 }, {
    mode = "n", prefix = "<leader>"
@@ -65,20 +77,27 @@ wk.register({
 wk.register({
    w = {
       name = 'Browser Search',
-      g = v_openbrowser_cword('google'),
-      b = v_openbrowser_cword('googlebooks'),
-      s = v_openbrowser_cword('googlescholar'),
-      w = v_openbrowser_cword('wortbuch'),
-      e = v_openbrowser_cword('sematicscholar'),
-      i = v_openbrowser_cword('github'),
-      l = v_openbrowser_cword('linguee_eng_ger'),
-      G = v_openbrowser('google'),
-      B = v_openbrowser('googlebooks'),
-      S = v_openbrowser('googlescholar'),
-      W = v_openbrowser('wortbuch'),
-      E = v_openbrowser('sematicscholar'),
-      I = v_openbrowser('github'),
-      L = v_openbrowser('linguee_eng_ger')
+      G = openbrowser_cword('google'),
+      B = openbrowser_cword('googlebooks'),
+      S = openbrowser_cword('googlescholar'),
+      W = openbrowser_cword('wortbuch'),
+      E = openbrowser_cword('sematicscholar'),
+      L = openbrowser_cword('linguee_eng_ger'),
+      g = v_openbrowser('google'),
+      b = v_openbrowser('googlebooks'),
+      s = v_openbrowser('googlescholar'),
+      w = v_openbrowser('wortbuch'),
+      e = v_openbrowser('sematicscholar'),
+      l = v_openbrowser('linguee_eng_ger'),
+      i = {
+         name = 'Github',
+         I = openbrowser_cword('github'),
+         i = v_openbrowser('github'),
+         C = openbrowser_cword('github_code'),
+         c = v_openbrowser('github_code'),
+         W = openbrowser_cword('github_wiki'),
+         w = v_openbrowser('github_wiki')
+      }
    },
 }, {
    mode = "v", prefix = "<leader>"
