@@ -115,34 +115,34 @@ require'fzf-lua'.setup({
          title          = false
       },
       on_create = function()
-            mappings = {
-               ['<S-PageUp>'] = { function()
-                     require'fzf-lua.win'.preview_scroll(-1)
-                  end, ''
-               },
-               ['<S-PageDown>'] = { function()
-                     require'fzf-lua.win'.preview_scroll(1)
-                  end, ''
-               },
-               ['`'] = {
-                  name = '',
-                  a = { function()
-                        helper.gxmessage('sss')
-                     end, 'ss'
-                  }
+         mappings = {
+            ['<S-PageUp>'] = { function()
+                  require'fzf-lua.win'.preview_scroll(-1)
+               end, ''
+            },
+            ['<S-PageDown>'] = { function()
+                  require'fzf-lua.win'.preview_scroll(1)
+               end, ''
+            },
+            ['`'] = {
+               name = '',
+               a = { function()
+                     helper.gxmessage('sss')
+                  end, 'ss'
                }
             }
+         }
 
-            vim.opt_local.buflisted = false
-            vim.opt_local.bufhidden = 'wipe'
-            vim.opt_local.signcolumn = 'no'
+         vim.opt_local.buflisted = false
+         vim.opt_local.bufhidden = 'wipe'
+         vim.opt_local.signcolumn = 'no'
 
-            require('which-key').register(mappings, {
-               buffer = 0,
-               mode = 't',
-               noremap = true
-            })
-         end
+         require('which-key').register(mappings, {
+            buffer = 0,
+            mode = 't',
+            noremap = true
+         })
+      end
    },
    previewers = {
       cat = {
@@ -192,6 +192,13 @@ require'fzf-lua'.setup({
             ignore_current_buffer = true,
             no_term_buffers = false
          }
+      },
+      actions = {
+         ["default"]     = actions.buf_edit,
+         ["ctrl-s"]      = actions.buf_split,
+         ["ctrl-v"]      = actions.buf_vsplit,
+         ["ctrl-t"]      = actions.buf_tabedit,
+         ["ctrl-d"]      = actions.buf_del,
       }
    },
    grep = {
@@ -237,6 +244,7 @@ require'fzf-lua'.setup({
    },
    oldfiles = {
       cwd = vim.env.HOME,
+      include_current_session = true,
       fzf_opts = {
          ['--tiebreak'] = 'index',
       }
