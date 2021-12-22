@@ -18,7 +18,7 @@ return {
    darkgray     = '#121212',
    brightcyan   = '#00ffff',
    brightyellow = '#ffff00',
-   lightyellow  = '#ffffaa',
+   lightyellow  = '#ffffdc',
    lightred     = '#ffc5c5',
    lightorange  = '#ffdd80',
    lightgreen   = '#b4ffb4',

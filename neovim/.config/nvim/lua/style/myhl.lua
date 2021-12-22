@@ -12,6 +12,11 @@ t.FoldColumn = { fg = cols.red, bg = 'blue', style = 'bold' }
 
 t.Whitespace = { fg = '#353522' }
 
+t.MiniTrailspace = { bg = cols.lightred }
+
+t.MatchParen = { fg = cols.brightyellow, bg = '#c5c5ba', style = 'bold' }
+t.MatchBackground = { bg = cols.lightyellow }
+
 t.EndOfBuffer      = { bg = cols.lightgray, fg = cols.cyan, style = 'italic' }
 
 t.IndentBlankline  = { fg = cols.purple }
@@ -143,22 +148,22 @@ t.MyModifiable = { bg = cols.lightorange }
 t.SignColumn = { bg = cols.gray }
 
 do
-   t.VertSplit           = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
-   t.LineNr              = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
+   t.VertSplit = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
+   t.LineNr    = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
 
    -- t.DiagnosticSignError = tbind({ fg = cols.red }, t.SignColumn )
    -- t.DiagnosticSignWarn  = tbind({ fg = cols.yellow }, t.SignColumn )
    -- t.DiagnosticSignInfo  = tbind({ fg = cols.cyan }, t.SignColumn )
    -- t.DiagnosticSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
 
-   t.LspDiagnosticsSignError = tbind({ fg = cols.red }, t.SignColumn )
-   t.LspDiagnosticsSignWarning  = tbind({ fg = cols.yellow }, t.SignColumn )
-   t.LspDiagnosticsSignInformation  = tbind({ fg = cols.cyan }, t.SignColumn )
-   t.LspDiagnosticsSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
+   t.LspDiagnosticsSignError       = tbind({ fg = cols.red }, t.SignColumn )
+   t.LspDiagnosticsSignWarning     = tbind({ fg = cols.yellow }, t.SignColumn )
+   t.LspDiagnosticsSignInformation = tbind({ fg = cols.cyan }, t.SignColumn )
+   t.LspDiagnosticsSignHint        = tbind({ fg = cols.cyan }, t.SignColumn )
 
-   t.GitSignsAdd         = tbind({ fg = cols.green, style = 'bold' }, t.SignColumn )
-   t.GitSignsDelete      = tbind({ fg = cols.red, style = 'bold'}, t.SignColumn )
-   t.GitSignsChange      = tbind({ fg = cols.yellow, style = 'bold'}, t.SignColumn )
+   t.GitSignsAdd    = tbind({ fg = cols.green, style = 'bold' }, t.SignColumn )
+   t.GitSignsDelete = tbind({ fg = cols.red, style = 'bold'}, t.SignColumn )
+   t.GitSignsChange = tbind({ fg = cols.yellow, style = 'bold'}, t.SignColumn )
 end
 
 return t
