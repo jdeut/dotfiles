@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Cambalache
+GenericName=Cambalache
+Comment=Successor of Glade
+Path=/home/johannes/Src/cambalache
+Exec=python3 run-dev.py %f
+Terminal=false
+StartupNotify=false
+MimeType=application/x-cambalache-project;application/x-gtk-builder;application/x-glade;
+Type=Application
+Icon=org.gnome.Glade
+Categories=GNOME;GTK;Development;GUIDesigner;
