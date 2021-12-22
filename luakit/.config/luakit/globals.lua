@@ -6,8 +6,8 @@ globals.domain_props = {
         user_stylesheet_uri     = "",
     },
     ["youtube.com"] = {
-        enable_scripts = true,
-        enable_plugins = true,
+        enable_scripts          = true,
+        enable_plugins          = true,
         enable_private_browsing = true
     },
     ["bbs.archlinux.org"] = {

@@ -12,7 +12,7 @@ t.dialog = function(text)
    label.text = text
    label.margin = 20
 
-   window:add_signal('destroy', function(v) 
+   window:add_signal('destroy', function(v)
          label:destroy()
       end
    )
