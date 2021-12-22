@@ -231,8 +231,7 @@ function detect_end()
 end
 
 function apply_crop(meta)
-
-    -- Verify if it is necessary to crop.
+    -- Verify if it is necessary to crop.na
     local is_effective = meta.x > 0 or meta.y > 0
         or meta.w < meta.max_w or meta.h < meta.max_h
 
