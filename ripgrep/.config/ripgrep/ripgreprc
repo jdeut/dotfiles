@@ -1,0 +1,14 @@
+--hidden
+--color=always
+--column
+--line-number
+--no-heading 
+--smart-case 
+--colors=path:fg:0x4f,0xa3,0xff
+--colors=path:style:bold
+--colors=line:fg:green
+--colors=line:style:bold
+--colors=column:fg:green
+--colors=column:style:bold
+--colors=match:fg:0xff,0xff,0x00
+--colors=match:style:intense
