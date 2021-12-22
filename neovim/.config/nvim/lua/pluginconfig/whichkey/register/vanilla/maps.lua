@@ -98,7 +98,7 @@ wk.register({
    q = {
       name = 'Quickfix',
       q    = { function()
-            require('Fn/quickfix-toggle').toggle()
+            require('myhelper.quickfix').toggle()
          end, 'toggle'
       },
       n    = { [[<cmd>cnext<CR>]], 'next entry'},

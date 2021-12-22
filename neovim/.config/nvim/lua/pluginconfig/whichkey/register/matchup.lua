@@ -4,7 +4,7 @@ require'which-key'.register({
       ['<Tab>'] = { [[<Plug>(matchup-g%)]], 'matchup g%' }
    },
    ['<leader>'] = {
-      ['<Tab>'] = { [[<Plug>(matchup-z%)]], 'matchup z%' }
+      ['<Tab>'] = { [[<Plug>(matchup-z%)]], 'Goto Nearest Block (Match)' }
    },
    ['['] = {
       ['<Tab>'] = { [[<Plug>(matchup-[%)]], 'matchup [%' }
@@ -18,6 +18,9 @@ require'which-key'.register({
    ['<Tab>'] = { [[<Plug>(matchup-%)]], 'matchup %' },
    ['['] = {
       ['<Tab>'] = { [[<Plug>(matchup-[%)]], 'matchup [%' }
+   },
+   ['<leader>'] = {
+      ['<Tab>'] = { [[<Plug>(matchup-z%)]], 'Goto Nearest Block (Match)' }
    },
    [']'] = {
       ['<Tab>'] = { [[<Plug>(matchup-]%)]], 'matchup ]%' }

@@ -3,7 +3,7 @@ require'which-key'.register({
       name = 'Utils',
       l = {
          name = 'LspInstaller',
-         i    = { [[<Cmd>LspInfo<CR>]], 'Info'},
+         n    = { [[<Cmd>LspInfo<CR>]], 'Info'},
          l    = { [[<Cmd>LspInstallInfo<CR>]], 'InstallInfo'},
       }
    }

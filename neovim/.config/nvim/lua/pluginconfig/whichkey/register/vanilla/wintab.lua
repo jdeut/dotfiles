@@ -1,7 +1,7 @@
 wk = require("which-key")
 
 local function ccmd(cmd, opts)
-   local count = vim.api.nvim_eval('v:count') 
+   local count = vim.api.nvim_eval('v:count')
    local prefix_mod = ''
 
    count = count > 0 and count or ''
@@ -46,7 +46,6 @@ wk.register({
    J         = { function() wincmd('J') end, "Move Down" },
    s         = { function() wincmd('W') end, "Switch"},
    i         = { function() wincmd('o') end, "Only"},
-   m         = { function() wincmd('c') end, "Close"},
    ['[']     = { function() wincmd('c') end, "Close"},
    n         = { function() wincmd('n') end, "New"},
    N         = { [[<Cmd>topleft vnew<cr>]], "New Vertical"},
@@ -64,6 +63,13 @@ wk.register({
    V         = { function() wincmd('v', { prefix_mod = 'rightbelow'}) end, "vsplit"},
    ['%']     = { [[<Cmd>vsplit<cr>]], "vsplit"},
    ['"']     = { [[<Cmd>split<cr>]], "split"},
+   m         = { function()
+         local success, _ = pcall(vim.api.nvim_win_close, 0, true)
+         if not success then
+            vim.cmd('bprev')
+         end
+      end, "Close"
+   },
    g = {
       name = 'Alternate',
       f         = { function() wincmd('gf') end, "Open File Under Cursor in Tab"},
@@ -74,4 +80,12 @@ wk.register({
    }
 },  {
    mode = "n", prefix = "s", silent = true
+})
+
+wk.register({
+   name = 'Buffer/Window/Tab Management',
+   ['<C-j>'] = { function() vim.cmd('bnext') end, "Bnext"},
+   ['<C-k>'] = { function() vim.cmd('bprev') end, "Bprev"},
+}, {
+   mode = "n", prefix = "", silent = true
 })
