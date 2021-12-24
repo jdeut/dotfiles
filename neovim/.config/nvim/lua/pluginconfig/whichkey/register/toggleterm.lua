@@ -1,7 +1,3 @@
-local function tt()
-   return(toggleterminals.default)
-end
-
 local function apply_to_terminals(fn)
    local wins = vim.api.nvim_list_wins()
 
