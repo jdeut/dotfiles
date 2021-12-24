@@ -125,7 +125,7 @@ set autowrite
 "wildmenu
 set wildmenu
 "options for command line completion
-set wildmode=longest,full
+set wildmode=full:longest
 set wildoptions=pum
 "options for insert mode completion
 "'menu' makes completion faster than 'menuone'
@@ -240,6 +240,8 @@ function! SetSqlSyntaxHi()
 endfunction
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+lua require'skeleton'
 
 "══════════════════════════════════════════════════════════════════
 " Autocommands (FileType specific settings, mappings, etc.) 

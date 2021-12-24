@@ -51,7 +51,7 @@ local floatMultiColArgs = function()
    }
 end
 
-require'fzf-lua'.setup({
+require'fzf-lua'.setup({ 
    global_resume  = true,
    git_icons      = true,           -- show git icons?
    file_icons     = true,           -- show file icons?
