@@ -77,7 +77,7 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 #
 declare -A hostcolor
 
-hostcolor[mainbook]=250
+hostcolor[mainbook]=207
 hostcolor[tv]=56
 
 export PROMPT="%B%(?.%F{46}%?%f.%F{red}%?%f) %B%F{14}%n%f%F{white}@%f%F{$hostcolor[$HOST]}%m%f:%F{blue}%~%f %F{14}%#%f %b"
