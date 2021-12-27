@@ -77,8 +77,8 @@ export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 #
 declare -A hostcolor
 
-hostcolor[mainbook]=245
-hostcolor[tv]=54
+hostcolor[mainbook]=250
+hostcolor[tv]=56
 
 export PROMPT="%B%(?.%F{46}%?%f.%F{red}%?%f) %B%F{14}%n%f%F{white}@%f%F{$hostcolor[$HOST]}%m%f:%F{blue}%~%f %F{14}%#%f %b"
 export ZVM_KEYTIMEOUT=0.3
