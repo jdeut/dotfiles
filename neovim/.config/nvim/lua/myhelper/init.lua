@@ -47,7 +47,7 @@ t.get_screen_cursor_position = function()
 end
 
 t.feedkeys_after_termcodes = function(key)
-   local tkey = vim.api.nvim_replace_termcodes(key, 'n', {})
+   local tkey = vim.api.nvim_replace_termcodes(key, 'n', {}, {})
    vim.api.nvim_feedkeys(tkey, 'n', {})
 end
 
@@ -70,6 +70,27 @@ t.get_last_visual_selection = function()
    end
 
    return table.concat(lines,"\n")
+end
+
+t.open_from_ext = function(f)
+   local ok, bt = pcall(vim.api.nvim_buf_get_option, 0, 'buftype')
+
+   if not ok then
+      vim.api.nvim_notify([[can't open ]] .. f, vim.log.levels.ERROR, {})
+   end
+
+   if vim.fn.filereadable(f) == 0 then vim.api.nvim_notify(
+         string.format(
+            [['%s' doesn't exist in %s]], f, vim.fn.getcwd()
+         ),
+         vim.log.levels.WARN, {}
+      )
+      return
+   end
+
+   if bt == 'terminal' then vim.api.nvim_win_hide(0) end
+
+   vim.cmd([[edit ]] .. f)
 end
 
 t.gxmessage = function(text)
