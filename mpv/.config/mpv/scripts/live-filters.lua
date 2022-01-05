@@ -154,7 +154,7 @@ end
 function update()
     local screenx, screeny, aspect = mp.get_osd_size()
     screenx = screenx / opts.scale
-    screeny = 100
+    screeny = 400
 
     -- Clear the OSD if the REPL is not active
     if not repl_active then
@@ -760,7 +760,7 @@ end
 
 
 mp.add_key_binding('`', 'repl-enable', function() set_active(true) end)
-mp.add_key_binding('ctrl+x', "toggle-filter", toggle)
+mp.add_key_binding('alt+x', "toggle-filter", toggle)
 mp.add_key_binding('ctrl+shift+x', "clear-filters", clear_filters)
 mp.add_key_binding('ctrl+z', "remove-last-filter", remove_last_filter)
 mp.add_key_binding('ctrl+shift+z', "undo-filter-removal", undo_filter_removal)
