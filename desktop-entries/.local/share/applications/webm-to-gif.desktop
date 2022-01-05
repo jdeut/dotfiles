@@ -2,7 +2,7 @@
 Name=WebpToGif
 GenericName=WebpToGif
 Comment=WebpToGif
-Exec=bash -c "$HOME/.local/bin/webp-to-gif.sh %f"
+Exec=bash -c "\$HOME/.local/bin/webp-to-gif.sh %f"
 Terminal=true
 Type=Application
 Keywords=Text;editor;
