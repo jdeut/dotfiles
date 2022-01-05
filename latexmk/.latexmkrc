@@ -5,12 +5,12 @@ use feature qw( state );
 sub hline {
     print "=============================================================\n";
 }
-sub infomsg { 
+sub infomsg {
     $begin = shift;
     $end   = shift;
 
     if($begin == 1) { hline(); }
-    print ' >>> ', @_; 
+    print ' >>> ', @_;
     if($end == 1) { hline(); }
 }
 sub init_hooks {
@@ -27,7 +27,7 @@ sub hook_post_compilation {
     my $notify = shift @_;
 
     my $msg;
-     
+
     if($fs == 1) {
         #success
         infomsg 1,0,"compilation success\n";
