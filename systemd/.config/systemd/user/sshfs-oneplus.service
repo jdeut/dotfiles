@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount oneplus
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/usr/bin/sshfs "oneplus.lan_root:/storage/emulated/0" "$HOME/mnt/oneplus" -o reconnect -o cache=yes'
+# ExecStop=/bin/bash -c '/bin/umount $HOME/mnt/oneplus'
+# RemainAfterExit=True
+# User=johannes
+
+[Install]
+WantedBy=multi-user.target
