@@ -47,7 +47,6 @@ let g:vimtex_compiler_latexmk = {
 
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--noraise --unique file:@pdf#src:@line@tex'
-let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_view_forward_search_on_start = 1
 
 " let g:vimtex_view_general_viewer                 = 'zathura'
@@ -55,7 +54,6 @@ let g:vimtex_view_forward_search_on_start = 1
 let g:vimtex_view_enabled        = 1
 let g:vimtex_view_method         = 'general'
 let g:vimtex_view_automatic      = 1
-let g:vimtex_view_automatic_xwin = 0
 let g:vimtex_imaps_enabled       = 0
 
 let g:tex_no_error                               = 1

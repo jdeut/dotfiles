@@ -58,17 +58,6 @@ local mappings = {
    },
    l = {
       name = 'Build related',
-      V = { function()
-            -- vim.cmd([[VimtexView]])
-            vim.fn.jobstart({'run-raise-bridge.sh', 'okular' }, { detach = 1 })
-            -- vim.fn.jobstart({
-            --    'run-raise-bridge.sh',
-            --    'nvim'
-            -- }, {
-            --    detach = 1 
-            -- })
-         end, 'Compile'
-      },
       l = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'},
       g = { function()
             vim.cmd(
@@ -100,7 +89,16 @@ local mappings = {
       end, 'open'
       },
       r = {[[:w<cr>:VimtexCompile<cr>]], 'Compile'}
-   }
+   },
+   v = { function()
+         vim.cmd([[VimtexView]])
+      end, 'Compile'
+   },
+   V = { function()
+         -- vim.cmd([[VimtexView]])
+         vim.fn.jobstart({'run-raise-bridge.sh', 'okular' }, { detach = 1 })
+      end, 'Compile'
+   },
 }
 
 require('which-key').register(
