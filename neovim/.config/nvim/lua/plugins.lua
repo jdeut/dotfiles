@@ -389,11 +389,16 @@ linguee_eng_ger = 'https://www.linguee.com/english-german/search?source=auto&que
    use { 'farmergreg/vim-lastplace' }
    use { 'neovim/nvim-lspconfig',
       config = function()
-         p = require('lspconfig')
+         local p = require('lspconfig')
+
+         for k,v in pairs(require'style.sign') do
+            vim.fn.sign_define(k, v)
+         end
 
          -- p.texlab.setup{}
          p.r_language_server.setup{}
-         p.zk.setup{}
+         -- p.texlab.setup{}
+         -- p.zk.setup{}
       end
    }
    use {
@@ -401,58 +406,67 @@ linguee_eng_ger = 'https://www.linguee.com/english-german/search?source=auto&que
       config = function()
          local lsp_installer = require("nvim-lsp-installer")
 
-         vim.fn.sign_define("DiagnosticSignError",
-            { text = "ᵉ", texthl = "DiagnosticSignError" }
-         )
-         vim.fn.sign_define("DiagnosticSignWarn",
-            { text = "ʷ", texthl = "DiagnosticSignWarn" }
-         )
-         vim.fn.sign_define("DiagnosticSignInfo",
-            { text = "ⁱ", texthl = "DiagnosticSignInfo" }
-         )
-         vim.fn.sign_define("DiagnosticSignHint",
-            { text = "ʰ", texthl = "DiagnosticSignHint" }
-         )
+         lsp_installer.settings{
+            log_level = vim.log.levels.INFO
+         }
 
-         local custom_attach = function(_, bufnr)
-            local function buf_map(...)
-               vim.api.nvim_buf_set_keymap(bufnr, ...)
-            end
+         -- local custom_attach = function(_, bufnr)
+         --    local function buf_map(...)
+         --       vim.api.nvim_buf_set_keymap(bufnr, ...)
+         --    end
+         --
+         --    vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+         -- end
+         -- vim.diagnostic.config({
+         --    virtual_text = {
+         --       prefix = 'asdasd',
+         --       format = function(d)
+         --          return 's'
+         --       end
+         --    }
+         -- })
 
-            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-         end
+         local server_opts = {
+            ['sumneko_lua'] = require'lsp.settings.sumneko_lua',
+            ['texlab'] = require'lsp.settings.texlab',
+            ['ltex'] = require'lsp.settings.ltex'
+         }
 
          lsp_installer.on_server_ready(function(server)
-            local default_opts = {
-               on_attach = custom_attach
-            }
+            local custom_config_ok, custom_config = pcall(require, "lsp.settings." .. server.name)
 
-            local server_opts = {
-               ["sumneko_lua"] = function()
-                  default_opts.settings = {
-                     Lua = {
-                        diagnostics = { -- recognize the `vim` global
-                           globals = {'vim','require','use'},
-                           enable = true
-                        },
-                        workspace = { -- Make the server aware of Neovim runtime files
-                           library = {
-                              [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                              [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                           },
-                        },
-                        telemetry = { -- Do not send telemetry data 
-                           enable = false,
-                        }
-                     }
-                  }
-               end,
-            }
+            -- server.on_ready(function() print('ssss') end)
 
-            local server_options = server_opts[server.name]
-               and server_opts[server.name]() or default_opts
+            if server.name == 'sumneko_lua' then
+               custom_config.on_new_config = function(config, root_dir)
+                  if root_dir == '/home/johannes/.dotfiles' then
+                     -- print(vim.inspect(config))
+                     config = vim.tbl_deep_extend(
+                        'force',
+                        config,
+                        require'lsp.settings.sumneko_lua.nvim'
+                     )
+                  else
+                     config = vim.tbl_deep_extend(
+                        'force',
+                        config,
+                        require'lsp.settings.sumneko_lua.other'
+                     )
+                  end
 
-            server:setup(server_options)
+                  -- print(vim.inspect({config, root_dir = root_dir}))
+                  --
+                  -- vim.api.nvim_notify(vim.inspect(config), vim.log.levels.INFO, {})
+                  return config
+               end
+            end
+
+            if custom_config_ok then
+               -- vim.api.nvim_notify(server.name, vim.log.levels.INFO, {})
+               server:setup(custom_config)
+            else
+               server:setup()
+            end
          end)
       end
    }
