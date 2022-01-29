@@ -1,57 +1,7 @@
-local t = {}
-
 local actions = require'fzf-lua.actions'
 local helper  = require'myhelper'
 
-t.custom = {}
-
-t.custom.git_files = function(opts)
-
-   local default_opts = {
-      prompt      = 'GitFiles❯ '
-   }
-
-   local merged_opts = type(opts) == 'table' and
-      vim.tbl_deep_extend('force', default_opts, opts or {}) or
-      default_opts
-
-   local exclude = not vim.fn.expand('%:.') == ''
-      and '--exclude "' .. vim.fn.expand('%:.') .. '" '
-      or ''
-
-   merged_opts.cwd = merged_opts.cwd and merged_opts.cwd or
-      helper.git_get_root_or_cwd()
-
-   merged_opts.cmd = table.concat({
-      'fdfind -t f -H ',
-      exclude,
-      '--base-directory "',
-      merged_opts.cwd or vim.env.PWD , '" ',
-      '--exec stat --printf="%Y\t%n\n"',
-      ' | sort -r -k 1 | cut -f 2'
-   })
-
-   require'fzf-lua'.files(merged_opts)
-end
-
-local floatMultiColArgs = function()
-
-   local w = { max = 125, col1 = 40 }
-
-   w.float = vim.opt.columns:get() * 0.8 > w.max and w.max
-         or vim.opt.columns:get() * 0.8
-   w.floatr = math.floor(w.float / vim.opt.columns:get() * 100 ) / 100
-   w.col2 = math.floor( (w.float - w.col1) / w.float * 100)
-
-   return {
-      layout     = ( w.float > 100 and 'horizontal' or 'vertical' ),
-      horizontal = string.format('right:%d%%', w.col2 ),
-      width      = w.floatr,
-      vertical   = 'down:40%'
-   }
-end
-
-require'fzf-lua'.setup({ 
+local plugin_opts = {
    global_resume  = true,
    git_icons      = true,           -- show git icons?
    file_icons     = true,           -- show file icons?
@@ -243,12 +193,21 @@ require'fzf-lua'.setup({
       }
    },
    oldfiles = {
-      cwd = vim.env.HOME,
-      include_current_session = true,
+      -- cwd = vim.env.HOME,
+      -- include_current_session = true,
+      cwd_only = false,
       fzf_opts = {
          ['--tiebreak'] = 'index',
+      },
+      actions = {
+         ["ctrl-g"] = function(selected, o)
+            require'myhelper'.gxmessage({
+               selected = selected,
+               o = o
+            })
+         end
       }
    }
-})
+}
 
-return t
+require'fzf-lua'.setup(plugin_opts)

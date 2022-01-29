@@ -43,9 +43,13 @@ local sections_common = {
 }
 
 local sections = vim.tbl_deep_extend('error', {
-        lualine_a = {{ [[mode]], fmt = function(s) return s:sub(1,1) end }},
-        lualine_c = { [[ vim.fn.expand("%") ]] },
-        lualine_b = {{ [[branch]], cond = hide_on_winwidth_cond }}
+      lualine_a = {{ [[mode]], fmt = function(s) return s:sub(1,1) end }},
+      -- b not set
+      lualine_c = { function()
+            return( vim.fn.expand('%:h:p:s?^.*/??') .. ' ' .. vim.fn.expand('%') )
+         end
+      },
+      lualine_b = {{ [[branch]], cond = hide_on_winwidth_cond }}
    }, sections_common
 )
 
