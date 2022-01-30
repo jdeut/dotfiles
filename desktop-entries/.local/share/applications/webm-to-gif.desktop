@@ -8,4 +8,4 @@ Type=Application
 Keywords=Text;editor;
 Categories=Utility;TextEditor;
 StartupNotify=false
-MimeType=video
+MimeType=video/*

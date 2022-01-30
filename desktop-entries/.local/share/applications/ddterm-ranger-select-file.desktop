@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=RangerDDTerm
+GenericName=RangerDDTerm
+Comment=Select File
+#TryExec=ydotool-switch-to-nvim.sh
+Exec=bash -c "\$HOME/.dotfiles/local-bin-scripts/.local/bin/tmux-ddterm-ranger-select-file.sh %f"
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
+StartupNotify=false
+MimeType=inode/directory;inode/file
