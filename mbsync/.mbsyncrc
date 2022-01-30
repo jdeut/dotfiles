@@ -1,0 +1,23 @@
+IMAPAccount  Uni
+Host mailbox.uni-duisburg-essen.de
+UserCmd "secret-tool lookup account Uni directive UserCmd"
+PassCmd "secret-tool lookup account Uni directive PassCmd"
+SSLType IMAPS
+SSLVersion TLSv1.2
+CertificateFile ~/.certs/uni.cert
+
+IMAPStore Uni-remote
+Account Uni
+
+MaildirStore Uni-local
+Path ~/.Mail/Uni/
+Inbox ~/.Mail/Uni/INBOX
+SubFolders Legacy
+
+Channel Uni
+Far :Uni-remote:
+Near :Uni-local:
+Patterns *
+Create Both
+SyncState *
+Sync All
