@@ -94,10 +94,17 @@ t.open_from_ext = function(f)
 end
 
 t.gxmessage = function(text)
+   if type(text) == 'table' then
+      text = vim.inspect(text)
+   elseif text == nil then
+      text = 'NIL'
+   end
+   
+
    require('plenary.job'):new({
       command = 'gxmessage',
-      args = {text}}
-   ):sync()
+      args    = { text }
+   }):start()
 end
 
 return t

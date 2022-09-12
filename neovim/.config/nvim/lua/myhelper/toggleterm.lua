@@ -2,186 +2,210 @@ local job = require('plenary.job')
 local path = require('plenary.path')
 
 local Terminal = require('toggleterm.terminal').Terminal
+local ui = require'toggleterm.ui'
 
-local Toggleterminals = {}
+local tt = {}
 
-function Toggleterminals:new (o)
-   o = o or {}   -- create object if user does not provide one
-
-   self.__index = function(t,k)
-         if k == 'termwinnr' then
-            return vim.fn.bufwinnr(o.termbufnr)
-         elseif k == 'bufnr0' then
-            return vim.fn.bufnr()
-         elseif k == 'winnr0' then
-            return vim.fn.bufwinnr(o.bufnr0)
-         elseif k == 'termbufnr' then
-            if o.terminal then
-               return o.terminal.bufnr
-            else
-               return nil
-            end
-         else
-            return self[k]
-         end
+function tt:index(k)
+   -- vim.api.nvim_notify(vim.inspect({k = k}), vim.log.levels.INFO, {})
+   if k == 'termwinnr' then
+      -- vim.api.nvim_notify(vim.inspect({d=2,t=self}), vim.log.levels.INFO, {})
+      if self.terminal then
+         return vim.fn.bufwinnr(self.terminal.bufnr)
+      else
+         return nil
       end
-
-   o.terminal = Terminal:new({
-      direction = "vertical",
-      hidden = false,
-      on_open = function(term)
-         o:set_size_in_termwin()
-
-         local tnmap = {
-            ['<C-o>'] = { function() o:jump_back() end, 'jump back' },
-            ['<C-q>'] = { function() o:jump_back() o:close() end, 'close and jump back' }
-         }
-
-         for _,v in ipairs{'t','n'} do
-            require('which-key').register(tnmap, {
-               mode = v, buffer = 0, prefix = ''
-            })
-         end
+   elseif k == 'bufnr0' then
+      return vim.api.nvim_win_get_buf(0)
+   elseif k == 'winnr0' then
+      return vim.api.nvim_win_get_number(0)
+   elseif k == 'termbufnr' then
+      if self.terminal then
+         return self.terminal.bufnr
+      else
+         return nil
       end
-   })
+   else
+      return self[k]
+   end
+end
 
-   o.config = {
-      size = 60
-   }
+function tt:new (o)
+   local o = o or {}   -- create object if user does not provide one
 
-   o.prevbufnr = 0
+   self.__index = self.index
 
    setmetatable(o, self)
 
-   return o
+   self.config    = { size = 60 }
+   self.prevbufnr = 0
+   self.prevtabnr = 0
+   self.is_init   = true
+   self.terminal  = Terminal:new({
+      cmd = [[env TOGGLETERM=1 zsh]],
+      direction = "vertical",
+      shade_terminals = false,
+      -- persist_size = false,
+      -- hidden = false,
+      on_open = function(term)
+         self:on_open()
+      end
+   })
+
+   return self
 end
 
-function Toggleterminals:set_size_in_termwin()
-   vim.cmd(self.termwinnr .. "wincmd w")
+function tt:on_first_open()
+   local tnmap = {
+      ['<C-o>'] = { function() self:jump_back() end, 'jump back' },
+      ['<C-q>'] = { function() self:jump_back() self.terminal:close() end, 'close and jump back' }
+   }
+
+   for _,v in ipairs{'t','n'} do
+      require('which-key').register(tnmap, {
+         mode = v, buffer = 0, prefix = ''
+      })
+   end
+end
+
+function tt:on_open()
+   if self.is_init then
+      vim.api.nvim_notify('on_first_open', vim.log.levels.INFO, {})
+      self:on_first_open()
+      self.is_init = false
+   end
+   self:set_size()
+   -- vim.api.nvim_notify(
+   --    vim.inspect({test = 1, prevbufnr = self.prevbufnr, termwinnr = self.termwinnr, termwindow = self.terminal.window, termbufnr = self.terminal.bufnr}),
+   --    vim.log.levels.INFO,
+   --    {}
+   -- )
+end
+
+function tt:set_size()
    vim.cmd("vertical resize " .. self.config.size)
 end
 
-function Toggleterminals:kill_descendant()
+function tt:set_size_in_termwin()
+   -- vim.api.nvim_notify(
+   --    vim.inspect(
+   --       {
+   --          termwinnr = self.termwinnr,
+   --          termwin = self.terminal.window,
+   --          bufnr = self.terminal.bufnr
+   --       }
+   --    ),
+   --    vim.log.levels.INFO,
+   --    {}
+   -- )
+   if self.termwinnr then
+      if self.termwinnr > 0 then
+         vim.cmd(self.termwinnr .. "wincmd w")
+         self:set_size()
+      end
+   end
+end
+
+function tt:kill_descendant()
    if not self.terminal.bufnr then
       return false
    end
 
-   local termpid = vim.api.nvim_buf_get_var(
+   local ret, termpid = pcall(
+      vim.api.nvim_buf_get_var,
       self.terminal.bufnr,
       'terminal_job_pid'
    )
 
+   if not ret then
+      return false
+   end
+
    job:new({
       command = 'pkill',
-      args = {'-P', termpid},
-      on_exit = function(_, result)
-         if result == 0 then
-            -- print('killed descendant')
-         else
-            -- print('no descendant to kill')
-         end
-      end
+      args = {'-P', termpid}
    }):sync()
 
    return true
 end
 
-function Toggleterminals:prevwinnr()
+function tt:prevwinnr()
    return vim.fn.bufwinnr(self.prevbufnr)
 end
 
-function Toggleterminals:resize(fn)
+function tt:resize(x)
    local jump_back = self.bufnr0 == self.termbufnr and false or true
-   fn()
+   local conf  = self.config
+
+   if conf.size + x > 0.2 * vim.o.columns and
+      conf.size + x < 0.8 * vim.o.columns then
+      conf.size = conf.size + x
+   end
    self:set_size_in_termwin()
    if jump_back then
       self:jump_back()
    end
 end
 
-function Toggleterminals:size_inc()
-   self:resize( function()
-      if self.config.size < 0.8 * vim.o.columns then
-         self.config.size = self.config.size + 25
-      end
-   end)
+function tt:size_inc()
+   self:resize(25)
 end
 
-function Toggleterminals:size_dec()
-   self:resize( function()
-      if self.config.size > 0.2 * vim.o.columns then
-         self.config.size = self.config.size - 25
-      end
-   end)
+function tt:size_dec()
+   self:resize(-25)
 end
 
-function Toggleterminals:jump_back()
+function tt:jump_back()
    vim.cmd(self:prevwinnr() .. "wincmd w")
 end
 
-function Toggleterminals:toggle()
-   if self.termbufnr then
-      if self.termwinnr > 0 then
-         self:close()
-      else
-         self:open()
-      end
-   else
-      self:open()
-   end
-end
-
-function Toggleterminals:open()
-   self.prevbufnr = self.bufnr0
-   self.terminal:open()
-   if self:prevwinnr() > 0 then
-      self:jump_back()
-   end
-end
-
-function Toggleterminals:jump_to_term_append()
+function tt:jump_to_term_append()
    self:jump_to_term_normal()
    vim.cmd("normal! A")
 end
 
-function Toggleterminals:jump_to_term_normal()
+function tt:jump_to_term_normal()
    self.prevbufnr = vim.api.nvim_win_get_buf(0)
 
    if self.termbufnr then
       if self.termwinnr > 0 then
+         -- vim.api.nvim_notify('toggleterm: termwinnr > 0', vim.log.levels.INFO, {})
          vim.cmd(self.termwinnr .. "wincmd w")
       else
-         self.terminal:open()
+         -- vim.api.nvim_notify('toggleterm: termwinnr !> 0', vim.log.levels.INFO, {})
+         self.terminal:toggle()
+         -- self.terminal:open()
       end
    else
       self.terminal:open()
    end
 end
 
-function Toggleterminals:save_size()
+function tt:save_size()
    if self.termwinnr > 0 then
       self.config.size = vim.fn.winwidth(self.termwinnr)
    end
 end
 
-function Toggleterminals:close()
+function tt:close()
    if self.termwinnr > 0 then
       self:save_size()
-      vim.api.nvim_win_hide(self.termwinnr)
+      self.terminal:close()
    end
 end
 
-function Toggleterminals:send(opts)
+function tt:send(opts)
 
    if not opts.cmd then
       return
-   else
-      if opts.args then
-         assert(type(opts.args) == 'table')
-      end
+   end
+   if opts.args then
+      assert(type(opts.args) == 'table')
    end
 
    self.prevbufnr = vim.api.nvim_win_get_buf(0)
+
+   -- vim.api.nvim_notify(vim.inspect{self_prevbufnr = self.prevbufnr}, vim.log.levels.INFO, {})
 
    local dir  = vim.fn.getcwd()
 
@@ -195,25 +219,30 @@ function Toggleterminals:send(opts)
       end
    end
 
-   self:jump_to_term_normal()
+   -- vim.api.nvim_notify(vim.inspect{dir = dir}, vim.log.levels.INFO, {})
 
-   vim.cmd("normal! G")
+   do
+      local cmd = {
+         table.concat(
+            lopts.args and
+               {lopts.cmd, table.concat(lopts.args, ' ')} or
+               {lopts.cmd},
+            ' '
+         )
+      }
 
-   self.terminal:send(string.format("cd %s", dir), false)
+      if not self.terminal:is_open() then
+         self.terminal:open()
+      end
 
-   local cmdline = table.concat(
-      lopts.args and
-         {lopts.cmd, table.concat(lopts.args, ' ')} or
-         {lopts.cmd},
-      ' '
-   )
-
-   self.terminal:send(
-      cmdline, false
-   )
-
-   self:jump_back()
+      self.terminal:change_dir(dir)
+      self.terminal:send(cmd)
+   end
 end
 
-return(Toggleterminals:new())
+function tt:send_after_kill(opts)
+   self:kill_descendant()
+   self:send(opts)
+end
 
+return(tt)

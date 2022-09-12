@@ -17,15 +17,15 @@ hi texTikzSemicolon guifg=#33aa22 guibg=NONE gui=bold
 hi! link texGroup texOpt
 hi! link texNoSpellArg texOpt
 hi! link texMathZoneX texOpt
-highlight link texAuthorArg      texArg
-highlight link texCmdBooktabs    texEnvArgName
-highlight link texCmdItem        texArg
-highlight link texMathEnvArgName texMathCmd
-highlight link texMathSymbol     texMathCmd
-highlight link texNewenvArgName  texArgNew
-highlight link texPgfType        texCmd
-highlight link texSpecialChar    texSymbol
-highlight link texTabularChar    texMathOper
+hi link texAuthorArg      texArg
+hi link texCmdBooktabs    texEnvArgName
+hi link texCmdItem        texArg
+hi link texMathEnvArgName texMathCmd
+hi link texMathSymbol     texMathCmd
+hi link texNewenvArgName  texArgNew
+hi link texPgfType        texCmd
+hi link texSpecialChar    texSymbol
+hi link texTabularChar    texMathOper
 
 
 "function! s:highlight(group, guifg, guibg, attr)

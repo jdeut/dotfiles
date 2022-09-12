@@ -1,41 +1,26 @@
-#
-# Antigen setting
+zmodload zsh/zprof
+# set -x
 
+# HELPER
 source "$ZDOTDIR/helper.zsh"
+# EXPORT
+source_file "$ZDOTDIR/loader/exports.zsh"
 
 # set -x
-zmodload zsh/zprof
+# zmodload zsh/zprof
 
 autoload -Uz compinit
-autoload -U colors 
 
-# ZVM_INIT_MODE=sourcing
-
-if [[ -n ${HOME}/.cache/.zsh/.zcompdump(#qN.mh+24) ]]; then
-	compinit;
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit -d ${ZDOTDIR}/.zcompdump
 else
-	compinit -C;
-fi;
+	compinit -C
+fi
 
-source_file "$ZDOTDIR/antigen.zsh"
-
-#
-# Alias
-alias ls='ls --color=auto --group-directories-first'
-alias lg='ls -gGhrt -w30'
-alias vimr='tmux select-window -t ${USER}:1 ; vim --remote'
-alias less="$PAGER"
-alias zless="$PAGER"
-alias qmv='qmv --format=destination-only'
-
-
+autoload -U colors
+setterm -linewrap on
 #
 # Zaw
-zstyle ':filter-select' max-lines 10
-zstyle ':filter-select' case-insensitive yes
-zstyle ':filter-select' extended-search yes
-zstyle ':filter-select:highlight' matched fg=green,standout
-zstyle ':filter-select:highlight' selected fg=yellow,bold
 # bindkey -M filterselect '^E' autosuggest-accept
 
 # Terminal settings
@@ -60,45 +45,18 @@ setopt hist_reduce_blanks
 setopt hist_find_no_dups
 setopt hist_save_no_dups
 
-#
-# Key Bindings
+# set +x
 
-function zvm_after_init() {
-    FZF_TMUX=0
+# STYLE
+source_file "$ZDOTDIR/style/style.zsh"
 
-    source $ZDOTDIR/fzf/fzf.zsh
-    # source $ZDOTDIR/fzf/completion.zsh
+# ANTIGEN
+# `source_file` doesn't work for loading antigen
+source "$ZDOTDIR/plugins.zsh"
 
-    # remove conflicting key bindings
-    bindkey -rM viins '^R'
-
-    zvm_bindkey vicmd '^O' fzf-cdr
-    zvm_bindkey viins '^O' fzf-cdr
-
-    zvm_bindkey vicmd '^R' fzf-history-widget
-    zvm_bindkey viins '^R' fzf-history-widget
-    
-    zvm_bindkey vicmd '^f' fzf-cd-widget
-    zvm_bindkey viins '^f' fzf-cd-widget
-}
-
-function zvm_after_lazy_keybindings() {
-
-    zvm_bindkey filterselect '^[' send-break
-
-    # zvm_bindkey vicmd ']r' fzf-history-widget
-    # zvm_bindkey viins ']r' fzf-history-widget
-
-
-    # zvm_bindkey vicmd ']l' "ddilg^M"
-    # zvm_bindkey viins ']l' "^[ddilg^M"
-
-    #zvm_bindkey viins '\\\\' '^v\\'
-    #bindkey -M viins -s '#' 'asdasdasd'
-}
-
-#
-# EXPORT
-
-source_file "$ZDOTDIR/export.zsh"
-
+# FUNCTIONS
+source_file "$ZDOTDIR/loader/functions.zsh"
+# Alias
+source_file "$ZDOTDIR/alias.zsh"
+# Last
+source_file "$ZDOTDIR/last.zsh"

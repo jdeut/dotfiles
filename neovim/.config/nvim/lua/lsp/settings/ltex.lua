@@ -1,4 +1,4 @@
-return {
+local settings = {
    ltex = {
       enabled = true,
       diagnosticSeverity = "information",
@@ -49,3 +49,7 @@ return {
       }
    }
 }
+
+return function()
+   return settings
+end

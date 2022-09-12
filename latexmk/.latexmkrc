@@ -17,10 +17,10 @@ sub init_hooks {
     my $st_desk_noti = `gsettings get "org.gnome.desktop.notifications" "show-banners"`;
     $st_desk_noti =~ s/[ \n]//g;
 
-    $failure_cmd = "internal hook_post_compilation 0 $st_desk_noti";
-    $success_cmd = "internal hook_post_compilation 1 $st_desk_noti";
+    # $failure_cmd = "internal hook_post_compilation 0 $st_desk_noti";
+    # $success_cmd = "internal hook_post_compilation 1 $st_desk_noti";
 
-    system('gsettings set org.gnome.desktop.notifications show-banners true');
+    # system('gsettings set org.gnome.desktop.notifications show-banners true');
 }
 sub hook_post_compilation {
     my $fs = shift @_;
@@ -38,11 +38,11 @@ sub hook_post_compilation {
         $msg = "failed";
     }
 
-    `notify-send --hint=int:transient:1 -u normal -i info "latexmk" "compilation $msg"`;
+    # `notify-send --hint=int:transient:1 -u normal -i info "latexmk" "compilation $msg";
 
-    system "sleep 0.4";
+    # system "sleep 0.4";
 
-    system("gsettings set org.gnome.desktop.notifications show-banners $notify");
+    # system("gsettings set org.gnome.desktop.notifications show-banners $notify");
 }
 sub mylatex() {
     state $init = 1;

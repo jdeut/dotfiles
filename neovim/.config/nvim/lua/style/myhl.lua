@@ -2,11 +2,11 @@ local t = {}
 
 local cols = require'style.mycols'
 
-local tbind = vim.fn.extend
+local tbind = function(t1, t2) return vim.tbl_deep_extend('keep', t1, t2) end
 
 t.Normal = { fg = '#111111', bg = '#ffffff' }
 
-t.NonText    = { fg = cols.fg, bg = cols.bg }
+t.NonText    = { fg = cols.semilightgray, bg = 'NONE' }
 t.Folded     = { fg = cols.black, bg = cols.lightgreen, style = 'italic' }
 t.FoldColumn = { fg = cols.red, bg = 'blue', style = 'bold' }
 
@@ -14,12 +14,17 @@ t.Whitespace = { fg = '#353522' }
 
 t.MiniTrailspace = { bg = cols.lightred }
 
-t.MatchParen = { fg = cols.brightyellow, bg = '#c5c5ba', style = 'bold' }
-t.MatchBackground = { bg = cols.lightyellow }
+t.MatchParen = { fg = cols.brightpurple, bg = cols.darkyellow, style = 'bold' }
+t.MatchBackground = { bg = cols.yellow, style = 'bold' }
 
 t.EndOfBuffer      = { bg = cols.lightgray, fg = cols.cyan, style = 'italic' }
 
 t.IndentBlankline  = { fg = cols.purple }
+
+t.CmpItemMenu = { fg = cols.fg }
+t.CmpItemAbbrMatchFuzzy = { fg = cols.brightgreen }
+
+t.Pmenu = { bg = cols.lightgreen }
 
 t.WhichKey          = { fg = cols.darkyellow, style = 'bold' }
 t.WhichKeyFloat     = { bg = cols.lightgreen }
@@ -36,10 +41,11 @@ t.RegTitle  = { fg = cols.green, style = 'italic' }
 t.RegName   = { fg = cols.green, style = 'italic' }
 t.RegPrefix = { fg = cols.green, style = 'italic' }
 
-t.HopNextKey   = { bg = cols.lightyellow, fg = cols.black, style = 'bold' }
-t.HopNextKey1  = { bg = cols.lightgreen, fg = cols.red, style = 'bold' }
-t.HopNextKey2  = { bg = cols.lightglightgreen2, fg = cols.red }
-t.HopUnmatched = { fg = cols.comment }
+t.HopNextKey   = { bg = cols.fg, fg = cols.bg, style = 'bold' }
+t.HopNextKey1  = { bg = cols.brightyellow, fg = cols.purple, style = 'bold' }
+t.HopNextKey2  = { bg = cols.fg, fg = cols.bg, style = 'bold'}
+t.HopUnmatched = { fg = cols.lightblue }
+t.HopCursor = t.HopUnmatched
 
 t.ColorColumn = { bg = cols.lightgray }
 
@@ -118,13 +124,11 @@ t.IndentBlanklineIndent4 = { fg = '#6606ff', style = 'bold' }
 t.IndentBlanklineIndent5 = { fg = '#01cFfF', style = 'bold' }
 t.IndentBlanklineIndent6 = { fg = '#f608fD', style = 'bold' }
 
-t.LspDiagnosticsVirtualTextError       = { fg = 'red', style = 'italic' }
-t.LspDiagnosticsVirtualTextWarning     = { fg = 'red', style = 'italic' }
-t.LspDiagnosticsVirtualTextHint        = { fg = 'red', style = 'italic' }
-t.LspDiagnosticsVirtualTextInformation = { fg = cols.cyan, style = 'italic' }
-
 t.MyFzfLuaDefault = t.Normal
 t.MyFzfLuaBorder = t.Normal
+
+t.NormalFloat = { bg = cols.lightgreen }
+-- t.FloatBorder = { bg = cols.semilightgray }
 
 t.MyFzfBg = { bg = cols.black }
 t.MyFzfFg = { fg = cols.orange }
@@ -145,25 +149,39 @@ t.MyFzfPointer = { fg = cols.brightcyan }
 
 t.MyModifiable = { bg = cols.lightorange }
 
-t.SignColumn = { bg = cols.gray }
+t.SignColumn = { bg = cols.gray, style = 'bold'}
 
-do
-   t.VertSplit = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
-   t.LineNr    = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
+t.VertSplit = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
+t.LineNr    = tbind({ fg = cols.black, style = 'bold' }, t.SignColumn)
 
-   -- t.DiagnosticSignError = tbind({ fg = cols.red }, t.SignColumn )
-   -- t.DiagnosticSignWarn  = tbind({ fg = cols.yellow }, t.SignColumn )
-   -- t.DiagnosticSignInfo  = tbind({ fg = cols.cyan }, t.SignColumn )
-   -- t.DiagnosticSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
 
-   t.LspDiagnosticsSignError       = tbind({ fg = cols.red }, t.SignColumn )
-   t.LspDiagnosticsSignWarning     = tbind({ fg = cols.yellow }, t.SignColumn )
-   t.LspDiagnosticsSignInformation = tbind({ fg = cols.cyan }, t.SignColumn )
-   t.LspDiagnosticsSignHint        = tbind({ fg = cols.cyan }, t.SignColumn )
+t.DiagnosticVirtualTextError       = { fg = '#bd5555', style = 'bold' }
+t.DiagnosticVirtualTextWarning     = { fg = cols.comment, style = 'italic' }
+t.DiagnosticVirtualTextHint        = { fg = cols.comment, style = 'italic' }
+t.DiagnosticVirtualTextInformation = { fg = cols.cyan, style = 'italic' }
 
-   t.GitSignsAdd    = tbind({ fg = cols.green, style = 'bold' }, t.SignColumn )
-   t.GitSignsDelete = tbind({ fg = cols.red, style = 'bold'}, t.SignColumn )
-   t.GitSignsChange = tbind({ fg = cols.yellow, style = 'bold'}, t.SignColumn )
-end
+t.DiagnosticFloatingError          = { fg = '#bd5555', style = 'bold' }
+t.DiagnosticFloatingWarning        = { fg = cols.comment, style = 'italic' }
+t.DiagnosticFloatingHint           = { fg = cols.comment, style = 'italic' }
+t.DiagnosticFloatingInformation    = { fg = cols.cyan, style = 'italic' }
+
+t.DiagnosticUnderlineError         = { fg = cols.blue, style = 'bold' }
+t.DiagnosticUnderlineWarning       = { fg = cols.blue, style = 'italic' }
+t.DiagnosticUnderlineHint          = { fg = cols.green, style = 'italic' }
+t.DiagnosticUnderlineInformation   = { fg = cols.yellow, style = 'italic' }
+
+t.DiagnosticSignError = tbind({ bg = cols.red, fg = cols.red }, t.SignColumn )
+t.DiagnosticSignWarn  = tbind({ bg = cols.red, fg = cols.yellow }, t.SignColumn )
+t.DiagnosticSignInfo  = tbind({ bg = cols.red, fg = cols.cyan }, t.SignColumn )
+t.DiagnosticSignHint  = tbind({ bg = cols.red, fg = cols.cyan }, t.SignColumn )
+
+t.LspDiagnosticsSignError = tbind({ fg = cols.red }, t.SignColumn )
+t.LspDiagnosticsSignWarn  = tbind({ fg = cols.yellow }, t.SignColumn )
+t.LspDiagnosticsSignInfo  = tbind({ fg = cols.cyan }, t.SignColumn )
+t.LspDiagnosticsSignHint  = tbind({ fg = cols.cyan }, t.SignColumn )
+
+t.GitSignsAdd                       = tbind({ fg = cols.green, style = 'bold' }, t.SignColumn )
+t.GitSignsDelete                    = tbind({ fg = cols.red, style = 'bold'}, t.SignColumn )
+t.GitSignsChange                    = tbind({ fg = cols.yellow, style = 'bold'}, t.SignColumn )
 
 return t

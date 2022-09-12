@@ -1,3 +1,5 @@
+require'style.mytcols'
+
 local t = {}
 
 t.get_hl_group_colors = function (hl_gr)
@@ -32,9 +34,6 @@ end
 -- end
 -- local hlgroups = require'style.myhl'
 
-local tcols    = require'style.mytcols'
-
-for k,v in pairs(tcols) do vim.g[k] = v end
 
 -- local bcols = require'style.darknord'
 -- local hlgroups = require'style.myhl'

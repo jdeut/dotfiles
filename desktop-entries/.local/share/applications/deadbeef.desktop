@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=DeadBeef
+Comment=DeadBeef
+Exec=/usr/bin/nice -n -15 /opt/deadbeef/bin/deadbeef
+Terminal=false
+StartupNotify=false
+Type=Application

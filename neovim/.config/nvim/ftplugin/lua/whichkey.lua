@@ -42,6 +42,35 @@ local mappings = {
             end,
             'Exec in Term'
          },
+         t = { function()
+               tt():kill_descendant()
+
+               local path = vim.fn.expand('%:p:h')
+
+               path = vim.fn.split(path, '/')
+
+               if path[#path] == 'spec' then
+                  path[#path] = nil
+               end
+
+               path = [[/]] .. vim.fn.join(path, '/')
+
+               vim.api.nvim_notify(path, vim.log.levels.INFO, {})
+
+               tt():send({
+                  cmd = 'busted',
+                  args = { '-v', '-C', path }
+               })
+            end, 'Test with busted', silent = true
+         },
+         l = { function()
+               tt():kill_descendant()
+               tt():send({
+                  cmd = 'env love',
+                  args = { vim.fn.expand('%:p:h') }
+               })
+            end, 'Run with Love2D', silent = true
+         },
          j = { function()
                tt():kill_descendant()
                tt():send({
@@ -52,7 +81,10 @@ local mappings = {
          },
          w = {
             function()
-               tt():send({cmd = 'env WIREPLUMBER_DEBUG=2 wpexec'})
+               tt():send({
+                  cmd = 'env WIREPLUMBER_DEBUG=2 wpexec',
+                  args = args()
+               })
             end,
             'Wireplumber'
          },

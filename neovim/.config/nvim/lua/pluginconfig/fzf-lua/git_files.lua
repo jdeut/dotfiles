@@ -13,7 +13,7 @@ return function(opts)
       or ''
 
    opts.cwd = opts.cwd and opts.cwd or
-      helper.git_get_root_or_cwd()
+      require'myhelper'.git_get_root_or_cwd()
 
    opts.cmd = table.concat({
       'fdfind -t f -H ',

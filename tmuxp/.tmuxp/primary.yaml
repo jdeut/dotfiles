@@ -2,7 +2,7 @@ session_name: Primary
 start_directory: '~'
 # global_options:
 # default-terminal: vte-256color
-options: 
+options:
   default-command: /bin/zsh
   default-shell: /bin/zsh
   set-titles: on
@@ -13,6 +13,21 @@ windows:
   panes:
   - shell_command:
     - nvim
+- window_name: Ranger
+  layout: main-horizontal
+  panes:
+  - shell_command:
+    - ranger
+- window_name: Aerc
+  layout: main-horizontal
+  panes:
+  - shell_command:
+    - aerc
+- window_name: Scli
+  layout: main-horizontal
+  panes:
+  - shell_command:
+    - /home/johannes/Src/scli/scli
 - layout: main-horizontal
   panes:
   - shell_command:

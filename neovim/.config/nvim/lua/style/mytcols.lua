@@ -1,4 +1,4 @@
-return {
+local tcols = {
    terminal_color_0  = '#2e3436',
    terminal_color_1  = '#cc0000',
    terminal_color_2  = '#4e9a06',
@@ -16,3 +16,8 @@ return {
    terminal_color_14 = '#00f5e9',
    terminal_color_15 = '#eeeeec'
 }
+
+for k,v in pairs(tcols) do
+   -- print(v)
+   vim.g[k] = v
+end

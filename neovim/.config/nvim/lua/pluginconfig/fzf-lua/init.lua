@@ -1,25 +1,42 @@
-local actions = require'fzf-lua.actions'
-local helper  = require'myhelper'
+local ok, actions = pcall(require, 'fzf-lua.actions')
+
+if not ok then return end
 
 local plugin_opts = {
-   global_resume  = true,
-   git_icons      = true,           -- show git icons?
-   file_icons     = true,           -- show file icons?
-   color_icons    = true,           -- colorize file|git icons
-   actions = {
-      ['ctrl-q'] = function(s) helper.gxmessage(s) end
-   },
+   global_resume       = true,
+   global_resume_query = true,  -- include typed query in `resume`?
+   git_icons           = true,  -- show git icons?
+   file_icons          = true,  -- show file icons?
+   trim_entry          = true,
+   color_icons         = true,  -- colorize file|git icons
    keymap = {
       fzf = {               -- fzf '--bind=' options
          ['f2']         = 'toggle-preview',
          ['f3']         = 'toggle-preview-wrap',
          ['ctrl-d']     = 'half-page-down',
          ['ctrl-u']     = 'half-page-up',
-         ['ctrl-a']     = 'toggle-all',
+         -- ['ctrl-a']     = 'toggle-all',
+         ['ctrl-a']     = 'select-all+accept',
          ['ctrl-r']     = 'toggle+down',
          ['ctrl-j']     = 'down',
          ['ctrl-k']     = 'up',
          ['ctrl-h']     = 'clear-query'
+      }
+   },
+   -- function(selected, o) require'myhelper'.gxmessage({ selected = selected, o = o }) end
+   actions = {
+      buffers = {
+         ['default'] = actions.buf_edit,
+         ['ctrl-s']  = actions.buf_split,
+         ['ctrl-v']  = actions.buf_vsplit,
+         ['ctrl-t']  = actions.buf_tabedit,
+         ['ctrl-x']  = { actions.buf_del, actions.resume }
+      },
+      files = {
+         ['default'] = actions.file_edit_or_qf,
+         ['ctrl-s']  = actions.file_split,
+         ['ctrl-v']  = actions.file_vsplit,
+         ['ctrl-t']  = actions.file_tabedit,
       }
    },
    fzf_opts = {
@@ -27,26 +44,46 @@ local plugin_opts = {
       -- set to `false` to remove a flag
       -- set to '' for a non-value flag
       -- for raw args use `fzf_args` instead
-      ['--ansi']        = '',
-      ['--prompt']      = '> ',
-      ['--info']        = 'inline',
-      ['--height']      = '100%',
-      ['--layout']      = 'reverse'
+      ['--ansi']   = '',
+      ['--prompt'] = '> ',
+      ['--info']   = 'inline',
+      ['--height'] = '100%',
+      ['--layout'] = 'reverse'
    },
    fzf_colors = {
-      ["bg"]      = { "bg", "MyFzfBg" },
-      ["fg"]      = { "fg", "MyFzfFg" },
-      ["hl"]      = { "fg", "MyFzfInfo"},
-      ["bg+"]     = { "bg", "MyFzfBgPlus" },
-      ["fg+"]     = { "fg", "MyFzfFgPlus" },
-      ["hl+"]     = { "fg", "MyFzfHighPlus" },
-      ["info"]    = { "fg", "MyFzfInfo" },
-      ["prompt"]  = { "fg", "MyFzfPrompt" },
-      ["pointer"] = { "fg", "MyFzfPointer" },
-      ["marker"]  = { "fg", "MyFzfMarker" },
-      ["spinner"] = { "fg", "MyFzfSpinner" },
-      ["header"]  = { "fg", "MyFzfSpinner" },
-      ["gutter"]  = { "bg", "MyFzfGutter" },
+      ['bg']      = { 'bg', 'MyFzfBg' },
+      ['fg']      = { 'fg', 'MyFzfFg' },
+      ['hl']      = { 'fg', 'MyFzfInfo' },
+      ['bg+']     = { 'bg', 'MyFzfBgPlus' },
+      ['fg+']     = { 'fg', 'MyFzfFgPlus' },
+      ['hl+']     = { 'fg', 'MyFzfHighPlus' },
+      ['info']    = { 'fg', 'MyFzfInfo' },
+      ['prompt']  = { 'fg', 'MyFzfPrompt' },
+      ['pointer'] = { 'fg', 'MyFzfPointer' },
+      ['marker']  = { 'fg', 'MyFzfMarker' },
+      ['spinner'] = { 'fg', 'MyFzfSpinner' },
+      ['header']  = { 'fg', 'MyFzfSpinner' },
+      ['gutter']  = { 'bg', 'MyFzfGutter' },
+   },
+   previewers = {
+      cat = {
+         cmd             = 'cat',
+         args            = '--number',
+      },
+      bat = {
+         cmd             = 'bat',
+         args            = '--style numbers --color always',
+         theme           = 'zenburn', -- bat --list-themes,
+         config          = nil,            -- nil uses $BAT_CONFIG_PATH
+      },
+      builtin = {
+         syntax          = true,         -- preview syntax highlight?
+         syntax_limit_l  = 100,            -- syntax limit (lines), 0=nolimit
+         syntax_limit_b  = 1024*1024    -- syntax limit (bytes), 0=nolimit
+      },
+      man = {
+         cmd = 'man -c %s | col -bx'
+      }
    },
    winopts = {
       border = 'none',
@@ -55,14 +92,27 @@ local plugin_opts = {
          border = 'MyFzfLuaBorder'
       },
       preview = {
-         default        = 'bat',
-         border         = 'noborder',
-         hidden         = 'nohidden',
-         layout         = 'horizontal',
-         vertical       = 'down:20%',
-         horizontal     = 'right:40%',
-         scrollbar      = 'border',
-         title          = false
+         default    = 'bat',
+         border     = 'noborder',
+         hidden     = 'nohidden',
+         layout     = 'horizontal',
+         scrolloff  = '-2',
+         vertical   = 'down:20%',
+         horizontal = 'right:50%',
+         scrollbar  = 'border',
+         title      = false,
+         delay      = 50,
+         winopts    = {
+            number         = false,
+            relativenumber = false,
+            cursorline     = false,
+            cursorlineopt  = 'both',
+            cursorcolumn   = false,
+            signcolumn     = 'no',
+            list           = false,
+            foldenable     = false
+            -- winhighlight   = 'Normal:MyFzfBg'
+         }
       },
       on_create = function()
          mappings = {
@@ -73,19 +123,12 @@ local plugin_opts = {
             ['<S-PageDown>'] = { function()
                   require'fzf-lua.win'.preview_scroll(1)
                end, ''
-            },
-            ['`'] = {
-               name = '',
-               a = { function()
-                     helper.gxmessage('sss')
-                  end, 'ss'
-               }
             }
          }
 
-         vim.opt_local.buflisted = false
-         vim.opt_local.bufhidden = 'wipe'
-         vim.opt_local.signcolumn = 'no'
+         -- vim.opt_local.buflisted = false
+         -- vim.opt_local.bufhidden = 'wipe'
+         -- vim.opt_local.signcolumn = 'no'
 
          require('which-key').register(mappings, {
             buffer = 0,
@@ -94,26 +137,7 @@ local plugin_opts = {
          })
       end
    },
-   previewers = {
-      cat = {
-         cmd             = "cat",
-         args            = "--number",
-      },
-      bat = {
-         cmd             = "bat",
-         args            = "--style numbers --color always",
-         theme           = 'zenburn', -- bat --list-themes,
-         config          = nil,            -- nil uses $BAT_CONFIG_PATH
-      },
-      builtin = {
-         syntax          = true,         -- preview syntax highlight?
-         syntax_limit_l  = 0,            -- syntax limit (lines), 0=nolimit
-         syntax_limit_b  = 1024*1024    -- syntax limit (bytes), 0=nolimit
-      },
-      man = {
-         cmd = "man -c %s | col -bx"
-      }
-   },
+   -- provider setup
    files = {
       multiprocess = true
    },
@@ -121,10 +145,18 @@ local plugin_opts = {
       files = {
          prompt = 'GitFiles❯ ',
          multiprocess = true
+      },
+      status = {
+         cmd = [[git status -s | awk '{ _ = $1 OFS $2 ; "stat -c %Y " $2 | getline ; print $0, _}' | sort -r | awk '{ printf "%2s %s\n", $2, $3 }']],
+         winopts = {
+            fullscreen = true,
+            preview = {
+               horizontal = 'right:60%'
+            }
+         }
       }
    },
    helptags = {
-      -- winopts_raw = floatMultiColArgs,
       fzf_opts = {
          ['--tiebreak'] = 'index'
       }
@@ -135,36 +167,29 @@ local plugin_opts = {
       }
    },
    buffers = {
+      previewer = false,
+      sort_lastused = true,
+      ignore_current_buffer = true,
+      -- show_all_buffers = true,
       winopts = {
-         preview = {
-            preview_layout = 'horizontal',
-            preview_horizontal = 'down:28%',
-            ignore_current_buffer = true,
-            no_term_buffers = false
-         }
-      },
-      actions = {
-         ["default"]     = actions.buf_edit,
-         ["ctrl-s"]      = actions.buf_split,
-         ["ctrl-v"]      = actions.buf_vsplit,
-         ["ctrl-t"]      = actions.buf_tabedit,
-         ["ctrl-d"]      = actions.buf_del,
+         split = 'botright 15new'
       }
    },
    grep = {
       prompt       = 'Rg❯ ',
       input_prompt = 'Grep For❯ ',
-      rg_opts      = "-g '!{.git,node_modules}/*'",
+      rg_opts      = '-g "!{.git,node_modules}/*"',
       git_icons    = true,           -- show git icons?
       file_icons   = true,           -- show file icons?
       color_icons  = true,           -- colorize file|git icons
       multiprocess = true,
       no_esc       = 2,
-      actions      = {
-         ['ctrl-q']  = actions.file_sel_to_qf,
-      },
       winopts = {
-         split = 'belowright new'
+         split = 'botright 30new',
+         preview = {
+            layout = 'vertical',
+            vertical = 'down:20%'
+         }
       }
    },
    lsp = {
@@ -175,15 +200,15 @@ local plugin_opts = {
       file_icons        = true,
       git_icons         = false,
       lsp_icons         = true,
-      severity          = "hint",
+      severity          = 'hint',
       fzf_opts = {
          ['--keep-right'] = ''
       },
       icons = {
-         ["Error"]       = { icon = "", color = "red" },       -- error
-         ["Warning"]     = { icon = "", color = "yellow" },    -- warning
-         ["Information"] = { icon = "", color = "blue" },      -- info
-         ["Hint"]        = { icon = "", color = "magenta" },   -- hint
+         ['Error']       = { icon = '', color = 'red' },       -- error
+         ['Warning']     = { icon = '', color = 'yellow' },    -- warning
+         ['Information'] = { icon = '', color = 'blue' },      -- info
+         ['Hint']        = { icon = '', color = 'magenta' },   -- hint
       },
       winopts = {
          preview = {
@@ -193,19 +218,17 @@ local plugin_opts = {
       }
    },
    oldfiles = {
-      -- cwd = vim.env.HOME,
-      -- include_current_session = true,
       cwd_only = false,
+      stat_file = true,
+      include_current_session = true,
       fzf_opts = {
          ['--tiebreak'] = 'index',
       },
-      actions = {
-         ["ctrl-g"] = function(selected, o)
-            require'myhelper'.gxmessage({
-               selected = selected,
-               o = o
-            })
-         end
+      winopts = {
+         width = 0.95,
+         preview = {
+            horizontal = 'right:37%'
+         }
       }
    }
 }

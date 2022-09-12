@@ -1,6 +1,8 @@
-lua packer = require('plugins')
+lua ok, packer = pcall(require, 'plugins') if ok then packer.compile() end
 
-lua packer.compile()
+lua require'autocommands'
+lua require'settings.diagnostics'
+lua require'settings.lsp'
 
 "══════════════════════════════════════════════════════════════════
 " General Settings
@@ -14,7 +16,7 @@ runtime ftplugin/man.vim
 
 set printoptions=paper:A4,duplex:off,collate:n,syntax:n,header:0
 
-let loaded_matchit               = 1
+let loaded_matchit = 1
 
 let &printdevice='HP_Color_LaserJet_Pro_MFP_M177fw'
 
@@ -37,7 +39,7 @@ set noswapfile
 "set langmap+=z;y
 
 set list
-set showbreak=⟩⟩
+set showbreak=↪\ 
 "space:·
 set listchars=tab:▸\ ,eol:\ 
 "tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
@@ -52,6 +54,7 @@ set foldenable
 "close folds also if it's just one screenline
 " set foldminlines=0
 set foldminlines=2
+set scrollback=10000
 set foldmarker=❰❰❰,❱❱❱
 set foldmethod=marker
 "set foldtext=MyFoldText()
@@ -65,7 +68,7 @@ set grepformat=%f:%l:%c:%m,%f:%l:%m
 "set maxium number of items to show in the popup menu
 set pumheight=14
 set previewheight=15
-set pumblend=30
+set pumblend=10
 "use the 'patience' diff algorithm that looks for the
 "longest common subsequence (https://vimways.org/2018/the-power-of-diff/)
 set diffopt+=algorithm:patience,iblank,iwhite,context:1,vertical
@@ -73,7 +76,7 @@ set diffopt+=algorithm:patience,iblank,iwhite,context:1,vertical
 "set wildignore=*.png,*.jpg,*.gif,*.odt,*.pdf,*.ps,*.o
 set wildignore+=*~,*.pyc,*/.git/*,*.so,*.swp,*.o,*.zip,*.zwc,*.png,*.jpg,*.pdf,*.gif,*.ps,*.o,*.odt
 "wrapped lines use also the column for 'relativenumber'
-set cpoptions-=n
+set cpoptions+=n
 set encoding=utf-8
 set matchpairs+=<:>,\':\',\":\"
 set colorcolumn=80
@@ -186,7 +189,6 @@ packadd termdebug
 "let g:loaded_netrw               = 1
 "let g:loaded_netrwPlugin         = 1
 
-
 let loaded_gzip                  = 1
 let g:c_syntax_for_h             = 1
 let g:termdebug_useFloatingHover = 1
@@ -207,18 +209,18 @@ let g:no_vim_maps                = 0
 
 let g:nvim_config_home           = $HOME . '/.config/nvim'
 
-let g:clipboard = {
-\   'name': 'myClipboard',
-\   'copy': {
-\      '+': ['wl-copy', '-f', '-t', 'text/plain'],
-\      '*': ['wl-copy', '-p', '-f', '-t', 'text/plain']
-\    },
-\   'paste': {
-\      '+': ['wl-paste', '-n'],
-\      '*': ['wl-paste', '-p', '-n']
-\   },
-\   'cache_enabled': 1,
-\ }
+" let g:clipboard = {
+" \   'name': 'myClipboard',
+" \   'copy': {
+" \      '+': ['wl-copy', '-f', '-t', 'text/plain'],
+" \      '*': ['wl-copy', '-p', '-f', '-t', 'text/plain']
+" \    },
+" \   'paste': {
+" \      '+': ['wl-paste', '-n'],
+" \      '*': ['wl-paste', '-p', '-n']
+" \   },
+" \   'cache_enabled': 1,
+" \ }
 
 if exists('g:loaded_clipboard_provider')
   unlet g:loaded_clipboard_provider
@@ -226,31 +228,29 @@ if exists('g:loaded_clipboard_provider')
 endif
 
 "══════════════════════════════════════════════════════════════════
-" Custom Functions 
+" Custom Functions
 function! SetSqlSyntaxHi()
     unlet b:current_syntax
     syn include @SQL syntax/sql.vim
 
     syn region pandocDelimitedCodeBlock_sql
-    \   start=/\_^`\{3}{\(sql\|meinsql\).\{-}\}.*\_$/ 
-    \   end=/\_^`\{3}\_$/ 
+    \   start=/\_^`\{3}{\(sql\|meinsql\).\{-}\}.*\_$/
+    \   end=/\_^`\{3}\_$/
     \   contains=@SQL
 
     "hi pandocDelimitedCodeBlock_sql guifg=#057705
 endfunction
 
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
-
 lua require'skeleton'
 
 "══════════════════════════════════════════════════════════════════
-" Autocommands (FileType specific settings, mappings, etc.) 
+" Autocommands (FileType specific settings, mappings, etc.)
 "
 augroup MY__
     au!
 
     "au BufRead * let b:lexima_disable = 0
-    "au BufNew * lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<afile>:p')}}):sync() 
+    "au BufNew * lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<afile>:p')}}):sync()
 
     "au BufEnter * if &ft ==# 'help' | normal "zR" | wincmd L | vert resize 85 | endif
     au TextYankPost *
@@ -263,16 +263,14 @@ augroup MY__
     " press <C-c> to leave the command-line window
     autocmd CmdwinEnter * noremap <buffer> <C-c> <C-\><C-N>
 
-    
-
     " set ` mark to cursor position at mode change from [*] -> [visual]
     au ModeChanged *:[vV]* lua p = vim.api.nvim_win_get_cursor(0) vim.api.nvim_buf_set_mark(0, '`', p[1], p[2], {})
     " test with -->
     "   au ModeChanged * echomsg printf('the old mode was: %s, the new mode is: %s', v:event.old_mode, v:event.new_mode)
 
-    "autocmd WinEnter * lua 
+    "autocmd WinEnter * lua
     "\   local fts = { 'denite', 'denite-filter' } ;
-    "\   local ret = vim.tbl_contains(fts, vim.bo.filetype) 
+    "\   local ret = vim.tbl_contains(fts, vim.bo.filetype)
     "\   if ret == false then
     "\       vim.wo.cursorline = true
     "\       vim.defer_fn(function() vim.wo.cursorline = false end, 3000)
@@ -280,12 +278,12 @@ augroup MY__
     "\   end
 
     "═══════════════════════════════════════════════════════════════
-    " Diff 
+    " Diff
 
     au OptionSet diff setlocal nonumber norelativenumber
 
     "═══════════════════════════════════════════════════════════════
-    " Terminal 
+    " Terminal
 
     "au TermOpen * call SetTerminalColors()
     au TermOpen * setlocal winhighlight=Normal:Floaterm
@@ -308,3 +306,6 @@ augroup MY__
     "au WinEnter term://* startinsert
 
 augroup END
+
+
+lua require'style.mytcols'

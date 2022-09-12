@@ -1,4 +1,4 @@
-snippet box "" !
+snippet box "%%%% box" !
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % $0
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -6,6 +6,33 @@ endsnippet
 
 snippet si "si"
 \\${1|num,si|}{${2:${VISUAL}}}
+endsnippet
+
+
+snippet qty "si" i
+\qty{$1}{$2} $0
+endsnippet
+
+snippet _ "si" i
+_${1|\text{,{|}$2}$0
+endsnippet
+
+snippet cmd "commands" !
+\\${1}{${2:${VISUAL}}}
+endsnippet
+
+snippet tcol "textcolor"
+\textcolor{${1}}{${2:${VISUAL}}}
+endsnippet
+
+snippet beamerex "beamerex"
+\begin{frame}[fragile]
+   \begin{beamerex}[ID={${1}}]
+	   ${0}
+   \end{beamerex}
+   \begin{beamerexL}
+   \end{beamerexL}
+\end{frame}
 endsnippet
 
 snippet fbox ""
@@ -36,8 +63,11 @@ snippet note "\note{ }"
 }
 endsnippet
 
-snippet ft "\frametitle{}" 
-\frametitle{$0}
+snippet frame "\begin{frame}" 
+\begin{frame}
+	\frametitle{$1}
+	${2:${VISUAL}}
+\end{frame}
 endsnippet
 
 snippet it "\item" 
@@ -63,19 +93,34 @@ ${1:${VISUAL}}
 % ❱❱❱
 endsnippet
 
-snippet b "begin{} / end{}" b
+snippet sub "subfiles" b
+\documentclass[../doc.tex]{subfiles}
+\begin{document}
+
+${1:${VISUAL}}
+
+\end{document}
+endsnippet
+
+snippet b "begin ... end" b
 \begin{${1:something}}
 	${2:${VISUAL}}
 \end{$1}
 endsnippet
 
-snippet btcb "begin{} / end{}" b
+snippet { "command" b
+\\${1:something}{
+	${2:${VISUAL}}
+}$0
+endsnippet
+
+snippet btcb "begin{tcolorbox}..." b
 \begin{tcolorbox}
 	${1:${VISUAL}}
 \end{tcolorbox}
 endsnippet
 
-snippet bi "begin{itemize} / end{}" b
+snippet bi "enum|itemize|describe" b
 \begin{${1|enumerate,itemize,describe|}}
 	\item ${2:${VISUAL}}
 \end{$1}$0

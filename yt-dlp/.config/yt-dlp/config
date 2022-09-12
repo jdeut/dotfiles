@@ -1,18 +1,28 @@
 --no-mtime
 
---embed-thumbnail
---embed-subs
+--no-embed-thumbnail
+--no-write-thumbnail
+--no-embed-subs
 
 --audio-format "mp3"
 
 --format "bestvideo[ext=webm]+251/bestvideo[ext=mp4]+(258/256/140)/bestvideo[ext=webm]+(250/249)/best"
 
---geo-bypass 
+--cookies-from-browser=firefox
 
---progress 
+--downloader=aria2c
+--downloader-args=aria2c:"-x 8 -s 8 -k 1M"
+
+
+--concurrent-fragments 3
+
+--geo-bypass
+
+--progress
 
 --restrict-filenames
 
 # --print-traffic
 
--o ~/Videos/yt-dlp/%(duration>%H-%M-%S)s-%(title).20s.%(ext)s
+-P ~/Videos/yt-dlp
+-o %(duration>%H-%M-%S)s-%(title).20s.%(ext)s

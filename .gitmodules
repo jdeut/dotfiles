@@ -10,3 +10,9 @@
 [submodule "mpv/.config/mpv/scripts/live-filters/remote"]
 	path = mpv/.config/mpv/scripts/live-filters/remote
 	url = https://github.com/hdb/mpv-live-filters
+[submodule "mpv/.config/mpv/scripts/mpvacious/remote"]
+	path = mpv/.config/mpv/scripts/mpvacious/remote
+	url = https://github.com/Ajatt-Tools/mpvacious
+[submodule "ranger/.config/ranger/plugins/ranger-archives"]
+	path = ranger/.config/ranger/plugins/ranger-archives
+	url = https://github.com/maximtrp/ranger-archives.git
