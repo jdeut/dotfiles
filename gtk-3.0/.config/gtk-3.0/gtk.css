@@ -1,10 +1,10 @@
 /* @import url('/home/johannes/.local/share/gnome-shell/extensions/no-title-bar@jonaspoehler.de/stylesheet.css'); */
 
-.titlebar {
+.titlebar, headerbar {
     background: #30FF00;
 }
 
-.titlebar:backdrop {
+.titlebar:backdrop, headerbar:backdrop {
     background: #c6c5c4;
 }
 

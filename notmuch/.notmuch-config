@@ -13,7 +13,7 @@
 
 [database]
 path=/home/johannes/.cache/notmuch
-mail_root=/home/johannes/.Mail/Uni
+mail_root=/home/johannes/.Mail/
 
 # User configuration
 #
