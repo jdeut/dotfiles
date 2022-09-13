@@ -19,13 +19,14 @@ toggleterm.setup {
       --    fg = '#00ff00'
       -- }
    },
-   close_on_exit = false, -- close the terminal window when
+   size = 70,
+   close_on_exit = true, -- close the terminal window when
    start_in_insert = false,
    open_mapping = [[<F10>]],
-   hide_numbers = 1,
+   hide_numbers = true,
    persist_size = false,
    shade_terminals = false,
-   shade_factor = 1,
+   shade_factor = true,
    autochdir = true,
    auto_scroll = true
 }

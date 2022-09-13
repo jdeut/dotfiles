@@ -1,35 +1,19 @@
--- The type of command (can be `vim`, `lua`, or
--- `shell`, default `shell`)
+local ok, toggleterm = pcall(require, 'toggleterm.terminal')
 
-local path = require'plenary.path'
+if not ok then return end
 
-local M = {}
+local M = {
+   term = toggleterm.Terminal:new( {
+      cmd = [[env TOGGLETERM=1 zsh]],
+      direction = 'vertical',
+      size = 70
+   })
+}
 
-do
-   local ttls = {}
+M.term_send = function(cmd)
+   if not M.term:is_open() then M.term:toggle() end
 
-   M.tt = function()
-      if not ttls[vim.bo.filetype] then
-         -- vim.api.nvim_notify('new terminal for ' .. vim.bo.filetype, vim.log.levels.INFO, {})
-         ttls[vim.bo.filetype] = require'myhelper.toggleterm':new()
-      end
-
-      return ttls[vim.bo.filetype]
-   end
-
-   M.tt_ft_exists = function()
-      if ttls[vim.bo.filetype] then
-         return true
-      end
-      return false
-   end
-
-   M.args = function()
-      local fn = 'main.lua'
-      return({
-         path.new(fn):exists() and fn or vim.fn.expand('%')
-      })
-   end
+   M.term:send(cmd, true)
 end
 
 require('yabs'):setup({
@@ -37,10 +21,8 @@ require('yabs'):setup({
       lua = {
          tasks = {
             run = {
-               command = 'lua5.3',
-               output = function(cmd)
-                  M.tt():send_after_kill({ cmd = cmd, args = M.args() })
-               end
+               command = 'lua5.3 %',
+               output = M.term_send
             }
          }
       },
@@ -48,9 +30,7 @@ require('yabs'):setup({
          tasks = {
             run = {
                command = 'tl run %', -- The command to run (% and other
-               output = function(cmd)
-                  M.tt():send_after_kill({ cmd = cmd, args = M.args() })
-               end
+               output = M.term_send
             },
          },
       },
