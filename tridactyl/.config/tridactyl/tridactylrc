@@ -1,0 +1,24 @@
+set hintuppercase false
+set hintshift true
+set allowautofocus true
+set hintfiltermode vimperator-reflow
+set hintchars 'asdfjkl;en'
+set tabsort mru
+set smoothscroll true
+set modeindicatorshowkeys true
+set editorcmd terminal nvr
+
+unbind <C-f>
+unbind --mode=normal <space>
+
+bind e hint -W js -p tri.native.run(`gxmessage asdfasdf`)
+bind --mode=normal <C-d> fillcmdline
+bind <space> fillcmdline_notrail
+bind J tabnext
+bind K tabprev
+bind x fillcmdline
+bind q scrollline 90
+
+set logging.cmdline debug
+set logging.controller debug
+set logging.state debug

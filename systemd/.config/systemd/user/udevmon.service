@@ -1,0 +1,16 @@
+[Unit]
+Description=Monitor input devices for launching tasks
+Wants=systemd-udev-settle.service
+After=systemd-udev-settle.service
+
+[Service]
+# RootDirectory=
+# ExecStart=/bin/pwd
+WorkingDirectory=/home/servicewarden/services/interception-tools/
+ExecStart=/home/servicewarden/services/interception-tools/udevmon -c intercept.yaml
+Nice=-19
+Restart=on-failure
+# OOMScoreAdjust=-1000
+
+[Install]
+WantedBy=default.target
