@@ -37,10 +37,15 @@ wk.register({
          name = 'Lsp',
          i = { FzfLua.lsp_implementations, [[implementations]] },
          a = { FzfLua.lsp_code_actions, [[code actions]] },
-         d = { FzfLua.lsp_definitions, [[declarations]] },
+         d = { FzfLua.lsp_definitions, [[definitions]] },
+         c = { FzfLua.lsp_declarations, [[declarations]] },
+         l = { FzfLua.lsp_incoming_calls, [[incoming calls]] },
+         L = { FzfLua.lsp_outgoing_calls, [[incoming calls]] },
          g = { FzfLua.lsp_document_diagnostics, [[document diagnostics]] },
-         G = { FzfLua.lsp_workspace_diagnostics, [[document diagnostics]] },
+         G = { FzfLua.lsp_workspace_diagnostics, [[workspace diagnostics]] },
          r = { FzfLua.lsp_references, [[references]] },
+         s = { FzfLua.lsp_document_symbols, [[document symbols]] },
+         S = { FzfLua.lsp_workspace_symbols, [[workspace symbols]] },
          t = { FzfLua.lsp_typedefs, [[typedefs]] },
          f = { function()
                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))

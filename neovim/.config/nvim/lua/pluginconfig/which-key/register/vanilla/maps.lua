@@ -95,5 +95,22 @@ wk.register({
       },
       n    = { [[<cmd>cnext<CR>]], 'next entry'},
       p    = { [[<cmd>cprev<CR>]], 'previous entry'},
+      g    = {
+         g = {
+            function()
+               vim.cmd([[copen]])
+               vim.api.nvim_feedkeys('gg', 'xt', false)
+               vim.cmd([[wincmd p]])
+            end
+            , 'gg in quickfix window'
+         },
+      },
+      G    = { function()
+            vim.cmd([[copen]])
+            vim.api.nvim_feedkeys('G', 'xt', false)
+            vim.cmd([[wincmd p]])
+         end
+         , 'G in quickfix window'
+      },
    }
 },  { mode = 'n', prefix = '<leader>' })

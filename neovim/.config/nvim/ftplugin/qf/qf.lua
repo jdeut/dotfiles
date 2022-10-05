@@ -1,5 +1,5 @@
 -- set current window height to
-vim.cmd([[resize 8]])
+vim.cmd([[resize 11]])
 
 vim.wo.wrap         = true
 vim.wo.number       = false

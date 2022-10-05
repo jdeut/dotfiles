@@ -1,0 +1,97 @@
+INFO:  latexindent version 3.18, 2022-06-12, a script to indent .tex files
+       latexindent lives here: /usr/share/texlive/texmf-dist/scripts/latexindent/
+       Wed Sep 21 16:11:00 2022
+       Reading input from STDIN
+INFO:  Processing switches:
+       -sl|--screenlog: log file will also be output to the screen
+       -t|--trace: Trace mode active (you have used either -t or --trace)
+       -m|--modifylinebreaks: modify line breaks
+INFO:  Directory for backup files and indent.log:
+       .
+INFO:  YAML settings read: defaultSettings.yaml
+       Reading defaultSettings.yaml from /usr/share/texlive/texmf-dist/scripts/latexindent/defaultSettings.yaml
+INFO:  YAML settings read: indentconfig.yaml or .indentconfig.yaml
+       Home directory is /home/johannes (didn't find either indentconfig.yaml or .indentconfig.yaml)
+       To specify user settings you would put indentconfig.yaml here: /home/johannes/indentconfig.yaml
+       Alternatively, you can use the hidden file .indentconfig.yaml as: /home/johannes/.indentconfig.yaml
+INFO:  -l switch used without filename, will search for the following files in turn:
+       localSettings.yaml,latexindent.yaml,.localSettings.yaml,.latexindent.yaml
+INFO:  YAML settings read: -l switch
+       Multiple localSettings found, separated by commas:
+       localSettings.yaml, latexindent.yaml, .localSettings.yaml, .latexindent.yaml
+WARN:  yaml file not found: localSettings.yaml not found. Proceeding without it.
+WARN:  yaml file not found: latexindent.yaml not found. Proceeding without it.
+WARN:  yaml file not found: .localSettings.yaml not found. Proceeding without it.
+WARN:  yaml file not found: .latexindent.yaml not found. Proceeding without it.
+TRACE: Token check
+TRACE: List of items: item|myitem (see itemNames)
+TRACE: Constructing specialBeginEnd regex (see specialBeginEnd)
+TRACE: Constructing headings reg exp for example, chapter, section, etc (see indentAfterThisHeading)
+       Not indenting after subparagraph (see indentAfterThisHeading)
+       Not indenting after part (see indentAfterThisHeading)
+       Not indenting after section (see indentAfterThisHeading)
+       Not indenting after subsection* (see indentAfterThisHeading)
+       Not indenting after subsection (see indentAfterThisHeading)
+       Not indenting after chapter (see indentAfterThisHeading)
+       Not indenting after subsubsection (see indentAfterThisHeading)
+       Not indenting after paragraph (see indentAfterThisHeading)
+TRACE: Looping through array for commandCodeBlocks->stringsAllowedBetweenArguments
+       node
+       at
+       to
+       decoration
+       \+\+
+       \-\-
+       \#\#\d
+TRACE: Strings allowed between arguments: (?^u:node|at|to|decoration|\+\+|\-\-|\#\#\d) (see stringsAllowedBetweenArguments)
+TRACE: Looping through array for commandCodeBlocks->stringsAllowedBetweenArguments
+       node
+       at
+       to
+       decoration
+       \+\+
+       \-\-
+       \#\#\d
+TRACE: Strings allowed between arguments: (?^u:node|at|to|decoration|\+\+|\-\-|\#\#\d) (see stringsAllowedBetweenArguments)
+TRACE: Looping through array for commandCodeBlocks->commandNameSpecial
+       @ifnextchar\[
+TRACE: The special command names regexp is: (?^u:@ifnextchar\[) (see commandNameSpecial)
+TRACE: Searching for NOINDENTBLOCK (see noIndentBlock)
+       looking for noindent:1 noIndentBlock
+       looking for cmhtest:1 noIndentBlock
+TRACE: Searching for VERBATIM commands (see verbatimCommands)
+       looking for verb:1 Commands
+       looking for lstinline:1 Commands
+TRACE: Storing trailing comments
+       No trailing comments found
+TRACE: Searching for VERBATIM environments (see verbatimEnvironments)
+       looking for verbatim:1 environments
+       looking for minted:1 environments
+       looking for lstlisting:1 environments
+TRACE: Protecting blank lines (see preserveBlankLines)
+TRACE: Horizontal space removal routine
+TRACE: Searching for FILE CONTENTS environments (see fileContentsEnvironments)
+       looking for filecontents environments
+       looking for filecontents* environments
+TRACE: Removing leading space from mainDocument (verbatim/noindentblock already accounted for)
+INFO:  Phase 1: searching for objects
+TRACE: looking for ENVIRONMENTS
+TRACE: looking for IFELSEFI
+TRACE: looking for HEADINGS (chapter, section, part, etc)
+       No objects found.
+INFO:  Phase 2: finding surrounding indentation
+TRACE: Updating FamilyTree...
+INFO:  Phase 3: indenting objects
+       No child objects (mainDocument)
+INFO:  Phase 4: final indentation check
+TRACE: Horizontal space removal routine
+       Removing trailing white space *after* the document is processed (see removeTrailingWhitespace: afterProcessing)
+TRACE: condense blank lines routine
+       Condensing multiple blank lines into 1 (see condenseMultipleBlankLinesInto)
+       Unprotecting blank lines (see preserveBlankLines)
+       Finished unprotecting lines (see preserveBlankLines)
+INFO:  Output routine:
+       Not outputting to file; see -w and -o switches for more options.
+       --------------
+INFO:  Please direct all communication/issues to:
+        https://github.com/cmhughes/latexindent.pl

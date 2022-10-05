@@ -18,6 +18,9 @@ else
 fi
 
 autoload -U colors
+autoload edit-command-line
+zle -N edit-command-line
+
 setterm -linewrap on
 #
 # Zaw

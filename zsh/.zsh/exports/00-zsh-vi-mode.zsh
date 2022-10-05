@@ -1,0 +1,2 @@
+export ZVM_KEYTIMEOUT=0.3
+export ZVM_CURSOR_STYLE_ENABLED=true

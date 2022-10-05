@@ -14,8 +14,9 @@ t.Whitespace = { fg = '#353522' }
 
 t.MiniTrailspace = { bg = cols.lightred }
 
-t.MatchParen = { fg = cols.brightpurple, bg = cols.darkyellow, style = 'bold' }
-t.MatchBackground = { bg = cols.yellow, style = 'bold' }
+t.MatchParen = { fg = cols.brightpurple, bg = cols.matchup_bg, style = 'bold' }
+-- t.MatchBackground = { bg = cols.matchup_bg, style = 'bold' }
+t.MatchBackground = { bg = cols.matchup_bg }
 
 t.EndOfBuffer      = { bg = cols.lightgray, fg = cols.cyan, style = 'italic' }
 

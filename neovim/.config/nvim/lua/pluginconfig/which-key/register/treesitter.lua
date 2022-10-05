@@ -3,9 +3,9 @@ require'which-key'.register({
       name = 'Utils',
       t = {
          name = 'Treesitter',
-         u    = { [[<Cmd>TSUpdate<CR>]], 'Info'},
-         n    = { [[<Cmd>TSInstallInfo<CR>]], 'Info'},
-         N    = { [[<Cmd>TSModuleInfo<CR>]], 'Module Info'}
+         u    = { [[<Cmd>TSUpdate<CR>]], 'Update Modules'},
+         n    = { [[<Cmd>TSInstallInfo<CR>]], 'List Installed Modules'},
+         N    = { [[<Cmd>TSModuleInfo<CR>]], 'State of Modules'}
       }
    }
 },  { mode = 'n', prefix = '<leader>' })

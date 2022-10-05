@@ -2,7 +2,7 @@ local tmp = {
    fg            = '#111111',
    bg            = '#ffffff',
    white         = '#ffffff',
-   yellow        = '#fdfcb4',
+   yellow        = '#ef8f0f',
    orange        = '#ff9000',
    purple        = '#9a12cf',
    black         = '#000000',
@@ -25,7 +25,8 @@ local tmp = {
    lightorange   = '#ffdd80',
    lightgreen    = '#b4ffb4',
    lightgreen2   = '#d4ffd4',
-   lightgray     = '#f3f4f2'
+   lightgray     = '#f3f4f2',
+   matchup_bg    = '#ffefdb'
 }
 
 return tmp

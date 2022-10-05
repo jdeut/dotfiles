@@ -2,11 +2,10 @@
 Name=Cambalache
 GenericName=Cambalache
 Comment=Successor of Glade
-Path=/home/johannes/Src/cambalache
-Exec=python3 run-dev.py %f
+Exec=/usr/bin/flatpak run --user ar.xjuan.Cambalache %f
 Terminal=false
 StartupNotify=false
 MimeType=application/x-cambalache-project;application/x-gtk-builder;application/x-glade;
 Type=Application
-Icon=org.gnome.Glade
+Icon=ar.xjuan.Cambalache
 Categories=GNOME;GTK;Development;GUIDesigner;

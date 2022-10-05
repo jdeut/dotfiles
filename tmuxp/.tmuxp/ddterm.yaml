@@ -1,0 +1,19 @@
+session_name: ddterm
+start_directory: '~'
+global_options:
+  default-shell: /bin/zsh
+  default-command: /bin/zsh
+options: 
+  set-titles: on
+  base-index: 1
+  set-titles-string: DDTerm Tmux Session
+windows:
+- window_name: Ranger
+  layout: main-horizontal
+  panes:
+  - shell_command:
+    - bash -c "while :; do ranger; done"
+- layout: main-horizontal
+  panes:
+  - shell_command:
+    - clear

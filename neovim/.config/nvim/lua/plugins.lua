@@ -40,6 +40,35 @@ local p = function()
       as = 'which-key',
       config = pluginconfig
    }
+   use { 'stevearc/overseer.nvim',
+      config = function()
+         require'overseer'.setup({
+            component_aliases = {
+               default = {
+                  -- These are the default components listed in the README
+                  -- You probably want to keep them
+                  "on_output_summarize",
+                  "on_exit_set_status",
+                  -- { "display_duration", detail_level = 1 },
+                  "on_complete_notify",
+                  "on_complete_dispose",
+                  -- This puts the parsed results into the quickfix
+                  { "on_result_diagnostics_quickfix", open = true },
+                  -- This puts the parsed results into neovim's diagnostics
+                  "on_result_diagnostics",
+               },
+               default_vscode = {
+                  { "on_output_quickfix", open = true },
+                  "on_exit_set_status",
+                  "on_complete_notify",
+                  { "on_output_summarize", max_lines = 5 },
+                  { "display_duration", detail_level = 1 },
+                  { "on_output_write_file", filename = "/tmp/overseer_output_file" },
+               },
+            }
+         })
+      end
+   }
    use { 'rmehri01/onenord.nvim',
       requires = { "rktjmp/lush.nvim" },
       as = 'onenord',
@@ -48,9 +77,9 @@ local p = function()
    use { 'kevinhwang91/rnvimr',
       config = pluginconfig
    }
-   use { 'kevinhwang91/nvim-hlslens',
-      config = pluginconfig
-   }
+   -- use { 'kevinhwang91/nvim-hlslens',
+   --    config = pluginconfig
+   -- }
    use { 'jalvesaq/Nvim-R',
       alias = 'Nvim-R'
    }
@@ -94,12 +123,6 @@ local p = function()
    }
    use { 'andymass/vim-matchup',
       config = pluginconfig
-   }
-   use { 'famiu/nvim-reload',
-      config = function()
-         require('nvim-reload').vim_reload_dirs = { vim.fn.stdpath('config') .. '/*' }
-         require('nvim-reload').lua_reload_dirs = { vim.fn.stdpath('config') }
-      end
    }
    use { 'ekickx/clipboard-image.nvim',
       as = 'clipboard-image',
@@ -218,44 +241,48 @@ local p = function()
          vim.g.rooter_change_directory_for_non_project_files = 'current'
       end
    }
-   use { 'williamboman/nvim-lsp-installer',
-      -- disable = true,
-      requires = 'neovim/nvim-lspconfig',
+   use { 'williamboman/mason.nvim',
       config = function()
+         require'mason'.setup()
+      end
+   }
+   use { 'williamboman/mason-lspconfig.nvim',
+      after = {'mason.nvim', 'nvim-lspconfig', 'cmp-nvim-lsp'},
+      config = function()
+         require'mason-lspconfig'.setup({
+            ensure_installed = { "texlab", "lte", "sumneko_lua", "cssls"}, -- ensure these servers are always installed
+            automatic_installation = { exclude = { 'vala_ls' } }
+         })
 
-         local lsp_installer = require 'nvim-lsp-installer'
+         local mason_lspconfig = require'mason-lspconfig'
          local lspconfig = require 'lspconfig'
 
-         lsp_installer.setup {
-            ensure_installed = { "texlab", "lte", "sumneko_lua", "cssls"}, -- ensure these servers are always installed
-            automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-            ui = {
-               icons = {
-                  server_installed = "✓",
-                  server_pending = "➜",
-                  server_uninstalled = "✗"
-               }
-            },
-            log_level = vim.log.levels.INFO
-         }
-
-         local g_opts = {
+         local common_opts = {
             on_attach = require 'lsp.on_attach',
             capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
          }
 
-         for _, server in pairs(lsp_installer.get_installed_servers()) do
-
-            local ok, server_settings = pcall(require, 'lsp.settings.' .. server.name)
+         for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+            -- print(server)
+            local ok, server_settings = pcall(require, 'lsp.settings.' .. server)
 
             if ok then
-               local l_opts = vim.tbl_deep_extend("force", server_settings(), g_opts)
+               local l_opts = vim.tbl_deep_extend("force", server_settings(), common_opts)
 
-               lspconfig[server.name].setup(l_opts)
+               lspconfig[server].setup(l_opts)
             else
-               lspconfig[server.name].setup (g_opts)
+               lspconfig[server].setup(common_opts)
             end
          end
+
+         lspconfig.vala_ls.setup(
+            vim.tbl_deep_extend("force", {}, common_opts)
+         )
+      end
+   }
+   use { 'neovim/nvim-lspconfig',
+      -- after = {'mason-lspconfig.nvim', 'cmp-nvim-lsp'},
+      config = function()
       end
    }
    use { 'onsails/lspkind-nvim',
@@ -263,21 +290,23 @@ local p = function()
          require('lspkind').init {}
       end
    }
-   use { 'p00f/nvim-ts-rainbow',
-      requires = 'nvim-treesitter/nvim-treesitter',
+   use { 'nvim-treesitter/nvim-treesitter',
+      before = {'andymass/vim-matchup' },
       config = function()
-         -- require 'nvim-treesitter.configs'.setup {
-         --  ensure_installed = 'maintained',
-         --  rainbow = {
-         --     enable        = true,
-         --     extended_mode = true
-         --  },
-         --  matchup = {
-         --     enable = false
-         --  }
-         -- }
-      end,
-      disable = false
+         require 'nvim-treesitter.configs'.setup {
+            ensure_installed = { 'vala', 'c', 'lua', 'latex' },
+            rainbow = {
+               enable        = true,
+               extended_mode = true
+            },
+            matchup = {
+               enable = true
+            }
+         }
+      end
+   }
+   use { 'p00f/nvim-ts-rainbow',
+      after = { 'nvim-treesitter' }
    }
    use { 'akinsho/toggleterm.nvim',
       as = 'nvim-toggleterm',
@@ -287,6 +316,10 @@ local p = function()
       requires = { 'andymass/vim-matchup' },
       setup = function()
          vim.g.vimtex_imaps_enabled = 0
+      end
+   }
+   use { 'vala-lang/vala.vim',
+      setup = function()
       end
    }
    use { 'WolfgangMehner/perl-support',

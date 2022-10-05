@@ -2,4 +2,4 @@
 
  # gxmessage "$1 $2 $3"
 
-mbsync Uni
+mbsync --all
