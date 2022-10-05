@@ -77,9 +77,6 @@ local p = function()
    use { 'kevinhwang91/rnvimr',
       config = pluginconfig
    }
-   -- use { 'kevinhwang91/nvim-hlslens',
-   --    config = pluginconfig
-   -- }
    use { 'jalvesaq/Nvim-R',
       alias = 'Nvim-R'
    }
