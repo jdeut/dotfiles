@@ -9,7 +9,15 @@
 
 local pluginconfig = function(plugin)
    assert(type(plugin) == 'string')
-   require([[pluginconfig.]] .. plugin)
+
+   local ok, pluginconfig = pcall(require, [[pluginconfig.]] .. plugin)
+
+   if not ok then
+      vim.notify( string.format('pluginconfig(): `%s` not found', plugin), vim.log.levels.INFO)
+   else
+      -- vim.notify( string.format('pluginconfig(): `%s` found', plugin), vim.log.levels.DEBUG)
+   end
+   -- require([[pluginconfig.]] .. plugin)
 end
 
 local p = function()
@@ -41,33 +49,8 @@ local p = function()
       config = pluginconfig
    }
    use { 'stevearc/overseer.nvim',
-      config = function()
-         require'overseer'.setup({
-            component_aliases = {
-               default = {
-                  -- These are the default components listed in the README
-                  -- You probably want to keep them
-                  "on_output_summarize",
-                  "on_exit_set_status",
-                  -- { "display_duration", detail_level = 1 },
-                  "on_complete_notify",
-                  "on_complete_dispose",
-                  -- This puts the parsed results into the quickfix
-                  { "on_result_diagnostics_quickfix", open = true },
-                  -- This puts the parsed results into neovim's diagnostics
-                  "on_result_diagnostics",
-               },
-               default_vscode = {
-                  { "on_output_quickfix", open = true },
-                  "on_exit_set_status",
-                  "on_complete_notify",
-                  { "on_output_summarize", max_lines = 5 },
-                  { "display_duration", detail_level = 1 },
-                  { "on_output_write_file", filename = "/tmp/overseer_output_file" },
-               },
-            }
-         })
-      end
+      as = 'overseer',
+      config = pluginconfig
    }
    use { 'rmehri01/onenord.nvim',
       requires = { "rktjmp/lush.nvim" },
@@ -198,14 +181,6 @@ local p = function()
    }
    use { 'SirVer/ultisnips',
       setup = function()
-         -- let g:ulti_expand_or_jump_res = 0 'default value, just set once
-         -- function! Ulti_ExpandOrJump_and_getRes()
-         --    call v:lua.MPairs.disable_filetype_set()
-         --    call UltiSnips#ExpandSnippetOrJump()
-         --    call v:lua.MPairs.disable_filetype_reset()
-         --    return ''
-         -- endfunction
-         --
          vim.g.UltiSnipsSnippetsDir         = '~/.config/nvim/UltiSnips'
          vim.g.UltiSnipsEditSplit           = 'vertical'
          vim.g.UltiSnipsListSnippets        = '<Nop>'
@@ -222,15 +197,6 @@ local p = function()
             '"', "'", '[', ']', '(', ')', '{', '}',
             '/', [[\]], '_', '-', '.', ',', ':'
          }
-
-         -- vim.g.wordmotion_mappings = {
-         --     W = [[''w]], B = [[''b]],
-         --     E = [[''e]], gE = [[]],
-         --     w = [['w]], b = [['b]],
-         --     e = [['e]], ge = [[]],
-         --     aw = [['aw]], iw = [['iw]],
-         --     ['<C-R><C-W>'] = [['<C-R><C-w>]]
-         -- }
       end
    }
    use { 'airblade/vim-rooter',
@@ -245,37 +211,8 @@ local p = function()
    }
    use { 'williamboman/mason-lspconfig.nvim',
       after = {'mason.nvim', 'nvim-lspconfig', 'cmp-nvim-lsp'},
-      config = function()
-         require'mason-lspconfig'.setup({
-            ensure_installed = { "texlab", "lte", "sumneko_lua", "cssls"}, -- ensure these servers are always installed
-            automatic_installation = { exclude = { 'vala_ls' } }
-         })
-
-         local mason_lspconfig = require'mason-lspconfig'
-         local lspconfig = require 'lspconfig'
-
-         local common_opts = {
-            on_attach = require 'lsp.on_attach',
-            capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-         }
-
-         for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-            -- print(server)
-            local ok, server_settings = pcall(require, 'lsp.settings.' .. server)
-
-            if ok then
-               local l_opts = vim.tbl_deep_extend("force", server_settings(), common_opts)
-
-               lspconfig[server].setup(l_opts)
-            else
-               lspconfig[server].setup(common_opts)
-            end
-         end
-
-         lspconfig.vala_ls.setup(
-            vim.tbl_deep_extend("force", {}, common_opts)
-         )
-      end
+      as = 'mason-lspconfig',
+      config = pluginconfig
    }
    use { 'neovim/nvim-lspconfig',
       -- after = {'mason-lspconfig.nvim', 'cmp-nvim-lsp'},
