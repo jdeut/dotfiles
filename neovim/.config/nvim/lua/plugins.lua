@@ -10,10 +10,12 @@
 local pluginconfig = function(plugin)
    assert(type(plugin) == 'string')
 
-   local ok, pluginconfig = pcall(require, [[pluginconfig.]] .. plugin)
+   local modname = [[pluginconfig.]] .. plugin
+
+   local ok, pluginconfig = pcall(require, modname)
 
    if not ok then
-      vim.notify( string.format('pluginconfig(): `%s` not found', plugin), vim.log.levels.INFO)
+      vim.notify( string.format('pluginconfig(): `%s` not found >> %s', modname, vim.inspect(pluginconfig)), vim.log.levels.INFO)
    else
       -- vim.notify( string.format('pluginconfig(): `%s` found', plugin), vim.log.levels.DEBUG)
    end
@@ -134,7 +136,6 @@ local p = function()
       config = pluginconfig
    }
    use { 'Pocco81/auto-save.nvim',
-      as = 'autosave',
       config = pluginconfig
    }
    use { 'jghauser/mkdir.nvim',

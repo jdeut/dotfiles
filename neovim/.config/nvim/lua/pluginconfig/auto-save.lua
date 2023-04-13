@@ -1,4 +1,4 @@
-local autosave = require('autosave')
+local autosave = require('auto-save')
 
 vim.g.auto_save_silent = 1
 
