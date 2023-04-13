@@ -1,5 +1,11 @@
+local ok, overseer = pcall(require, "overseer")
+if not ok then
+  vim.notify "Could not load overseer"
+  return
+end
 
-require'overseer'.setup({
+overseer.setup({
+   -- strategy = "toggleterm",
    component_aliases = {
       default = {
          -- These are the default components listed in the README
@@ -15,12 +21,22 @@ require'overseer'.setup({
          "on_result_diagnostics",
       },
       default_vscode = {
-         { "on_output_quickfix", open = true },
+         {
+            "on_output_quickfix",
+            open = true,
+            open_height = 5
+         },
          "on_exit_set_status",
-         "on_complete_notify",
-         { "on_output_summarize", max_lines = 5 },
-         { "display_duration", detail_level = 1 },
-         { "on_output_write_file", filename = "/tmp/overseer_output_file" },
+         -- "on_complete_notify",
+         {
+            "on_output_summarize",
+            max_lines = 5
+         },
+         -- { "display_duration", detail_level = 1 },
+         {
+            "on_output_write_file",
+            filename = "/tmp/overseer_output_file"
+         },
       },
    }
 })

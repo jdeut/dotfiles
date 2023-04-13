@@ -19,7 +19,8 @@ toggleterm.setup {
       --    fg = '#00ff00'
       -- }
    },
-   size = 70,
+   size = 20,
+   direction = 'horizontal',
    close_on_exit = true, -- close the terminal window when
    start_in_insert = false,
    open_mapping = [[<F10>]],

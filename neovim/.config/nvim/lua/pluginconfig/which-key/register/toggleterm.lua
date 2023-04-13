@@ -11,6 +11,8 @@ local function apply_to_terminals(fn)
    end
 end
 
+local myTT = require'toggleterm.terminal'.Terminal:new({ hidden = true })
+
 require'which-key'.register({
    t = {
       name = 'ToggleTerm',
@@ -34,9 +36,13 @@ require'which-key'.register({
                end
             )
          end, "increase size"
-      }
+      },
       -- ['s'] = { function() tt():restart() end, "increase size" },
-      -- t = { function() tt():toggle() end, "Toggle" },
+      t = { function()
+            vim.api.nvim_notify('test', vim.log.levels.INFO, {})
+            myTT:toggle()
+         end, "Toggle"
+      }
       -- c = { function() tt().terminal:clear() end, 'Clear Term' }
    }
 },  {

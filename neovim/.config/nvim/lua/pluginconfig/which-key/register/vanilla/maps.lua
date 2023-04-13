@@ -15,7 +15,7 @@ wk.register( {
       e = {
          name = 'Edit/Sub',
          e    = { [[:s###c<Left><Left><Left>]], [[Substitute]], silent = false },
-         w    = { [[:s#=expand('<cword>')<cr>##c<Left><Left>]], [[ ]], silent = false }
+         w    = { [[:s#=expand('<cword>')<cr>##c<Left><Left>]], [[Substitute <cword>]], silent = false }
       }
    }
 },  { mode = 'x', silet = false})
@@ -25,7 +25,7 @@ wk.register( {
       e = {
          name = 'Edit/Sub',
          e    = { [[:%s###c<Left><Left><Left>]], [[Substitute]], silent = false },
-         w    = { [[:%s#=expand('<cword>')<cr>##c<Left><Left>]], [[ ]], silent = false }
+         w    = { [[:%s#=expand('<cword>')<cr>##c<Left><Left>]], [[Substitute <cword>]], silent = false }
       },
       w = {
          f = { function()

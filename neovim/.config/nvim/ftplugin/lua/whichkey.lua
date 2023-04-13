@@ -29,11 +29,22 @@ local mappings = {
             'Kill lua instances'
          },
          r = { function()
-               -- tt():kill_descendant()
-               -- tt():send({
-               --    cmd = 'lua5.3',
-               --    args = args()
-               -- })
+               local size = require'toggleterm.config'.get('size')
+
+               require'toggleterm'.setup {
+                  size = 80
+               }
+
+               local task = require'overseer'.new_task({
+                  cmd = {'lua'},
+                  args = { vim.fn.expand('%:p') },
+                  strategy = { 'toggleterm', direction = 'vertical' }
+               })
+               task:start()
+
+               require'toggleterm'.setup {
+                  size = 120
+               }
             end,
             'Exec in Term'
          },

@@ -1,6 +1,6 @@
 require'mason-lspconfig'.setup({
-   ensure_installed = { "texlab", "lte", "sumneko_lua", "cssls"}, 
-   automatic_installation = { exclude = { 'vala_ls' } }
+   ensure_installed = { "texlab", "lua_ls", "vala_ls" }
+   -- automatic_installation = { exclude = { 'vala_ls' } }
 })
 
 local mason_lspconfig = require'mason-lspconfig'
@@ -8,9 +8,7 @@ local lspconfig = require 'lspconfig'
 
 local common_opts = {
    on_attach = require 'lsp.on_attach',
-   capabilities = require('cmp_nvim_lsp').update_capabilities(
-      vim.lsp.protocol.make_client_capabilities()
-   )
+   capabilities = require('cmp_nvim_lsp').default_capabilities()
 }
 
 for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
@@ -26,6 +24,6 @@ for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
    end
 end
 
-lspconfig.vala_ls.setup(
-   vim.tbl_deep_extend("force", {}, common_opts)
-)
+-- lspconfig.vala_ls.setup(
+--    vim.tbl_deep_extend("force", {}, common_opts)
+-- )

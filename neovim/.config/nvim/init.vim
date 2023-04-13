@@ -14,17 +14,17 @@ filetype indent off
 "enable 'Man' command
 runtime ftplugin/man.vim
 
-set printoptions=paper:A4,duplex:off,collate:n,syntax:n,header:0
-
 let loaded_matchit = 1
 
-let &printdevice='HP_Color_LaserJet_Pro_MFP_M177fw'
-
-let &printexpr= "system(" .
-\   "[ 'lp' ] + " .
-\   "( empty(&printdevice) ? [] : ['-d', &printdevice] ) + " .
-\   "[ v:fname_in ]" .
-\ ")"
+" set printoptions=paper:A4,duplex:off,collate:n,syntax:n,header:0
+"
+" let &printdevice='HP_Color_LaserJet_Pro_MFP_M177fw'
+"
+" let &printexpr= "system(" .
+" \   "[ 'lp' ] + " .
+" \   "( empty(&printdevice) ? [] : ['-d', &printdevice] ) + " .
+" \   "[ v:fname_in ]" .
+" \ ")"
 
 "disable beeping and flashing on error
 set vb t_vb=

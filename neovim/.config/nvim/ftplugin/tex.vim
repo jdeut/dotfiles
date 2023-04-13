@@ -77,26 +77,26 @@ hi link texCFrametitleArg VimtexFrametitle
 hi link texCSubfileArg VimtexFrametitle
 
 
-" let g:vimtex_complete_ref = { 
+" let g:vimtex_complete_ref = {
 let g:vimtex_complete_ref = {
 \   'custom_patterns': [
 \       '^.*\subref{s*$'
 \   ]
 \ }
-" 
+"
 
-" let g:vimtex_mappings_disable         = { 
+" let g:vimtex_mappings_disable         = {
 let g:vimtex_mappings_disable         = {
 \   'n': ['<localleader>ll']
 \ }
-" 
+"
 
-" let g:vimtex_grammar_textidote        = { 
+" let g:vimtex_grammar_textidote        = {
 let g:vimtex_grammar_textidote        = {
 \   'jar': '/opt/textidote/textidote.jar',
 \   'args': ''
 \ }
-" 
+"
 
 let g:vimtex_fold_types = {
 \   'cmd_single' : {
@@ -127,9 +127,9 @@ let g:vimtex_fold_types = {
 \       'close': '',
 \   }
 \ }
-" 
+"
 
-" let g:vimtex_quickfix_ignore_filters  = [ 
+" let g:vimtex_quickfix_ignore_filters  = [
 let g:vimtex_quickfix_ignore_filters  = [
 \   'Underfull',
 \   'Overfull',
@@ -138,7 +138,7 @@ let g:vimtex_quickfix_ignore_filters  = [
 \   'everypage Warning',
 \   'Package hyperref Warning',
 \   'Package typearea Warning: Bad type area settings!',
-\ ] 
+\ ]
 
 let g:vimtex_syntax_custom_cmds = [
 \  { 'name' : 'adjustbox', 'argspell' : 0 },
@@ -220,7 +220,7 @@ let g:vimtex_syntax_custom_cmds = [
 \  { 'name' : 'cellcolor', 'argspell' : 0 },
 \  { 'name' : 'color', 'argspell' : 0 },
 \  { 'name' : 'setbeamertemplate', 'argspell' : 0 },
-\  { 'name' : 'newcolumntype', 'argspell' : 0}, 
+\  { 'name' : 'newcolumntype', 'argspell' : 0},
 \  { 'name' : 'RealisticCapacitor', 'argspell' : 0 },
 \  { 'name' : 'xusebox', 'argspell' : 0, 'argstyle' : 'ital' }
 \ ]

@@ -69,9 +69,7 @@ local p = function()
    }
    use { 'hrsh7th/cmp-nvim-lsp',
       config = function()
-         require('cmp_nvim_lsp').update_capabilities(
-            vim.lsp.protocol.make_client_capabilities()
-         )
+         require('cmp_nvim_lsp').default_capabilities()
       end
    }
    use { 'quangnguyen30192/cmp-nvim-ultisnips',
