@@ -1,4 +1,6 @@
-local autosave = require('autosave')           vim.g.auto_save_silent = 1
+local autosave = require('autosave')
+
+vim.g.auto_save_silent = 1
 
 autosave.hook_after_saving = function()
    autosave.setup({

@@ -133,7 +133,7 @@ local p = function()
       as = 'indent-blankline',
       config = pluginconfig
    }
-   use { 'Pocco81/AutoSave.nvim',
+   use { 'Pocco81/auto-save.nvim',
       as = 'autosave',
       config = pluginconfig
    }
