@@ -1,4 +1,6 @@
 vim.wo.winhighlight = 'Normal:Floaterm'
 
 
-vim.cmd([[IndentBlanklineDisable]])
+if vim.fn.exists(':IndentBlanklineDisable') > 0 then
+   vim.cmd([[IndentBlanklineDisable]])
+end
