@@ -33,7 +33,7 @@ mail_root=/home/johannes/.Mail/
 
 [user]
 name=Johannes Deutsch
-primary_email=johannes.deutsch@uni-due.de
+primary_email=j_deutsch@web.de
 
 # Configuration for "notmuch new"
 #
@@ -49,6 +49,8 @@ primary_email=johannes.deutsch@uni-due.de
 #		names will be ignored, independent of its depth/location
 #		in the mail store.
 #
+
+other_email=johannes.deutsch@wbg-marl.nrw.schule;energien@uber.space;
 
 [new]
 tags=unread;inbox;

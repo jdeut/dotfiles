@@ -1,5 +1,5 @@
 require'mason-lspconfig'.setup({
-   ensure_installed = { "texlab", "lua_ls", "vala_ls" }
+   ensure_installed = { "texlab", "lua_ls", "vala_ls", "clangd" }
    -- automatic_installation = { exclude = { 'vala_ls' } }
 })
 
