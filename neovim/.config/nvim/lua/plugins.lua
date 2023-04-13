@@ -135,7 +135,8 @@ local p = function()
       as = 'indent-blankline',
       config = pluginconfig
    }
-   use { 'Pocco81/auto-save.nvim',
+   use { 'okuuva/auto-save.nvim',
+      as = 'auto-save',
       config = pluginconfig
    }
    use { 'jghauser/mkdir.nvim',
