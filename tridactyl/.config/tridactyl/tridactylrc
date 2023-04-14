@@ -13,7 +13,7 @@ unbind --mode=normal <space>
 
 bind e hint -W js -p tri.native.run(`gxmessage asdfasdf`)
 bind --mode=normal <C-d> fillcmdline
-bind <space> fillcmdline_notrail
+" bind <space> fillcmdline_notrail
 bind J tabnext
 bind K tabprev
 bind x fillcmdline
