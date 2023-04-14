@@ -6,3 +6,4 @@ use-formatting = true
 partition-contacts = true
 enable-notifications = true
 notification-command = notify-send -i "%a" "scli" "%s - %m"
+open-command = xdg-open "%u"
