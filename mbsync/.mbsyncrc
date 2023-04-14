@@ -66,7 +66,7 @@ MaildirStore WBGS-local
 Path ~/.Mail/WBGS/
 Inbox ~/.Mail/WBGS/INBOX
 
-Channel Uberspace
+Channel WBGS
 Far :WBGS-remote:
 Near :WBGS-local:
 Patterns *
@@ -88,7 +88,7 @@ MaildirStore webde-local
 Path ~/.Mail/webde/
 Inbox ~/.Mail/webde/INBOX
 
-Channel Uberspace
+Channel webde
 Far :webde-remote:
 Near :webde-local:
 Patterns *
