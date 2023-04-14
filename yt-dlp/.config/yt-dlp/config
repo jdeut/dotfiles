@@ -2,13 +2,18 @@
 
 --no-embed-thumbnail
 --no-write-thumbnail
---no-embed-subs
 
 --audio-format "mp3"
 
 --format "bestvideo[ext=webm]+251/bestvideo[ext=mp4]+(258/256/140)/bestvideo[ext=webm]+(250/249)/best"
 
 --cookies-from-browser=firefox
+
+
+--write-auto-subs
+--write-subs
+--embed-subs
+--sub-langs "fr,de"
 
 --downloader=aria2c
 --downloader-args=aria2c:"-x 8 -s 8 -k 1M"
