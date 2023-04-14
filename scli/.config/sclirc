@@ -1,9 +1,0 @@
-wrap-at = 50
-color = ["yellow", "light green"]
-# color = {"4917635832763": "light magenta"}
-save-history = true
-use-formatting = true
-partition-contacts = true
-enable-notifications = true
-notification-command = notify-send -i "%a" "scli" "%s - %m"
-open-command = xdg-open "%u"

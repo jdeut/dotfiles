@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=mangl
-GenericName=mangl
-Exec=/home/johannes/.local/bin/mangl
-Terminal=false
-StartupNotify=false
-Type=Application

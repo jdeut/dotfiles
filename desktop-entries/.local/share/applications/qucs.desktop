@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=qucs
-GenericName=qucs
-Comment=Quite Universal Circuit Simulator
-Exec=/home/johannes/bin/Qucs-0.0.20-pre2-x86_64.AppImage
-Terminal=false
-StartupNotify=false
-Type=Application
