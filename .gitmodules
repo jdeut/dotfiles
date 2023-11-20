@@ -1,9 +1,7 @@
+# mpv addons
 [submodule "mpv/.config/mpv/scripts/videoclip"]
 	path = mpv/.config/mpv/scripts/videoclip
 	url = https://github.com/Ajatt-Tools/videoclip
-[submodule "mpv/.config/mpv/scripts/mpv-zenity-open-files"]
-	path = mpv/.config/mpv/scripts/mpv-zenity-open-files/remote
-    url = https://github.com/alifarazz/mpv-zenity-open-files
 [submodule "mpv/.config/mpv/scripts/youtube-quality/remote"]
 	path = mpv/.config/mpv/scripts/youtube-quality/remote
 	url = https://github.com/jgreco/mpv-youtube-quality
@@ -16,6 +14,10 @@
 [submodule "mpv/.config/mpv/scripts/mpvacious/remote"]
 	path = mpv/.config/mpv/scripts/mpvacious/remote
 	url = https://github.com/Ajatt-Tools/mpvacious
+[submodule "mpv/.config/mpv/scripts/zenity-open-files"]
+	path = mpv/.config/mpv/scripts/zenity-open-files
+	url = https://github.com/alifarazz/mpv-zenity-open-files
+# Ranger plugins
 [submodule "ranger/.config/ranger/plugins/ranger-archives"]
 	path = ranger/.config/ranger/plugins/ranger-archives
 	url = https://github.com/maximtrp/ranger-archives.git
