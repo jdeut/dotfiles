@@ -23,16 +23,24 @@ local settings = {
   --   }
   -- }
    texlab = {
-      auxDirectory = 'compiled',
       chktex = {
          onOpenAndSave = true
       },
       diagnostics = { -- recognize the `vim` global
          delay = 100
       },
+      experimental = {
+         mathEnvironments = {'align', 'align*'}
+      },
+      forwardSearch = {
+         executable = "evince-synctex",
+         args = { "-f", "%l", "%p", '"code -g %f:%l"' }
+      },
       build = {
          -- args = { "-pdf", "-outdir=compiled", "-interaction=nonstopmode", "-synctex=1", "%f" },
          executable = "latexmk",
+         auxDirectory = "compiled",
+         pdfDirectory = "compiled",
          isContinuous = false
       }
    }

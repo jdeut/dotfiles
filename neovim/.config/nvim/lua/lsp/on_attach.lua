@@ -13,7 +13,7 @@ end
 -- h = { vim.lsp.buf.hover, 'hover'},
 -- r = { vim.lsp.buf.references, 'references'},
 -- s = { vim.lsp.buf.rename, 'rename'},
---
+
 local buf_set_option = function(bufnr, ...)
    vim.api.nvim_buf_set_option(bufnr, ...)
 end
@@ -49,7 +49,6 @@ local caps = {
 
 local on_attach = function(client, bufnr)
    -- require 'myhelper'.gxmessage(client.server_capabilities)
-   --
 
    buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 

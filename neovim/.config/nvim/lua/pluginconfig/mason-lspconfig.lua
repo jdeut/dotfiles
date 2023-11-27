@@ -1,6 +1,5 @@
 require'mason-lspconfig'.setup({
    ensure_installed = { "texlab", "lua_ls", "vala_ls", "clangd" }
-   -- automatic_installation = { exclude = { 'vala_ls' } }
 })
 
 local mason_lspconfig = require'mason-lspconfig'
@@ -13,6 +12,8 @@ local common_opts = {
 
 for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
    -- print(server)
+   -- require'myhelper'.gxmessage(server)
+
    local ok, server_settings = pcall(require, 'lsp.settings.' .. server)
 
    if ok then
@@ -23,7 +24,3 @@ for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
       lspconfig[server].setup(common_opts)
    end
 end
-
--- lspconfig.vala_ls.setup(
---    vim.tbl_deep_extend("force", {}, common_opts)
--- )
