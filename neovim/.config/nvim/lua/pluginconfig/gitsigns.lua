@@ -2,7 +2,7 @@ require('gitsigns').setup({
    numhl              = true,
    linehl             = false,
    current_line_blame = false,
-   keymaps = {},
+   -- keymaps = {},
    current_line_blame_opts = {
       virt_text_pos = 'eol'
    },

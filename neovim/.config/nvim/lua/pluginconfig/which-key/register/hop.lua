@@ -15,6 +15,7 @@ for _, v in ipairs {'n', 'o', 'x'} do
          a = { require'hop'.hint_anywhere, [[Char]] },
          f = { require'hop'.hint_char1, [[Char]] },
          j = { require'hop'.hint_lines_skip_whitespace, [[Lines]] },
+         n = { require'hop-treesitter'.hint_nodes, [[Lines]] },
          w = { require'hop'.hint_words, [[Words]] },
          v = { require'hop'.hint_vertical, [[Vertical]] }
       }, { mode = v, prefix = 'f' }

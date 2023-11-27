@@ -8,14 +8,9 @@ local types = require 'cmp.types'
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-end
-
-cmp.setup {
-   mapping = {}
-}
+-- cmp.setup {
+--    mapping = {}
+-- }
 
 local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 local cmp_keymap = require("cmp.utils.keymap")
@@ -33,53 +28,32 @@ cmp.setup {
       }
    },
    mapping = {
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping
+      ['<Tab>'] = function(fallback)
+          if cmp.visible() then cmp.select_next_item()
+          else fallback()
+          end
+      end,
       ['<C-d>'] = function(fallback)
-          if cmp.visible() then
-              cmp.scroll_docs(4)
-          else
-              fallback()
+          if cmp.visible() then cmp.scroll_docs(4)
+          else fallback()
           end
       end,
       ['<C-u>'] = function(fallback)
-          if cmp.visible() then
-              cmp.scroll_docs(-4)
-          else
-              fallback()
+          if cmp.visible() then cmp.scroll_docs(-4)
+          else fallback()
           end
       end,
       ['<C-e>'] = cmp.mapping({ i = cmp.abort, c = cmp.close }),
-      -- ['<C-s>'] = function()
-      --       cmp.complete { config = {
-      --          sources = { { name = 'ultisnips' } }
-      --       } }
-      -- end,
       ['<C-f>'] = cmp.mapping({
-         i = function(fallback)
-            -- cmp_ultisnips_mappings.compose {'expand', 'jump_forwards'}(fallback)
-            cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-         end,
-         s = function(fallback)
-            -- cmp_ultisnips_mappings.compose {'expand', 'jump_forwards'}(fallback)
-            cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-         end,
-         x = function()
-            vim.api.nvim_feedkeys(cmp_keymap.t("<Plug>(ultisnips_expand)"), 'm', true)
-         end
+         i = function(fallback) cmp_ultisnips_mappings.expand_or_jump_forwards(fallback) end,
+         s = function(fallback) cmp_ultisnips_mappings.expand_or_jump_forwards(fallback) end,
+         x = function() vim.api.nvim_feedkeys(cmp_keymap.t("<Plug>(ultisnips_expand)"), 'm', true) end
       }),
       ['<C-h>'] = cmp.mapping(
-         function(fallback)
-            cmp_ultisnips_mappings.jump_backwards(fallback)
-         end,
-         { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
-      ),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping
-      ['<Tab>'] = function(fallback)
-          if cmp.visible() then
-              cmp.select_next_item()
-          else
-              fallback()
-          end
-      end
+         function(fallback) cmp_ultisnips_mappings.jump_backwards(fallback) end,
+         { "i", "s" }
+      )
    },
    sources = {
       {
@@ -124,35 +98,22 @@ cmp.setup {
       }
    },
    formatting = {
-      format = require'lspkind'.cmp_format({
-         mode = 'symbol_text', -- show only symbol annotations
-         maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-
-         -- The function below will be called before any actual modifications from lspkind
-         -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-         before = function (entry, vim_item)
-            return vim_item
-         end
-      })
+      -- format = require'lspkind'.cmp_format({
+      --    mode = 'symbol_text', -- show only symbol annotations
+      --    maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      --
+      --    -- The function below will be called before any actual modifications from lspkind
+      --    -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      --    before = function (entry, vim_item)
+      --       return vim_item
+      --    end
+      -- })
    },
    experimental = {
       ghost_text = false
    }
 }
 
---
--- `/` cmdline setup.
--- cmp.setup.cmdline('/', {
---    sources = {
---       { name = 'buffer' }
---    }
--- })
---
--- cmp.setup.cmdline('?', {
---    sources = {
---       { name = 'buffer' }
---    }
--- })
 
 -- `:` cmdline setup.
 cmp.setup.cmdline(':', {
@@ -164,20 +125,8 @@ cmp.setup.cmdline(':', {
 })
 
 for _, v in ipairs({ 'gitcommit', 'rnvimr' }) do
-    vim.cmd(
-    [[autocmd FileType ]] .. v ..
-        [[ lua require('cmp').setup.buffer { enabled = false }]]
-    )
+   vim.api.nvim_create_autocmd('FileType', {
+      pattern = v,
+      callback = function() require'cmp'.setup.buffer { enabled = false } end
+   })
 end
---
--- ['<C-p>']     = cmp.mapping.select_prev_item(),
--- ['<C-n>']     = cmp.mapping.select_next_item(),
--- ['<C-h>']     = cmp.mapping.scroll_docs(-4),
--- ['<C-f>']     = cmp.mapping.scroll_docs(4),
--- ['<C-Space>'] = cmp.mapping.complete(),
--- ['<C-e>']     = cmp.mapping.close()
--- ['<CR>']      = cmp.mapping.confirm({
---     behavior = cmp.ConfirmBehavior.Insert,
---     select = true
---   })
--- },
