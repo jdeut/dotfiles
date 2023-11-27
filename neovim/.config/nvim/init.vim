@@ -1,5 +1,8 @@
-lua ok, packer = pcall(require, 'plugins') if ok then packer.compile() end
+" lua vim.loader.enable()
 
+" lua ok, packer = pcall(require, 'plugins') if ok then packer.compile() end
+
+lua require'plugins'
 lua require'autocommands'
 lua require'settings.diagnostics'
 lua require'settings.lsp'
@@ -15,16 +18,6 @@ filetype indent off
 runtime ftplugin/man.vim
 
 let loaded_matchit = 1
-
-" set printoptions=paper:A4,duplex:off,collate:n,syntax:n,header:0
-"
-" let &printdevice='HP_Color_LaserJet_Pro_MFP_M177fw'
-"
-" let &printexpr= "system(" .
-" \   "[ 'lp' ] + " .
-" \   "( empty(&printdevice) ? [] : ['-d', &printdevice] ) + " .
-" \   "[ v:fname_in ]" .
-" \ ")"
 
 "disable beeping and flashing on error
 set vb t_vb=
@@ -62,6 +55,7 @@ set foldmethod=marker
 "execute au's like BufRead only once per opened file
 set fillchars=vert:▏,foldclose:┣,eob:~
 "▍
+set signcolumn=auto:2
 set hidden
 set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case\ "$(git rev-parse --show-toplevel)/.gitignore"
 set grepformat=%f:%l:%c:%m,%f:%l:%m

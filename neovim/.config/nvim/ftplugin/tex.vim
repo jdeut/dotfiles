@@ -10,92 +10,49 @@
 "lua require('plenary.job'):new({command = 'gxmessage', args = { vim.fn.expand('<sfile>:p')}}):sync()
 "breaks by word rather than character
 
-function! MyHandler(context)
-    call vimtex#doc#make_selection(a:context)
-    if !empty(a:context.selected)
-        execute 'silent !texdoc' a:context.selected '&'
-    endif
-    return 1
-endfunction
-
-au BufNewFile,BufRead *.cls set syntax=tex
+" function! MyHandler(context)
+"     call vimtex#doc#make_selection(a:context)
+"     if !empty(a:context.selected)
+"         execute 'silent !texdoc' a:context.selected '&'
+"     endif
+"     return 1
+" endfunction
+"
+" au BufNewFile,BufRead *.cls set syntax=tex
 
 "call vimtex#syntax#p#mycustom#load()
 "
-augroup vimtex_event_4
-    au!
-    au User VimtexEventViewReverse call jobstart(['run-raise-bridge.sh', 'nvim'], {'detach': v:true })
-    au User VimtexEventViewReverse normal! zMzvzz
-    au User VimtexEventViewReverse normal! zR
-    " au User VimtexEventViewReverse call jobstart(['gxmessage', 'hui'], {'detach': v:true })
-augroup END
-
-let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_compiler_latexmk = {
-\ 'build_dir' : 'compiled',
-\ 'callback' : 1,
-\ 'continuous' : 0,
-\ 'exeutable' : 'latexmk',
-\ 'hooks' : [],
-\ 'options' : [
-\   '-verbose',
-\   '-file-line-error',
-\   '-synctex=1',
-\   '-interaction=nonstopmode',
-\ ],
-\}
-
-let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_general_options = '--noraise --unique file:@pdf#src:@line@tex'
-let g:vimtex_view_forward_search_on_start = 1
-
-" let g:vimtex_view_general_viewer                 = 'zathura'
-" let g:vimtex_view_zathura_check_libsynctex       = v:true
-let g:vimtex_view_enabled        = 1
-let g:vimtex_view_method         = 'general'
-let g:vimtex_view_automatic      = 1
-let g:vimtex_imaps_enabled       = 0
-
-let g:tex_no_error                               = 1
-let g:vimtex_syntax_enabled                      = 1
-let g:vimtex_syntax_nospell_comments             = 1
-let g:vimtex_quickfix_autoclose_after_keystrokes = 3
-let g:vimtex_quickfix_open_on_warning            = 0
-let g:vimtex_text_obj_variant                    = 'vimtex'
-let g:vimtex_motion_enabled                      = 1
-let g:vimtex_fold_enabled                        = 0
-let g:vimtex_quicktex_open_on_warning            = 0
-let g:vimtex_doc_handlers                        = ['MyHandler']
-let g:vimtex_subfile_start_local                 = 1
-" let g:vimtex_subfile_start_local                 = 0
-" let g:vimtex_syntax_conceal_default              = 0
-" let g:vimtex_doc_handlers                        = ['MyTexdocHandler']
-"let g:vimtex_view_general_viewer = 'evince'
-" let g:vimtex_compiler_progname                   = 'nvr'
-
-hi link texCFrametitleArg VimtexFrametitle
-hi link texCSubfileArg VimtexFrametitle
+" augroup vimtex_event_4
+"     au!
+"     au User VimtexEventViewReverse call jobstart(['run-raise-bridge.sh', 'nvim'], {'detach': v:true })
+"     au User VimtexEventViewReverse normal! zMzvzz
+"     au User VimtexEventViewReverse normal! zR
+"     " au User VimtexEventViewReverse call jobstart(['gxmessage', 'hui'], {'detach': v:true })
+" " augroup END
+"
+" hi link texCFrametitleArg VimtexFrametitle
+" hi link texCSubfileArg VimtexFrametitle
 
 
 " let g:vimtex_complete_ref = {
-let g:vimtex_complete_ref = {
-\   'custom_patterns': [
-\       '^.*\subref{s*$'
-\   ]
-\ }
+" let g:vimtex_complete_ref = {
+" \   'custom_patterns': [
+" \       '^.*\subref{s*$'
+" \   ]
+" \ }
 "
 
 " let g:vimtex_mappings_disable         = {
-let g:vimtex_mappings_disable         = {
-\   'n': ['<localleader>ll']
-\ }
+" let g:vimtex_mappings_disable         = {
+" \   'n': ['<localleader>ll']
+" \ }
 "
 
 " let g:vimtex_grammar_textidote        = {
-let g:vimtex_grammar_textidote        = {
-\   'jar': '/opt/textidote/textidote.jar',
-\   'args': ''
-\ }
+" let g:vimtex_grammar_textidote        = {
+" \   'jar': '/opt/textidote/textidote.jar',
+" \   'args': ''
+" \ }
 "
 
 let g:vimtex_fold_types = {
@@ -127,18 +84,7 @@ let g:vimtex_fold_types = {
 \       'close': '',
 \   }
 \ }
-"
 
-" let g:vimtex_quickfix_ignore_filters  = [
-let g:vimtex_quickfix_ignore_filters  = [
-\   'Underfull',
-\   'Overfull',
-\   'inputenc Warning',
-\   'fontawesome5 Warning',
-\   'everypage Warning',
-\   'Package hyperref Warning',
-\   'Package typearea Warning: Bad type area settings!',
-\ ]
 
 let g:vimtex_syntax_custom_cmds = [
 \  { 'name' : 'adjustbox', 'argspell' : 0 },

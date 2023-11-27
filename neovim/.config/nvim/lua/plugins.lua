@@ -1,185 +1,163 @@
--- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
---
--- vim.cmd [[packadd packer.nvim]]
+local function bootstrap_pckr()
+   local pckr_path = vim.fn.stdpath("data") .. "/pckr/pckr.nvim"
 
---if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---vim.fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
---vim.api.nvim_command('packadd packer.nvim')
---end
-
-local pluginconfig = function(plugin)
-   assert(type(plugin) == 'string')
-
-   local modname = [[pluginconfig.]] .. plugin
-
-   local ok, pluginconfig = pcall(require, modname)
-
-   if not ok then
-      vim.notify( string.format('pluginconfig(): `%s` not found >> %s', modname, vim.inspect(pluginconfig)), vim.log.levels.INFO)
-   else
-      -- vim.notify( string.format('pluginconfig(): `%s` found', plugin), vim.log.levels.DEBUG)
+   if not vim.loop.fs_stat(pckr_path) then
+      vim.fn.system({
+         'git',
+         'clone',
+         "--filter=blob:none",
+         'https://github.com/lewis6991/pckr.nvim',
+         pckr_path
+      })
    end
-   -- require([[pluginconfig.]] .. plugin)
+
+   -- prepend pckr_path to nvim's runtime path
+   vim.opt.rtp:prepend(pckr_path)
 end
 
-local p = function()
-   -- Packer can manage itself
-   --
-   use { 'wbthomason/packer.nvim' }
-   use { 'rktjmp/lush.nvim' }
-   use { 'Matt-Deacalion/vim-systemd-syntax' }
-   use { 'euclidianAce/BetterLua.vim' }
-   use { 'glts/vim-texlog' }
-   use { 'voldikss/vim-floaterm' }
-   use { 'tpope/vim-fugitive' }
-   use { 'junegunn/vim-easy-align' }
-   use { 'stevearc/vim-arduino' }
-   use { 'farmergreg/vim-lastplace' }
-   use { 'powerman/vim-plugin-AnsiEsc' }
-   use { 'teal-language/vim-teal' }
-   use { 'liuchengxu/graphviz.vim' }
-   use { 'monaqa/dial.nvim' }
-   use { 'chentoast/marks.nvim',
+local function pluginconfig(name)
+   return function()
+      local ok, _ = pcall(require, 'pluginconfig.' .. name)
+
+      if not ok then
+         vim.notify("pluginconfig: can't load " .. name .. " config", vim.log.levels.WARN)
+         vim.notify(ok, vim.log.levels.ERROR)
+      end
+   end
+end
+
+bootstrap_pckr()
+
+require'pckr'.setup{
+   autoremove = true,
+   log = { level = 'debug' }
+}
+
+require'pckr'.add{
+   { 'rktjmp/lush.nvim' };
+   { 'Matt-Deacalion/vim-systemd-syntax' };
+   { 'glts/vim-texlog' };
+   { 'tpope/vim-fugitive' };
+   { 'junegunn/vim-easy-align' };
+   { 'vala-lang/vala.vim' };
+   { 'stevearc/vim-arduino' };
+   { 'farmergreg/vim-lastplace' };
+   { 'powerman/vim-plugin-AnsiEsc' };
+   { 'teal-language/vim-teal' };
+   { 'chentoast/marks.nvim',
       config = function()
-            require'marks'.setup {
-               builtin_marks = { ".", "<", ">", "^", "]", "["}
-            }
-         end
-   }
-   use { 'folke/which-key.nvim',
-      as = 'which-key',
-      config = pluginconfig
-   }
-   use { 'stevearc/overseer.nvim',
-      as = 'overseer',
-      config = pluginconfig
-   }
-   use { 'rmehri01/onenord.nvim',
+         require'marks'.setup {
+            builtin_marks = { ".", "<", ">", "^", "]", "["}
+         }
+      end
+   };
+   { 'stevearc/overseer.nvim',
+      config = pluginconfig('overseer')
+   };
+   { 'rmehri01/onenord.nvim',
       requires = { "rktjmp/lush.nvim" },
-      as = 'onenord',
-      config = pluginconfig
-   }
-   use { 'kevinhwang91/rnvimr',
-      config = pluginconfig
-   }
-   use { 'jalvesaq/Nvim-R',
-      alias = 'Nvim-R'
-   }
-   use { 'ibhagwan/fzf-lua',
+      config = pluginconfig('onenord')
+   };
+   { 'kevinhwang91/rnvimr',
+      config = pluginconfig('rnvimr')
+   };
+   { 'jalvesaq/Nvim-R',
+   };
+   { 'ibhagwan/fzf-lua',
       requires = { 'kyazdani42/nvim-web-devicons' },
-      config = pluginconfig
-   }
-   use { 'hrsh7th/cmp-nvim-lsp',
+      config = pluginconfig('fzf-lua')
+   };
+   { 'hrsh7th/cmp-nvim-lsp',
       config = function()
          require('cmp_nvim_lsp').default_capabilities()
       end
-   }
-   use { 'quangnguyen30192/cmp-nvim-ultisnips',
+   };
+   { 'quangnguyen30192/cmp-nvim-ultisnips',
+      requires = { 'hrsh7th/nvim-cmp' },
       config = function()
          require 'cmp_nvim_ultisnips'.setup {
             show_snippets = "all",
             documentation = function(snippet)
-               -- print(vim.inspect(snippet))
                return snippet.value
             end
          }
       end
-   }
-   use { 'hrsh7th/nvim-cmp',
+   };
+   { 'hrsh7th/nvim-cmp',
       requires = {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-path',
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-nvim-lsp',
          'hrsh7th/cmp-cmdline',
-         'quangnguyen30192/cmp-nvim-ultisnips',
          'kdheepak/cmp-latex-symbols'
       },
-      config = pluginconfig
-   }
-   use { 'pianocomposer321/yabs.nvim',
-      as = 'yabs',
-      config = pluginconfig
-   }
-   use { 'andymass/vim-matchup',
-      config = pluginconfig
-   }
-   use { 'ekickx/clipboard-image.nvim',
-      as = 'clipboard-image',
-      config = pluginconfig
-   }
-   use { 'lewis6991/gitsigns.nvim',
-      as = 'gitsigns',
+      config = pluginconfig('nvim-cmp')
+   };
+   { 'pianocomposer321/yabs.nvim',
+      config = pluginconfig('yabs')
+   };
+   { 'andymass/vim-matchup',
+      config = pluginconfig('vim-matchup')
+   };
+   { 'ekickx/clipboard-image.nvim',
+      config = pluginconfig('clipboard-image')
+   };
+   { 'lewis6991/gitsigns.nvim',
       requires = 'nvim-lua/plenary.nvim',
-      config = pluginconfig
-   }
-   use { 'echasnovski/mini.nvim',
+      config = pluginconfig('gitsigns')
+   };
+   { 'echasnovski/mini.nvim',
       config = function()
          require 'mini.trailspace'.setup {
             only_in_normal_buffers = true
          }
       end
-   }
-   use { 'tyru/open-browser.vim',
-      as = 'open-browser',
-      config = pluginconfig
-   }
-   use { 'borissov/fugitive-gitea',
+   };
+   { 'tyru/open-browser.vim',
+      config = pluginconfig('open-browser')
+   };
+   { 'borissov/fugitive-gitea',
       config = function()
          vim.g.fugitive_gitea_domains = {
             'https://energien.uber.space/gitea'
          }
       end
-   }
-   use { 'lukas-reineke/indent-blankline.nvim',
-      as = 'indent-blankline',
-      config = pluginconfig
-   }
-   use { 'okuuva/auto-save.nvim',
-      as = 'auto-save',
-      config = pluginconfig
-   }
-   use { 'jghauser/mkdir.nvim',
-      config = function()
-         require('mkdir')
-      end
-   }
-   use {
-      'salkin-mada/openscad.nvim',
-      config = function()
-         require('openscad')
-         -- load snippets, note requires
-         -- vim.g.openscad_load_snippets = true
-      end,
-      requires = 'L3MON4D3/LuaSnip'
-   }
-   use { 'phaazon/hop.nvim',
+   };
+   { 'lukas-reineke/indent-blankline.nvim',
+      config = pluginconfig('indent-blankline')
+   };
+   { 'okuuva/auto-save.nvim',
+      config = pluginconfig('auto-save')
+   };
+   { 'jghauser/mkdir.nvim',
+      config = 'mkdir'
+   };
+   { 'salkin-mada/openscad.nvim',
+      requires = 'L3MON4D3/LuaSnip',
+      config = 'openscad'
+   };
+   { 'smoka7/hop.nvim',
       config = function()
          require 'hop'.setup {
             keys             = 'asdfjkl;en',
             uppercase_labels = true
          }
       end
-   }
-   use { 'winston0410/range-highlight.nvim',
+   };
+   { 'winston0410/range-highlight.nvim',
       requires = 'winston0410/cmd-parser.nvim',
       config = function()
          require 'range-highlight'.setup {}
       end
-   }
-   use { 'b3nj5m1n/kommentary',
-      setup = function()
-         vim.g.kommentary_create_default_mappings = false
-      end,
+   };
+   {
+      'numToStr/Comment.nvim',
       config = function()
-         require('kommentary.config').configure_language('default', {
-            prefer_single_line_comments = true,
-            use_consistent_indenation = true,
-            ignore_whitespace = false
-         })
+         require('Comment').setup()
       end
-   }
-   use { 'SirVer/ultisnips',
+   };
+   { 'SirVer/ultisnips',
       setup = function()
          vim.g.UltiSnipsSnippetsDir         = '~/.config/nvim/UltiSnips'
          vim.g.UltiSnipsEditSplit           = 'vertical'
@@ -188,99 +166,99 @@ local p = function()
          vim.g.UltiSnipsJumpForwardTrigger  = '<Nop>'
          vim.g.UltiSnipsJumpBackwardTrigger = '<Nop>'
       end
-   }
-   use { 'chaoren/vim-wordmotion',
+   };
+   { 'chaoren/vim-wordmotion',
       setup = function()
          vim.g.wordmotion_nomap = 1
-
          vim.g.wordmotion_uppercase_spaces = {
             '"', "'", '[', ']', '(', ')', '{', '}',
             '/', [[\]], '_', '-', '.', ',', ':'
          }
       end
-   }
-   use { 'airblade/vim-rooter',
+   };
+   { 'airblade/vim-rooter',
       setup = function()
          vim.g.rooter_change_directory_for_non_project_files = 'current'
       end
-   }
-   use { 'williamboman/mason.nvim',
+   };
+   { 'williamboman/mason.nvim',
       config = function()
          require'mason'.setup()
       end
-   }
-   use { 'williamboman/mason-lspconfig.nvim',
-      after = {'mason.nvim', 'nvim-lspconfig', 'cmp-nvim-lsp'},
-      as = 'mason-lspconfig',
-      config = pluginconfig
-   }
-   use { 'neovim/nvim-lspconfig',
-      -- after = {'mason-lspconfig.nvim', 'cmp-nvim-lsp'},
-      config = function()
-      end
-   }
-   use { 'onsails/lspkind-nvim',
-      config = function()
-         require('lspkind').init {}
-      end
-   }
-   use { 'nvim-treesitter/nvim-treesitter',
-      before = {'andymass/vim-matchup' },
+   };
+   { 'williamboman/mason-lspconfig.nvim',
+      requires = {'williamboman/mason.nvim', 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp'},
+      config = pluginconfig('mason-lspconfig')
+   };
+   { 'neovim/nvim-lspconfig' };
+   -- { 'onsails/lspkind-nvim',
+   --    config = function()
+   --       require('lspkind').init {}
+   --    end
+   -- };
+   -- vimtex doc:
+   -- for people who use Tree-sitter, it is strongly advised to disable
+   -- Tree-sitter highlighting for LaTeX buffers
+   { 'nvim-treesitter/nvim-treesitter',
       config = function()
          require 'nvim-treesitter.configs'.setup {
-            ensure_installed = { 'vala', 'c', 'lua', 'latex' },
-            rainbow = {
-               enable        = true,
-               extended_mode = true
-            },
+            ensure_installed = { 'vala', 'c', 'lua' },
+            ignore_install = { 'latex' },
             matchup = {
                enable = true
+            },
+            highlight = {
+               enable = true,
+               disable = { "latex" }
+            },
+         }
+      end
+   };
+   { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git',
+      config = function()
+         local rainbow_delimiters = require 'rainbow-delimiters'
+
+         vim.g.rainbow_delimiters = {
+            strategy = {
+               [''] = rainbow_delimiters.strategy['global'],
+               vim = rainbow_delimiters.strategy['local'],
+            },
+            query = {
+               [''] = 'rainbow-delimiters',
+               lua = 'rainbow-blocks',
+            },
+            highlight = {
+               'RainbowDelimiterOutest',
+               'RainbowDelimiterViolet',
+               'RainbowDelimiterOrange',
+               'RainbowDelimiterBlue',
+               'RainbowDelimiterGreen',
+               'RainbowDelimiterYellow',
+               'RainbowDelimiterRed',
             }
          }
       end
-   }
-   use { 'p00f/nvim-ts-rainbow',
-      after = { 'nvim-treesitter' }
-   }
-   use { 'akinsho/toggleterm.nvim',
-      as = 'nvim-toggleterm',
-      config = pluginconfig
-   }
-   use { 'lervag/vimtex',
+   };
+   { 'akinsho/toggleterm.nvim',
+      config = pluginconfig('nvim-toggleterm')
+   };
+   { 'lervag/vimtex',
       requires = { 'andymass/vim-matchup' },
-      setup = function()
-         vim.g.vimtex_imaps_enabled = 0
-      end
-   }
-   use { 'vala-lang/vala.vim',
-      setup = function()
-      end
-   }
-   use { 'WolfgangMehner/perl-support',
-      setup = function()
-         vim.g.Perl_PerlTags = 'on'
-      end
-   }
-   use { 'kana/vim-textobj-indent',
+      config = pluginconfig('vimtex')
+   };
+   { 'kana/vim-textobj-indent',
       requires = { 'kana/vim-textobj-user' }
-   }
-   use { 'glts/vim-textobj-comment',
+   };
+   { 'glts/vim-textobj-comment',
       requires = { 'kana/vim-textobj-user' }
-   }
-   use { 'sgur/vim-textobj-parameter',
+   };
+   { 'sgur/vim-textobj-parameter',
       requires = { 'kana/vim-textobj-user' }
-   }
-   use { 'mllg/vim-devtools-plugin',
-      ft = { 'r' },
-      after = { 'Nvim-R' }
-   }
-   use { 'davisdude/vim-love-docs',
+   };
+   { 'davisdude/vim-love-docs',
       run = './src/gen.sh'
-   }
-   use { 'rrethy/vim-hexokinase',
-      run = 'make hexokinase'
-   }
-   use { 'AckslD/nvim-revJ.lua',
+   };
+   { 'AckslD/nvim-revJ.lua',
       requires = { 'kana/vim-textobj-user', 'sgur/vim-textobj-parameter' },
       config = function()
          require('revj').setup {
@@ -292,38 +270,53 @@ local p = function()
             add_seperator_for_last_parameter = false
          }
       end
-   }
-   use { 'alvarosevilla95/luatab.nvim',
+   };
+   { 'alvarosevilla95/luatab.nvim',
       requires = 'kyazdani42/nvim-web-devicons',
       config = function()
          require('luatab').setup({})
       end
-   }
-   use { 'nvim-lualine/lualine.nvim',
-      -- disable = true,
-      requires = {
-         'kyazdani42/nvim-web-devicons', opt = true
-      },
+   };
+   { 'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons'},
+      config = pluginconfig('lualine')
+   };
+   { 'folke/which-key.nvim',
       config = function()
-         require('pluginconfig.lualine')
-      end
-   }
-end
-
-return require('packer').startup({
-   p,
-   config = {
-      profile = {
-         enable = true,
-         threshold = 0.3 -- the amount in ms that a plugins load time must be over for it to be included in the profile
-      },
-      display = {
-         non_interactive = false,
-         open_cmd = 'leftabove 60vnew',
-         max_jobs = 6,
-         git = {
-            timeout = 3
+         require'which-key'.setup {
+            plugins = {
+               marks = false,
+               registers = true,
+            },
+            presets = {
+               operators = true
+            },
+            window = {
+               margin = { 0, 10, 4, 10 },
+               padding = { 0, 0, 0, 0 },
+               border = 'single',
+               winblend = 40
+            },
+            layout = {
+               height = { min = 4, max = 22 }, --
+               width = { min = 5, max = 40 }, --
+               spacing = 5, -- spacing between columns
+               align = "center",
+            },
+            hidden = {
+               "execute", "<cmd>", "<Cmd>",
+               "<CR>", "call", "lua", "^:", "^ "
+            },
+            -- triggers = {
+            --    '<localleader>', '<leader>', 'z', 'g', ']', '[', [[']], [[`]]
+            -- },
+            triggers_blacklist = {},
+            ignore_missing = true,
+            motions = { count = true },
+            show_help = true
          }
-      }
-   }
-})
+      end
+   };
+}
+
+require('pluginconfig.which-key')
