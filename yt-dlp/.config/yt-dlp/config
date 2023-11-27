@@ -15,8 +15,8 @@
 --embed-subs
 --sub-langs "fr,de"
 
---downloader=aria2c
---downloader-args=aria2c:"-x 8 -s 8 -k 1M"
+#--downloader=aria2c
+#--downloader-args=aria2c:"-x 8 -s 8 -k 1M --header 'user-agent: chrome'"
 
 
 --concurrent-fragments 3
