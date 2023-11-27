@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/home/johannes/.local/bin/ydotoold
+ExecStart=/usr/bin/ydotoold
 ExecReload=/usr/bin/kill -HUP $MAINPID
 Nice=-18
 KillMode=process
