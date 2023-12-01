@@ -21,3 +21,6 @@
 [submodule "mpv-youtube-ui"]
 	path = mpv/.config/mpv/scripts/youtube-ui/remote
 	url = https://github.com/eatsu/mpv-osc-youtube-ui
+[submodule "yt-dlp-streamtape-plugins"]
+	path = yt-dlp/.config/yt-dlp/plugins/yt-dlp-streamtape-plugins
+	url = https://github.com/impulse888/yt-dlp-streamtape-plugins
