@@ -10,6 +10,8 @@ elif [ ! -f "$@" ] ; then
     exit 1
 fi
 
-$HOME/.local/bin/nvr --remote-expr "luaeval('require[[myhelper]].open_from_ext([[$@]])')"
+# echo $NVIM_LISTEN_ADDRESS
 
-/home/johannes/.local/bin/run-raise-bridge.sh nvim
+nvim --server "$NVIM_LISTEN_ADDRESS" --remote "$@"
+
+$HOME/.local/bin/run-raise-bridge.sh nvim
