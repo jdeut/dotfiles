@@ -4,6 +4,7 @@
 --
 local cmp = require 'cmp'
 
+
 local types = require 'cmp.types'
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
@@ -130,3 +131,10 @@ for _, v in ipairs({ 'gitcommit', 'rnvimr' }) do
       callback = function() require'cmp'.setup.buffer { enabled = false } end
    })
 end
+
+require 'cmp_nvim_ultisnips'.setup {
+   show_snippets = "all",
+   documentation = function(snippet)
+      return snippet.value
+   end
+}

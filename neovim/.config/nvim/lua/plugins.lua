@@ -17,11 +17,11 @@ end
 
 local function pluginconfig(name)
    return function()
-      local ok, _ = pcall(require, 'pluginconfig.' .. name)
+      local ok, status = pcall(require, 'pluginconfig.' .. name)
 
       if not ok then
          vim.notify("pluginconfig: can't load " .. name .. " config", vim.log.levels.WARN)
-         vim.notify(ok, vim.log.levels.ERROR)
+         vim.notify(status, vim.log.levels.ERROR)
       end
    end
 end
@@ -58,11 +58,14 @@ require'pckr'.add{
       requires = { "rktjmp/lush.nvim" },
       config = pluginconfig('onenord')
    };
+   { 'lukas-reineke/indent-blankline.nvim',
+      requires = { "rktjmp/lush.nvim", "rmehri01/onenord.nvim"},
+      config = pluginconfig('indent-blankline')
+   };
    { 'kevinhwang91/rnvimr',
       config = pluginconfig('rnvimr')
    };
-   { 'jalvesaq/Nvim-R',
-   };
+   { 'jalvesaq/Nvim-R' };
    { 'ibhagwan/fzf-lua',
       requires = { 'kyazdani42/nvim-web-devicons' },
       config = pluginconfig('fzf-lua')
@@ -72,19 +75,10 @@ require'pckr'.add{
          require('cmp_nvim_lsp').default_capabilities()
       end
    };
-   { 'quangnguyen30192/cmp-nvim-ultisnips',
-      requires = { 'hrsh7th/nvim-cmp' },
-      config = function()
-         require 'cmp_nvim_ultisnips'.setup {
-            show_snippets = "all",
-            documentation = function(snippet)
-               return snippet.value
-            end
-         }
-      end
-   };
+   { 'quangnguyen30192/cmp-nvim-ultisnips' };
    { 'hrsh7th/nvim-cmp',
       requires = {
+         'quangnguyen30192/cmp-nvim-ultisnips',
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-path',
          'hrsh7th/cmp-nvim-lua',
@@ -123,9 +117,6 @@ require'pckr'.add{
             'https://energien.uber.space/gitea'
          }
       end
-   };
-   { 'lukas-reineke/indent-blankline.nvim',
-      config = pluginconfig('indent-blankline')
    };
    { 'okuuva/auto-save.nvim',
       config = pluginconfig('auto-save')
