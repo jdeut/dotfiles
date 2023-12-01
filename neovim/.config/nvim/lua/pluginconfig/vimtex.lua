@@ -1,3 +1,4 @@
+vim.g.vimtex_enabled = 1
 vim.g.vimtex_compiler_method = 'latexmk'
 
 vim.g.vimtex_compiler_latexmk = {
