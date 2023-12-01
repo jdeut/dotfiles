@@ -11,8 +11,6 @@ local common_opts = {
 }
 
 for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
-   -- print(server)
-   -- require'myhelper'.gxmessage(server)
 
    local ok, server_settings = pcall(require, 'lsp.settings.' .. server)
 
@@ -24,3 +22,4 @@ for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
       lspconfig[server].setup(common_opts)
    end
 end
+

@@ -187,10 +187,12 @@ require'pckr'.add{
       end
    };
    { 'williamboman/mason-lspconfig.nvim',
-      requires = {'williamboman/mason.nvim', 'neovim/nvim-lspconfig', 'hrsh7th/cmp-nvim-lsp'},
+      requires = {'williamboman/mason.nvim'},
+   };
+   { 'neovim/nvim-lspconfig',
+      requires = {'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp'},
       config = pluginconfig('mason-lspconfig')
    };
-   { 'neovim/nvim-lspconfig' };
    -- { 'onsails/lspkind-nvim',
    --    config = function()
    --       require('lspkind').init {}
@@ -313,7 +315,10 @@ require'pckr'.add{
             triggers_blacklist = {},
             ignore_missing = true,
             motions = { count = true },
-            show_help = true
+            show_help = true,
+            disable = {
+               filetype = { 'nofile' }
+            }
          }
       end
    };

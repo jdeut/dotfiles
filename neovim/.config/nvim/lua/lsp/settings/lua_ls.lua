@@ -1,20 +1,22 @@
 local settings = {
-   Lua = {
-      diagnostics = {
-         globals = {'use'},
-         enable = true
-      },
-      telemetry = { -- Do not send telemetry data
-         enable = false,
-      },
-      workspace = {
-         ignoreDir = {'.git'},
-         checkThirdParty = true,
-         preloadFileSize = 150,
-         library = {
-         -- Make the server aware of Neovim runtime files
-            vim.env.VIMRUNTIME,
-            vim.fn.stdpath("config") .. "/lua"
+   settings = {
+      Lua = {
+         diagnostics = {
+            globals = {'use'},
+            enable = true
+         },
+         telemetry = { -- Do not send telemetry data
+            enable = false,
+         },
+         workspace = {
+            ignoreDir = {'.git'},
+            checkThirdParty = true,
+            preloadFileSize = 150,
+            library = {
+            -- Make the server aware of Neovim runtime files
+               vim.env.VIMRUNTIME,
+               vim.fn.stdpath("config") .. "/lua"
+            }
          }
       }
    }
