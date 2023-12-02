@@ -37,6 +37,10 @@ require'pckr'.add{
    { 'rktjmp/lush.nvim' };
    { 'Matt-Deacalion/vim-systemd-syntax' };
    { 'glts/vim-texlog' };
+   { 'folke/which-key.nvim',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = pluginconfig('which-key')
+   };
    { 'tpope/vim-fugitive' };
    { 'junegunn/vim-easy-align' };
    { 'vala-lang/vala.vim' };
@@ -75,7 +79,9 @@ require'pckr'.add{
          require('cmp_nvim_lsp').default_capabilities()
       end
    };
-   { 'quangnguyen30192/cmp-nvim-ultisnips' };
+   { 'quangnguyen30192/cmp-nvim-ultisnips',
+      requires = {'SirVer/ultisnips'}
+   };
    { 'hrsh7th/nvim-cmp',
       requires = {
          'quangnguyen30192/cmp-nvim-ultisnips',
@@ -156,7 +162,7 @@ require'pckr'.add{
          vim.g.UltiSnipsExpandTrigger       = '<Plug>(ultisnips_expand)'
          vim.g.UltiSnipsJumpForwardTrigger  = '<Nop>'
          vim.g.UltiSnipsJumpBackwardTrigger = '<Nop>'
-      end
+      end,
    };
    { 'chaoren/vim-wordmotion',
       setup = function()
@@ -165,7 +171,7 @@ require'pckr'.add{
             '"', "'", '[', ']', '(', ')', '{', '}',
             '/', [[\]], '_', '-', '.', ',', ':'
          }
-      end
+      end,
    };
    { 'airblade/vim-rooter',
       setup = function()
@@ -207,7 +213,7 @@ require'pckr'.add{
          }
       end
    };
-   { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git',
+   { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
       config = function()
          local rainbow_delimiters = require 'rainbow-delimiters'
 
@@ -274,45 +280,32 @@ require'pckr'.add{
       requires = { 'kyazdani42/nvim-web-devicons'},
       config = pluginconfig('lualine')
    };
-   { 'folke/which-key.nvim',
-      config = function()
-         require'which-key'.setup {
-            plugins = {
-               marks = false,
-               registers = true,
-            },
-            presets = {
-               operators = true
-            },
-            window = {
-               margin = { 0, 10, 4, 10 },
-               padding = { 0, 0, 0, 0 },
-               border = 'single',
-               winblend = 40
-            },
-            layout = {
-               height = { min = 4, max = 22 }, --
-               width = { min = 5, max = 40 }, --
-               spacing = 5, -- spacing between columns
-               align = "center",
-            },
-            hidden = {
-               "execute", "<cmd>", "<Cmd>",
-               "<CR>", "call", "lua", "^:", "^ "
-            },
-            -- triggers = {
-            --    '<localleader>', '<leader>', 'z', 'g', ']', '[', [[']], [[`]]
-            -- },
-            triggers_blacklist = {},
-            ignore_missing = true,
-            motions = { count = true },
-            show_help = true,
-            disable = {
-               filetype = { 'nofile' }
-            }
-         }
-      end
-   };
 }
 
-require('pluginconfig.which-key')
+local loaded_plugins = {'pckr', 'textobj'}
+
+for _,v in pairs(require'pckr.plugin'.plugins) do
+   local name = string.gsub(v.name, "[.]", "-")
+   table.insert(loaded_plugins, 0, name)
+end
+
+for _,plugin in pairs(loaded_plugins) do
+   local path = {}
+
+   path.lua_modules_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua')
+   path.wk_register_plugins_rel_dir = vim.fs.joinpath('pluginconfig', 'which-key', 'register', 'plugins')
+   path.wk_register_plugin_file = vim.fs.joinpath(path.lua_modules_dir, path.wk_register_plugins_rel_dir, plugin .. '.lua')
+
+   local ret = vim.uv.fs_stat(path.wk_register_plugin_file)
+
+   if ret then
+      local ok, status = pcall(require, vim.fs.joinpath(path.wk_register_plugins_rel_dir, plugin))
+
+      if ok then
+         -- vim.notify(plugin .. " -- loaded", vim.log.levels.DEBUG)
+      else
+         vim.notify(status, vim.log.levels.ERROR)
+      end
+   end
+end
+
