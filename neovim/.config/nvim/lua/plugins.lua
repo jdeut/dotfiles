@@ -74,10 +74,16 @@ require'pckr'.add{
       requires = { 'kyazdani42/nvim-web-devicons' },
       config = pluginconfig('fzf-lua')
    };
-   { 'hrsh7th/cmp-nvim-lsp',
-      config = function()
-         require('cmp_nvim_lsp').default_capabilities()
-      end
+   { 'SirVer/ultisnips',
+      setup = function()
+         vim.g.UltiSnipsSnippetsDir         = '~/.config/nvim/UltiSnips'
+         vim.g.UltiSnipsEditSplit           = 'vertical'
+         vim.g.UltiSnipsListSnippets        = '<Nop>'
+         vim.g.UltiSnipsExpandTrigger       = '<Plug>(ultisnips_expand)'
+         vim.g.UltiSnipsJumpForwardTrigger  = '<Plug>(ultisnips_jump_forward)'
+         vim.g.UltiSnipsJumpBackwardTrigger = '<Plug>(ultisnips_jump_backward)'
+         vim.g.UltiSnipsRemoveSelectModeMappings = 0
+      end,
    };
    { 'quangnguyen30192/cmp-nvim-ultisnips',
       requires = {'hrsh7th/nvim-cmp', 'hrsh7th/cmp-cmdline', 'SirVer/ultisnips'},
