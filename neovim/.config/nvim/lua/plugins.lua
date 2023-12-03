@@ -208,8 +208,10 @@ require'pckr'.add{
    -- Tree-sitter highlighting for LaTeX buffers
    { 'nvim-treesitter/nvim-treesitter',
       config = function()
-         require 'nvim-treesitter.configs'.setup {
-            ensure_installed = { 'vala', 'c', 'lua' },
+         local parser_install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "ts-parsers")
+         require'nvim-treesitter.configs'.setup {
+            parser_install_dir = parser_install_dir,
+            ensure_installed = { 'vala', 'c', 'lua', 'bash'},
             ignore_install = { 'latex' },
             matchup = {
                enable = true
