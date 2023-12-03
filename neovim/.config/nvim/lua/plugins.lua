@@ -80,7 +80,12 @@ require'pckr'.add{
       end
    };
    { 'quangnguyen30192/cmp-nvim-ultisnips',
-      requires = {'SirVer/ultisnips'}
+      requires = {'hrsh7th/nvim-cmp', 'hrsh7th/cmp-cmdline', 'SirVer/ultisnips'},
+      config = pluginconfig('cmp-nvim-ultisnips')
+   };
+   { 'hrsh7th/cmp-cmdline',
+      requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-buffer' },
+      config = pluginconfig('cmp-cmdline')
    };
    { 'hrsh7th/nvim-cmp',
       requires = {
@@ -93,6 +98,9 @@ require'pckr'.add{
          'kdheepak/cmp-latex-symbols'
       },
       config = pluginconfig('nvim-cmp')
+   };
+   { 'hrsh7th/cmp-nvim-lsp',
+      config = function() require('cmp_nvim_lsp').default_capabilities() end
    };
    { 'pianocomposer321/yabs.nvim',
       config = pluginconfig('yabs')

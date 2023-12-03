@@ -4,7 +4,6 @@
 --
 local cmp = require 'cmp'
 
-
 local types = require 'cmp.types'
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
@@ -12,9 +11,6 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 -- cmp.setup {
 --    mapping = {}
 -- }
-
-local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
-local cmp_keymap = require("cmp.utils.keymap")
 
 cmp.setup {
    preselect = types.cmp.PreselectMode.Item,
@@ -35,26 +31,9 @@ cmp.setup {
           else fallback()
           end
       end,
-      ['<C-d>'] = function(fallback)
-          if cmp.visible() then cmp.scroll_docs(4)
-          else fallback()
-          end
-      end,
-      ['<C-u>'] = function(fallback)
-          if cmp.visible() then cmp.scroll_docs(-4)
-          else fallback()
-          end
-      end,
-      ['<C-e>'] = cmp.mapping({ i = cmp.abort, c = cmp.close }),
-      ['<C-f>'] = cmp.mapping({
-         i = function(fallback) cmp_ultisnips_mappings.expand_or_jump_forwards(fallback) end,
-         s = function(fallback) cmp_ultisnips_mappings.expand_or_jump_forwards(fallback) end,
-         x = function() vim.api.nvim_feedkeys(cmp_keymap.t("<Plug>(ultisnips_expand)"), 'm', true) end
-      }),
-      ['<C-h>'] = cmp.mapping(
-         function(fallback) cmp_ultisnips_mappings.jump_backwards(fallback) end,
-         { "i", "s" }
-      )
+      ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+      ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+      ['<C-e>'] = cmp.mapping({ i = cmp.abort, c = cmp.close })
    },
    sources = {
       {
@@ -81,34 +60,12 @@ cmp.setup {
          name = 'latex_symbols',
          keyword_length = 2
       },
-      {
-         name = 'ultisnips',
-         keyword_length = 1,
-         priority = 5
-      }
-   },
-   snippet = {
-      expand = function(args)
-          vim.fn["UltiSnips#Anon"](args.body)
-      end
    },
    sorting = {
       comparators = {
          cmp.config.compare.kind,
          cmp.config.compare.length
       }
-   },
-   formatting = {
-      -- format = require'lspkind'.cmp_format({
-      --    mode = 'symbol_text', -- show only symbol annotations
-      --    maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-      --
-      --    -- The function below will be called before any actual modifications from lspkind
-      --    -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      --    before = function (entry, vim_item)
-      --       return vim_item
-      --    end
-      -- })
    },
    experimental = {
       ghost_text = false
@@ -117,13 +74,6 @@ cmp.setup {
 
 
 -- `:` cmdline setup.
-cmp.setup.cmdline(':', {
-   sources = cmp.config.sources({
-      { name = 'path' }
-   }, {
-      { name = 'cmdline' }
-   })
-})
 
 for _, v in ipairs({ 'gitcommit', 'rnvimr' }) do
    vim.api.nvim_create_autocmd('FileType', {
@@ -131,10 +81,3 @@ for _, v in ipairs({ 'gitcommit', 'rnvimr' }) do
       callback = function() require'cmp'.setup.buffer { enabled = false } end
    })
 end
-
-require 'cmp_nvim_ultisnips'.setup {
-   show_snippets = "all",
-   documentation = function(snippet)
-      return snippet.value
-   end
-}
