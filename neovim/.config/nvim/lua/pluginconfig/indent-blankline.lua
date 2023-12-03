@@ -19,4 +19,3 @@ require('ibl').setup {
       }
    }
 }
-
