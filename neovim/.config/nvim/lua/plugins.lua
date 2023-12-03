@@ -227,6 +227,7 @@ require'pckr'.add{
                disable = { "latex" }
             },
          }
+         vim.opt.runtimepath:prepend(parser_install_dir)
       end
    };
    { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
