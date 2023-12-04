@@ -14,8 +14,8 @@ end
 -- r = { vim.lsp.buf.references, 'references'},
 -- s = { vim.lsp.buf.rename, 'rename'},
 
-local buf_set_option = function(bufnr, ...)
-   vim.api.nvim_buf_set_option(bufnr, ...)
+local buf_set_option = function(bufnr, name, value)
+   vim.api.nvim_set_option_value(name, value, { scope = 'local', buf = bufnr })
 end
 
 local caps = {
