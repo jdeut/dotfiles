@@ -4,27 +4,27 @@ if not ok then return end
 
 local plugin_opts = {
    global_resume       = true,
-   global_resume_query = true,  -- include typed query in `resume`?
-   git_icons           = true,  -- show git icons?
-   file_icons          = true,  -- show file icons?
+   global_resume_query = true, -- include typed query in `resume`?
+   git_icons           = true, -- show git icons?
+   file_icons          = true, -- show file icons?
    trim_entry          = true,
-   color_icons         = true,  -- colorize file|git icons
-   keymap = {
-      fzf = {               -- fzf '--bind=' options
-         ['f2']         = 'toggle-preview',
-         ['f3']         = 'toggle-preview-wrap',
-         ['ctrl-d']     = 'half-page-down',
-         ['ctrl-u']     = 'half-page-up',
+   color_icons         = true, -- colorize file|git icons
+   keymap              = {
+      fzf = {                  -- fzf '--bind=' options
+         ['f2']     = 'toggle-preview',
+         ['f3']     = 'toggle-preview-wrap',
+         ['ctrl-d'] = 'half-page-down',
+         ['ctrl-u'] = 'half-page-up',
          -- ['ctrl-a']     = 'toggle-all',
-         ['ctrl-a']     = 'select-all+accept',
-         ['ctrl-r']     = 'toggle+down',
-         ['ctrl-j']     = 'down',
-         ['ctrl-k']     = 'up',
-         ['ctrl-h']     = 'clear-query'
+         ['ctrl-a'] = 'select-all+accept',
+         ['ctrl-r'] = 'toggle+down',
+         ['ctrl-j'] = 'down',
+         ['ctrl-k'] = 'up',
+         ['ctrl-h'] = 'clear-query'
       }
    },
    -- function(selected, o) require'myhelper'.gxmessage({ selected = selected, o = o }) end
-   actions = {
+   actions             = {
       buffers = {
          ['default'] = actions.buf_edit,
          ['ctrl-s']  = actions.buf_split,
@@ -39,7 +39,7 @@ local plugin_opts = {
          ['ctrl-t']  = actions.file_tabedit,
       }
    },
-   fzf_opts = {
+   fzf_opts            = {
       -- options are sent as `<left>=<right>`
       -- set to `false` to remove a flag
       -- set to '' for a non-value flag
@@ -50,7 +50,7 @@ local plugin_opts = {
       ['--height'] = '100%',
       ['--layout'] = 'reverse'
    },
-   fzf_colors = {
+   fzf_colors          = {
       ['bg']      = { 'bg', 'MyFzfBg' },
       ['fg']      = { 'fg', 'MyFzfFg' },
       ['hl']      = { 'fg', 'MyFzfInfo' },
@@ -65,27 +65,27 @@ local plugin_opts = {
       ['header']  = { 'fg', 'MyFzfSpinner' },
       ['gutter']  = { 'bg', 'MyFzfGutter' },
    },
-   previewers = {
+   previewers          = {
       cat = {
-         cmd             = 'cat',
-         args            = '--number',
+         cmd  = 'cat',
+         args = '--number',
       },
       bat = {
-         cmd             = 'bat',
-         args            = '--style numbers --color always',
-         theme           = 'zenburn', -- bat --list-themes,
-         config          = nil,            -- nil uses $BAT_CONFIG_PATH
+         cmd    = 'bat',
+         args   = '--style numbers --color always',
+         theme  = 'zenburn', -- bat --list-themes,
+         config = nil,       -- nil uses $BAT_CONFIG_PATH
       },
       builtin = {
-         syntax          = true,         -- preview syntax highlight?
-         syntax_limit_l  = 100,            -- syntax limit (lines), 0=nolimit
-         syntax_limit_b  = 1024*1024    -- syntax limit (bytes), 0=nolimit
+         syntax         = true,       -- preview syntax highlight?
+         syntax_limit_l = 1000,       -- syntax limit (lines), 0=nolimit
+         syntax_limit_b = 1024 * 1024 -- syntax limit (bytes), 0=nolimit
       },
       man = {
          cmd = 'man -c %s | col -bx'
       }
    },
-   winopts = {
+   winopts             = {
       border = 'none',
       hl = {
          normal = 'MyFzfLuaDefault',
@@ -115,14 +115,14 @@ local plugin_opts = {
          }
       },
       on_create = function()
-         mappings = {
+         local mappings = {
             ['<S-PageUp>'] = { function()
-                  require'fzf-lua.win'.preview_scroll(-1)
-               end, ''
+               require 'fzf-lua.win'.preview_scroll(-1)
+            end, ''
             },
             ['<S-PageDown>'] = { function()
-                  require'fzf-lua.win'.preview_scroll(1)
-               end, ''
+               require 'fzf-lua.win'.preview_scroll(1)
+            end, ''
             }
          }
 
@@ -138,16 +138,17 @@ local plugin_opts = {
       end
    },
    -- provider setup
-   files = {
+   files               = {
       multiprocess = true
    },
-   git = {
+   git                 = {
       files = {
          prompt = 'GitFiles❯ ',
          multiprocess = true
       },
       status = {
-         cmd = [[git status -s | awk '{ _ = $1 OFS $2 ; "stat -c %Y " $2 | getline ; print $0, _}' | sort -r | awk '{ printf "%2s %s\n", $2, $3 }']],
+         cmd =
+         [[git status -s | awk '{ _ = $1 OFS $2 ; "stat -c %Y " $2 | getline ; print $0, _}' | sort -r | awk '{ printf "%2s %s\n", $2, $3 }']],
          winopts = {
             fullscreen = true,
             preview = {
@@ -156,17 +157,17 @@ local plugin_opts = {
          }
       }
    },
-   helptags = {
+   helptags            = {
       fzf_opts = {
          ['--tiebreak'] = 'index'
       }
    },
-   manpages = {
+   manpages            = {
       previewer = {
-         _ctor = require'fzf-lua.previewer'.fzf.man_pages
+         _ctor = require 'fzf-lua.previewer'.fzf.man_pages
       }
    },
-   buffers = {
+   buffers             = {
       previewer = false,
       sort_lastused = true,
       ignore_current_buffer = true,
@@ -175,16 +176,16 @@ local plugin_opts = {
          split = 'botright 15new'
       }
    },
-   grep = {
+   grep                = {
       prompt       = 'Rg❯ ',
       input_prompt = 'Grep For❯ ',
       rg_opts      = '-g "!{.git,node_modules}/*"',
-      git_icons    = true,           -- show git icons?
-      file_icons   = true,           -- show file icons?
-      color_icons  = true,           -- colorize file|git icons
+      git_icons    = true, -- show git icons?
+      file_icons   = true, -- show file icons?
+      color_icons  = true, -- colorize file|git icons
       multiprocess = true,
       no_esc       = 2,
-      winopts = {
+      winopts      = {
          split = 'botright 30new',
          preview = {
             layout = 'vertical',
@@ -192,32 +193,32 @@ local plugin_opts = {
          }
       }
    },
-   lsp = {
-      prompt            = '❯ ',
+   lsp                 = {
+      prompt           = '❯ ',
       -- cwd               = vim.loop.cwd(),
-      cwd_only          = false,      -- LSP/diagnostics for cwd only?
-      async_or_timeout  = true,       -- timeout(ms) or false for blocking calls
-      file_icons        = true,
-      git_icons         = false,
-      lsp_icons         = true,
-      severity          = 'hint',
-      fzf_opts = {
+      cwd_only         = false, -- LSP/diagnostics for cwd only?
+      async_or_timeout = true,  -- timeout(ms) or false for blocking calls
+      file_icons       = true,
+      git_icons        = false,
+      lsp_icons        = true,
+      severity         = 'hint',
+      fzf_opts         = {
          ['--keep-right'] = ''
       },
-      icons = {
-         ['Error']       = { icon = '', color = 'red' },       -- error
-         ['Warning']     = { icon = '', color = 'yellow' },    -- warning
-         ['Information'] = { icon = '', color = 'blue' },      -- info
-         ['Hint']        = { icon = '', color = 'magenta' },   -- hint
+      icons            = {
+         ['Error']       = { icon = '', color = 'red' }, -- error
+         ['Warning']     = { icon = '', color = 'yellow' }, -- warning
+         ['Information'] = { icon = '', color = 'blue' }, -- info
+         ['Hint']        = { icon = '', color = 'magenta' }, -- hint
       },
-      winopts = {
+      winopts          = {
          preview = {
             layout = 'vertical',
             vertical = 'down:25%'
          }
       }
    },
-   oldfiles = {
+   oldfiles            = {
       cwd_only = false,
       stat_file = true,
       include_current_session = true,
@@ -233,4 +234,4 @@ local plugin_opts = {
    }
 }
 
-require'fzf-lua'.setup(plugin_opts)
+require 'fzf-lua'.setup(plugin_opts)
