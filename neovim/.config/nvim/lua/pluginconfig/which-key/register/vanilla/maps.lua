@@ -1,27 +1,27 @@
-wk = require("which-key")
+local wk = require("which-key")
 
 local xn_related = {
    ['<DEL>']      = { [["+]], 'Select + Reg' },
    ['<DEL><DEL>'] = { [["+y]], 'Yank + Reg' },
-   ['<Space>']    = { [[:]], 'Enter Command-Line Mode', silent  = false},
+   ['<Space>']    = { [[:]], 'Enter Command-Line Mode', silent = false },
 }
 
-for _, v in ipairs({'x', 'n'}) do
-   wk.register(xn_related,  { mode = v })
+for _, v in ipairs({ 'x', 'n' }) do
+   wk.register(xn_related, { mode = v })
 end
 
-wk.register( {
-   ['<leader>']   = {
+wk.register({
+   ['<leader>'] = {
       e = {
          name = 'Edit/Sub',
          e    = { [[:s###c<Left><Left><Left>]], [[Substitute]], silent = false },
          w    = { [[:s#=expand('<cword>')<cr>##c<Left><Left>]], [[Substitute <cword>]], silent = false }
       }
    }
-},  { mode = 'x', silet = false})
+}, { mode = 'x', silet = false })
 
-wk.register( {
-   ['<leader>']   = {
+wk.register({
+   ['<leader>'] = {
       e = {
          name = 'Edit/Sub',
          e    = { [[:%s###c<Left><Left><Left>]], [[Substitute]], silent = false },
@@ -29,53 +29,53 @@ wk.register( {
       },
       w = {
          f = { function()
-            require'plenary.job':new({
+            require 'plenary.job':new({
                command = 'xdg-open',
-               args = { vim.fn.expand('<cfile>')},
+               args = { vim.fn.expand('<cfile>') },
             }):start()
          end
          , [[xdg-open]] }
       }
    }
-},  { mode = 'n', silent = false})
+}, { mode = 'n', silent = false })
 
-wk.register( {
-   ['<C-Space>'] = { function() vim.cmd([[wincmd p]]) end,  [[Go to previous window]] },
-},  { mode = 't' })
+wk.register({
+   ['<C-Space>'] = { function() vim.cmd([[wincmd p]]) end, [[Go to previous window]] },
+}, { mode = 't' })
 
-wk.register( {
+wk.register({
    ['<C-Space>'] = { function()
-         vim.cmd([[wincmd p]])
+      vim.cmd([[wincmd p]])
 
-         if vim.bo.buftype == 'terminal' then
-               vim.cmd([[startinsert]])
-         end
-      end,  [[Go to previous window]]
+      if vim.bo.buftype == 'terminal' then
+         vim.cmd([[startinsert]])
+      end
+   end, [[Go to previous window]]
    },
-   vv = { [[V]], 'linewise visual'}
+   vv = { [[V]], 'linewise visual' }
 }, { mode = 'n' })
 
 
 wk.register({
-   ['/'] = {
-      name = 'localleader',
-      ['/']    = { [[/]], 'Search', silent = false }
+   ['/']    = {
+      name  = 'localleader',
+      ['/'] = { [[/]], 'Search', silent = false }
    },
-   ['<F5>']  = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' },
-   ['<F2>']  = { function()
-         local line, col, r = vim.fn.line('.'), vim.fn.col('.'), {}
-         -- print(line .. [[  ]] .. col)
+   ['<F5>'] = { [[:write<cr>:silent Reload<cr>]], 'Reload settings' },
+   ['<F2>'] = { function()
+      local line, col, r = vim.fn.line('.'), vim.fn.col('.'), {}
+      -- print(line .. [[  ]] .. col)
 
-         print(vim.fn.synIDattr(vim.fn.synID(line, col, true), 'name'))
-      end, 'Show Syntax Info'
+      print(vim.fn.synIDattr(vim.fn.synID(line, col, true), 'name'))
+   end, 'Show Syntax Info'
    },
-   g = {
+   g        = {
       l = {
          name = 'Linewise Put',
          p = { function()
-               vim.cmd([[put ]] .. vim.v.register)
-               vim.cmd([[normal `[=`]`] ]])
-            end, 'put'
+            vim.cmd([[put ]] .. vim.v.register)
+            vim.cmd([[normal `[=`]`] ]])
+         end, 'put'
          }
       }
    }
@@ -90,11 +90,11 @@ wk.register({
    q = {
       name = 'Quickfix',
       q    = { function()
-            require('myhelper.quickfix').toggle()
-         end, 'toggle'
+         require('myhelper.quickfix').toggle()
+      end, 'toggle'
       },
-      n    = { [[<cmd>cnext<CR>]], 'next entry'},
-      p    = { [[<cmd>cprev<CR>]], 'previous entry'},
+      n    = { [[<cmd>cnext<CR>]], 'next entry' },
+      p    = { [[<cmd>cprev<CR>]], 'previous entry' },
       g    = {
          g = {
             function()
@@ -106,11 +106,11 @@ wk.register({
          },
       },
       G    = { function()
-            vim.cmd([[copen]])
-            vim.api.nvim_feedkeys('G', 'xt', false)
-            vim.cmd([[wincmd p]])
-         end
-         , 'G in quickfix window'
+         vim.cmd([[copen]])
+         vim.api.nvim_feedkeys('G', 'xt', false)
+         vim.cmd([[wincmd p]])
+      end
+      , 'G in quickfix window'
       },
    }
-},  { mode = 'n', prefix = '<leader>' })
+}, { mode = 'n', prefix = '<leader>' })
