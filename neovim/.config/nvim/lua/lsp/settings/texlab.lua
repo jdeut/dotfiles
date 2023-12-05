@@ -1,10 +1,20 @@
 local setting = {
    texlab = {
-      chktex = {
-         onOpenAndSave = true
+      latexindent = {
+         ["local"] = vim.fs.joinpath(vim.env.HOME, '.latexindent.yaml')
       },
-      diagnostics = {    -- recognize the `vim` global
-         delay = 100
+      chktex = {
+         onOpenAndSave = true,
+         onEdit = true
+      },
+      diagnostics = { -- recognize the `vim` global
+         delay = 10,
+         ignoredPatterns = {
+            "Wrong length of dash may have been used.",
+            "You should put a space",
+            "Package typearea Warning",
+            "Command terminated with space"
+         }
       },
       experimental = {
          mathEnvironments = { 'align', 'align*' }
@@ -15,9 +25,8 @@ local setting = {
       },
       build = {
          args = { "-pdflatex=lualatex", "-outdir=compiled", "-interaction=nonstopmode", "-synctex=1", "%f" },
-         onSave = true,
          executable = "latexmk",
-         auxDirectory = "compiled",
+         onSave = true,
          pdfDirectory = "compiled",
          isContinuous = false
       }
