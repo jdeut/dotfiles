@@ -1,0 +1,7 @@
+{
+    "version": "2.0.1",
+    "autoload": {
+        "DuckyChannel International Co., Ltd. Ducky Keyboard": "Standard",
+        "AT Translated Set 2 keyboard": "Standard"
+    }
+}
