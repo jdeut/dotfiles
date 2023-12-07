@@ -42,6 +42,13 @@ The given URL is recorded into .gitmodules.
     git submodule update --remote --recursive --merge
 ```
 
+If `git status` shows `Submodules changed but not updated`:
+
+```
+git submodule update --init --recursive
+```
+???
+
 # mpv
 
 ## Scripts
