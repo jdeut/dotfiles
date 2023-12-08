@@ -46,5 +46,29 @@
         "target_uinput": "keyboard",
         "output_symbol": "if_tap(key(KEY_BACKSLASH),hold_keys(KEY_LEFTMETA,KEY_LEFTALT,KEY_LEFTCTRL), timeout=150)",
         "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 44,
+                "origin_hash": "748e31550c24fc009038438dc4fce338"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "z",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 21,
+                "origin_hash": "748e31550c24fc009038438dc4fce338"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "y",
+        "mapping_type": "key_macro"
     }
 ]
