@@ -1,8 +1,10 @@
 local mason_lspconfig = require 'mason-lspconfig'
 local lspconfig = require 'lspconfig'
 
+local servers = { "texlab", "lua_ls", "vala_ls", "clangd" }
+
 mason_lspconfig.setup({
-   ensure_installed = { "texlab", "lua_ls", "vala_ls", "clangd" }
+   ensure_installed = servers
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -10,19 +12,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
    callback = function(args)
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
+
       if client == nil then
          return
       end
-      -- vim.notify('LspAttach autocommand ' .. client.name, vim.log.levels.INFO)
-      local caps = client.server_capabilities
 
-      if caps.completionProvider then
+      if client.supports_method "textDocument/completion" then
          vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
       end
-      if caps.definitionProvider then
+      if client.supports_method "textDocument/definition" then
          vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
       end
-      if caps.documentRangeFormattingProvider then
+      if client.supports_method "textDocument/rangeFormatting" then
          vim.bo[bufnr].formatexpr = 'v:lua.vim.lsp.formatexpr(#{timeout_ms:250})'
       end
    end,
@@ -36,18 +37,26 @@ local capabilities = vim.tbl_deep_extend(
 
 vim.lsp.set_log_level('info')
 
-for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+table.insert(servers, "ccls")
 
-   local ok, on_init = pcall(require, 'lsp.settings.' .. server)
+for _, server in pairs(servers) do
+   local settings = {}
+
+   local ok, overwrite_settings = pcall(require, 'lsp.settings' .. server)
 
    if ok then
-      lspconfig[server].setup {
-         capabilities = capabilities,
-         on_init = on_init
+      settings = overwrite_settings
+   end
+
+   if server == 'lua_ls' then
+      require("lspconfig")[server].setup {
+         on_init = require'lsp.settings.lua_ls',
+         capabilities = capabilities
       }
    else
-      lspconfig[server].setup {
-         capabilities = capabilities
+      require("lspconfig")[server].setup {
+         capabilities = capabilities,
+         settings = settings
       }
    end
 end

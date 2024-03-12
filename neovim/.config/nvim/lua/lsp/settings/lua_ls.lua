@@ -1,4 +1,4 @@
-local setting_nvim = {
+local settings_nvim = {
    Lua = {
       runtime = {
          version = "LuaJIT"
@@ -47,7 +47,7 @@ local setting_nvim = {
    }
 }
 
-local setting = {
+local settings = {
    Lua = {
       runtime = {
          version = 'Lua 5.3',
@@ -71,10 +71,18 @@ local setting = {
 
 
 return function(client)
-   local path = {
-      workspace = client.workspace_folders[1].name,
-      nvim_config = vim.uv.fs_realpath(vim.uv.fs_readlink(vim.fn.stdpath('config')))
-   }
+
+   local path = {}
+
+   if client.workspace_folders then
+      path.workspace = client.workspace_folders[1].name
+   else
+      path.workspace = ''
+   end
+
+   -- vim.uv.fs_realpath(vim.uv.fs_readlink(vim.fn.stdpath('config')))
+
+   path.nvim_config = vim.fn.stdpath('config')
 
    -- require'myhelper'.gxmessage{
    --    path.workspace,
@@ -85,10 +93,11 @@ return function(client)
 
    if regex:match_str(path.workspace) then
       -- require'myhelper'.gxmessage( "workspace folder is stdpath config" )
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, setting_nvim)
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, settings_nvim)
       client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
    elseif not vim.loop.fs_stat(path.workspace .. '/.luarc.json') and not vim.loop.fs_stat(path.workspace .. '/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, setting)
+      -- require'myhelper'.gxmessage( "workspace folder is NOT stdpath config" )
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, settings)
       client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
    end
 

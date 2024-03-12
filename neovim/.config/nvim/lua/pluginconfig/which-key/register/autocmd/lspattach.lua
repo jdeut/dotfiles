@@ -14,10 +14,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
          return
       end
 
-      local caps = client.server_capabilities
-
-      -- require 'myhelper'.gxmessage(caps)
-
       set_keymap(bufnr, 'n', '<localleader>', {
          ['wl'] = {
             function()
@@ -37,23 +33,37 @@ vim.api.nvim_create_autocmd("LspAttach", {
             }
          })
       end
-
-      if caps.hoverProvider then
+      if client.supports_method "textDocument/inlayHint" then
+         set_keymap(bufnr, 'n', '<localleader>', {
+            ['h'] = {
+               function()
+                  if vim.lsp.inlay_hint.is_enabled(bufnr) then
+                     vim.lsp.inlay_hint.enable(bufnr, false)
+                  else
+                     vim.lsp.inlay_hint.enable(bufnr, true)
+                  end
+               end,
+               'Lsp Toggle Inlay Hint'
+            }
+         })
+         vim.lsp.inlay_hint.enable(bufnr, true)
+      end
+      if client.supports_method "textDocument/hover" then
          set_keymap(bufnr, 'n', 'g', {
             h = { vim.lsp.buf.hover, 'Lsp Hover' }
          })
       end
-      if caps.signatureHelpProvider then
+      if client.supports_method "textDocument/signatureHelp" then
          set_keymap(bufnr, 'n', 'g', {
             ['s'] = { vim.lsp.buf.signature_help, 'Lsp Signature Help' }
          })
       end
-      if caps.renameProvider then
+      if client.supports_method "textDocument/rename" then
          set_keymap(bufnr, 'n', '<leader>', {
             ['er'] = { vim.lsp.buf.rename, 'Lsp Rename' }
          })
       end
-      if caps.documentSymbolProvider then
+      if client.supports_method "textDocument/documentSymbol" then
          set_keymap(bufnr, 'n', 'g', {
             ['0'] = { vim.lsp.buf.document_symbol, 'Lsp Document Symbols' }
          })

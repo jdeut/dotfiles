@@ -1,4 +1,4 @@
-local setting = {
+local settings = {
    texlab = {
       latexindent = {
          ["local"] = vim.fs.joinpath(vim.env.HOME, '.latexindent.yaml')
@@ -24,7 +24,7 @@ local setting = {
          args = { "-f", "%l", "%p", '"code -g %f:%l"' }
       },
       build = {
-         args = { "-pdflatex=lualatex", "-outdir=compiled", "-interaction=nonstopmode", "-synctex=1", "%f" },
+         args = { "-shell-escape", "-pdflatex=lualatex", "-interaction=nonstopmode", "-synctex=1", "%f" },
          executable = "latexmk",
          onSave = true,
          pdfDirectory = "compiled",
@@ -33,9 +33,5 @@ local setting = {
    }
 }
 
-return function(client)
-   client.config.settings = vim.tbl_deep_extend('force', client.config.settings, setting)
-   client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
 
-   return true
-end
+return settings
