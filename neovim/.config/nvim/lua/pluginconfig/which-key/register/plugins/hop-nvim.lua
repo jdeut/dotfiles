@@ -1,14 +1,3 @@
--- local t = {
---    maps = {
---       { 'f', require'hop'.hint_char1, [[Char]] },
---       { 'j', require'hop'.hint_lines_skip_whitespace, [[Char]] },
---       { 'w', require'hop'.hint_words, [[Char]] }
---    },
---    prefixes = {
---       F = { opts = { multi_windows = true }, append = 'MW'},
---       f = { opts = {}, append = '' }
---    }
--- }
 
 for _, v in ipairs {'n', 'o', 'x'} do
    require'which-key'.register( {

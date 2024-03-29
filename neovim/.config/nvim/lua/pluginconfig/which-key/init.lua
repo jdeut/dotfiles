@@ -1,6 +1,3 @@
-local scan = require'plenary.scandir'
-local path = require'plenary.path'
-
 require'which-key.plugins.registers'.registers =  '+"-:.%/#=_adfjkn0123789'
 
 require'which-key'.setup {
@@ -39,35 +36,22 @@ require'which-key'.setup {
    }
 }
 
-local luapath = path:new(vim.fn.stdpath('config')):joinpath('lua')
+--
+-- source all lua files as modules recursively from:
+-- pluginconfig/which-key/register/**/*.lua
+--
 
-local wkpaths = {
-   luapath:joinpath('pluginconfig/which-key/register/vanilla'),
-   luapath:joinpath('pluginconfig/which-key/register/autocmd')
-}
+local saved_dir = vim.fn.chdir(vim.fs.joinpath( vim.fn.stdpath('config'), 'lua'))
+local wkregs = vim.fn.glob( 'pluginconfig/which-key/register/**/*.lua', true, true)
 
-for _,wkpath in ipairs(wkpaths) do
-   scan.scan_dir(
-      wkpath:absolute(), {
-         search_pattern = 'lua$',
-         on_insert = function(entry, typ)
-            if typ == 'file' then
-               local p = path:new(entry):make_relative(luapath:absolute())
+for _,p in ipairs(wkregs) do
+   local mod = vim.fn.fnamemodify(p, ':r'):gsub('/', '.')
 
-               -- vim.cmd([[echomsg "]] .. tostring(p) .. [["]])
+   local ok, status = pcall(require, mod)
 
-               --assert(
-               --   tostring(p):match([[\.]]),
-               --   tostring(p):format("\ndot in path >>%s<< is not valid", p)
-               --)
-
-               p = vim.fn.fnamemodify(p, ':r'):gsub('/', '.')
-
-               -- vim.cmd([[echomsg "]] .. p .. [["]])
-
-               require(p)
-            end
-         end
-      }
-   )
+   if not ok then
+      vim.notify('Error loading ' .. p .. status, vim.log.levels.ERROR)
+   end
 end
+
+vim.fn.chdir(saved_dir)

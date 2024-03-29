@@ -1,4 +1,4 @@
-wk = require("which-key")
+local wk = require("which-key")
 
 local function ccmd(cmd, opts)
    local count = vim.api.nvim_eval('v:count')

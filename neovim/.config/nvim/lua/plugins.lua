@@ -3,7 +3,7 @@ local function bootstrap_pckr()
 
    if not vim.uv.fs_stat(pckr_path) then
       vim.fn.system({
-         'git',
+        'git',
          'clone',
          "--filter=blob:none",
          'https://github.com/lewis6991/pckr.nvim',
@@ -33,14 +33,10 @@ require 'pckr'.setup {
    log = { level = 'debug' }
 }
 
-require 'pckr'.add {
-   { 'rktjmp/lush.nvim' },
+require'pckr'.add {
    { 'Matt-Deacalion/vim-systemd-syntax' },
    { 'glts/vim-texlog' },
-   { 'folke/which-key.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
-      config = pluginconfig('which-key')
-   },
+   { 'nvim-lua/plenary.nvim' },
    { 'tpope/vim-fugitive' },
    { 'junegunn/vim-easy-align' },
    { 'vala-lang/vala.vim' },
@@ -58,19 +54,11 @@ require 'pckr'.add {
    { 'stevearc/overseer.nvim',
       config = pluginconfig('overseer')
    },
-   { 'rmehri01/onenord.nvim',
-      requires = { "rktjmp/lush.nvim" },
-      config = pluginconfig('onenord')
-   },
-   { 'lukas-reineke/indent-blankline.nvim',
-      requires = { "rktjmp/lush.nvim", "rmehri01/onenord.nvim" },
-      config = pluginconfig('indent-blankline')
-   },
    { 'kevinhwang91/rnvimr',
       config = pluginconfig('rnvimr')
    },
    { 'jalvesaq/Nvim-R' },
-   { 'ibhagwan/fzf-lua',
+   { 'https://gitlab.com/ibhagwan/fzf-lua.git',
       requires = { 'kyazdani42/nvim-web-devicons' },
       config = pluginconfig('fzf-lua')
    },
@@ -85,6 +73,10 @@ require 'pckr'.add {
          vim.g.UltiSnipsRemoveSelectModeMappings = 0
       end,
    },
+   { 'hrsh7th/nvim-cmp',
+      requires = { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-nvim-lsp', 'kdheepak/cmp-latex-symbols' },
+      config = pluginconfig('nvim-cmp')
+   },
    { 'quangnguyen30192/cmp-nvim-ultisnips',
       requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-cmdline', 'SirVer/ultisnips' },
       config = pluginconfig('cmp-nvim-ultisnips')
@@ -93,21 +85,28 @@ require 'pckr'.add {
       requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-buffer' },
       config = pluginconfig('cmp-cmdline')
    },
-   { 'hrsh7th/nvim-cmp',
-      requires = { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lua', 'hrsh7th/cmp-nvim-lsp', 'kdheepak/cmp-latex-symbols' },
-      config = pluginconfig('nvim-cmp')
-   },
    { 'hrsh7th/cmp-nvim-lsp',
       config = function() require('cmp_nvim_lsp').default_capabilities() end
-   },
-   { 'pianocomposer321/yabs.nvim',
-      config = pluginconfig('yabs')
    },
    { 'andymass/vim-matchup',
       config = pluginconfig('vim-matchup')
    },
-   { 'ekickx/clipboard-image.nvim',
-      config = pluginconfig('clipboard-image')
+   { 'TobinPalmer/pastify.nvim',
+      config = function()
+         require('pastify').setup {
+            opts = {
+               absolute_path = false, -- use absolute or relative path to the working directory
+               apikey = '', -- Api key, required for online saving
+               local_path = '/imgs/', -- The path to put local files in, ex ~/Projects/<name>/assets/images/<imgname>.png
+               save = 'local', -- Either 'local' or 'online'
+            },
+            ft = { -- Custom snippets for different filetypes, will replace $IMG$ with the image url
+               html = '<img src="$IMG$" alt="">',
+               markdown = '![]($IMG$)',
+               tex = [[\includegraphics[width=\linewidth]{$IMG$}]],
+            }
+         }
+      end
    },
    { 'lewis6991/gitsigns.nvim',
       requires = 'nvim-lua/plenary.nvim',
@@ -147,8 +146,7 @@ require 'pckr'.add {
       requires = 'winston0410/cmd-parser.nvim',
       config = function() require 'range-highlight'.setup {} end
    },
-   {
-      'numToStr/Comment.nvim',
+   { 'numToStr/Comment.nvim',
       config = function() require('Comment').setup() end
    },
    { 'NvChad/nvim-colorizer.lua',
@@ -164,7 +162,7 @@ require 'pckr'.add {
       end,
    },
    { 'airblade/vim-rooter',
-      setup = function()
+      config = function()
          vim.g.rooter_change_directory_for_non_project_files = 'current'
       end
    },
@@ -178,19 +176,28 @@ require 'pckr'.add {
       requires = { 'williamboman/mason-lspconfig.nvim', 'hrsh7th/cmp-nvim-lsp' },
       config = pluginconfig('nvim-lspconfig')
    },
-   -- { 'onsails/lspkind-nvim',
-   --    config = function()
-   --       require('lspkind').init {}
-   --    end
-   -- };
+   { 'mfussenegger/nvim-dap',
+      config = pluginconfig('nvim-dap')
+   },
+   { 'theHamsta/nvim-dap-virtual-text',
+      requires = { 'mfussenegger/nvim-dap' },
+      config = function()
+         require("nvim-dap-virtual-text").setup{
+            virt_text_pos = 'eol',
+            virt_text_win_col = 80
+         }
+      end
+   },
    -- vimtex doc:
    -- for people who use Tree-sitter, it is strongly advised to disable
    -- Tree-sitter highlighting for LaTeX buffers
    { 'nvim-treesitter/nvim-treesitter',
       config = function()
-         local parser_install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "ts-parsers")
+         local parser_path = vim.fs.joinpath(vim.fn.stdpath("data"), "ts-parsers")
+         vim.opt.runtimepath:prepend(parser_path)
+
          require 'nvim-treesitter.configs'.setup {
-            parser_install_dir = parser_install_dir,
+            parser_install_dir = parser_path,
             ensure_installed = { 'vala', 'c', 'lua', 'bash' },
             ignore_install = { 'latex' },
             matchup = {
@@ -201,7 +208,6 @@ require 'pckr'.add {
                disable = { "latex" }
             },
          }
-         vim.opt.runtimepath:prepend(parser_install_dir)
       end
    },
    { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
@@ -236,6 +242,7 @@ require 'pckr'.add {
       requires = { 'andymass/vim-matchup' },
       config = pluginconfig('vimtex')
    },
+   { 'kana/vim-textobj-user' },
    { 'kana/vim-textobj-indent',
       requires = { 'kana/vim-textobj-user' }
    },
@@ -273,32 +280,8 @@ require 'pckr'.add {
    },
 }
 
-local loaded_plugins = { 'pckr', 'textobj' }
-
-for _, v in pairs(require 'pckr.plugin'.plugins) do
-   local name = string.gsub(v.name, "[.]", "-")
-   table.insert(loaded_plugins, 0, name)
-end
-
-for _, plugin in pairs(loaded_plugins) do
-   local path = {}
-
-   path.lua_modules_dir = vim.fs.joinpath(vim.fn.stdpath('config'), 'lua')
-   path.wk_register_plugins_rel_dir = vim.fs.joinpath('pluginconfig', 'which-key', 'register',
-      'plugins')
-   path.wk_register_plugin_file = vim.fs.joinpath(path.lua_modules_dir,
-      path.wk_register_plugins_rel_dir,
-      plugin .. '.lua')
-
-   local ret = vim.uv.fs_stat(path.wk_register_plugin_file)
-
-   if ret then
-      local ok, status = pcall(require, vim.fs.joinpath(path.wk_register_plugins_rel_dir, plugin))
-
-      if ok then
-         -- vim.notify(plugin .. " -- loaded", vim.log.levels.DEBUG)
-      else
-         vim.notify(status, vim.log.levels.ERROR)
-      end
-   end
-end
+require'pckr'.add{
+   { 'folke/which-key.nvim',
+      config = pluginconfig('which-key')
+   }
+}

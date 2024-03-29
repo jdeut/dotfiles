@@ -17,6 +17,17 @@ wk.register({
 
    ['1'] = { t.git_files('/home/johannes/.dotfiles/neovim/.config/nvim'), [[Nvim Config Dir]] },
    ['2'] = { t.git_files('/home/johannes/.dotfiles'), [[Dotfiles]] },
+   ['3'] = { function()
+         FzfLua.fzf_exec(
+            [[ls -p -1 -t | grep -v '/$']],
+            {
+               cwd = vim.fn.stdpath('log'),
+               preview = "tac {}",
+               fzf_opts = { ['--preview-window'] = 'nohidden,down,70%' }
+            }
+         )
+      end, [[Logs]]
+   },
    ["<leader>"] = {
       name = 'Fzf',
       f = { FzfLua.buffers,  [[Buffers]] },
@@ -26,6 +37,7 @@ wk.register({
       },
       i = { FzfLua.git_status, [[Git status]] },
       c = { FzfLua.git_commits, [[Git commits]] },
+      d = { FzfLua.dap_commands, [[Git commits]] },
       C = { FzfLua.git_bcommits, [[Git status]] },
       h = { FzfLua.help_tags , [[Help]] },
       m = { FzfLua.man_pages , [[Help]] },

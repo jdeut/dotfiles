@@ -15,6 +15,8 @@ wk.register({
             vim.cmd(cmd)
          end, 'Toggle Loc'
       },
+      j    = { function() vim.diagnostic.goto_next {} end, "Goto next diagnostic" },
+      k    = { function() vim.diagnostic.goto_prev {} end, "Goto prev diagnostic" },
       q    = {
          function()
             local winid = vim.fn.getqflist({ winid = 0 }).winid

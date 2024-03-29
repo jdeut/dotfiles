@@ -13,16 +13,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
          return
       end
 
-      local caps = client.server_capabilities
-
       set_keymap(bufnr, 'n', '<localleader>', {
+
          b = {
             function()
                vim.cmd([[TexlabBuild]])
             end, 'TexlabBuild' }
       })
       set_keymap(bufnr, 'n', '<localleader>', {
-         f = {
+         a = {
             function()
                vim.cmd([[TexlabForward]])
             end, 'TexlabForward' }

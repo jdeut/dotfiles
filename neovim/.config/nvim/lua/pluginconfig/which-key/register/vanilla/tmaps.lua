@@ -1,4 +1,4 @@
-wk = require'which-key'
+local wk = require'which-key'
 
 -- tnoremap <leader><Esc> <C-\><C-n>
 -- tnoremap <C-ESC> <C-w><C-c>
