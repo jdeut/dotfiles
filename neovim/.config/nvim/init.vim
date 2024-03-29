@@ -1,11 +1,10 @@
-" lua vim.loader.enable()
+lua vim.loader.enable()
 
 " lua ok, packer = pcall(require, 'plugins') if ok then packer.compile() end
 
-lua require'plugins'
-lua require'autocommands'
-lua require'settings.diagnostics'
-lua require'settings.lsp'
+
+" lua require'autocommands'
+" lua require'settings.lsp'
 
 "══════════════════════════════════════════════════════════════════
 " General Settings
@@ -31,10 +30,10 @@ set noswapfile
 "set langmap+=y;z
 "set langmap+=z;y
 
-set list
-set showbreak=↪\ 
+set showbreak=↪\
 "space:·
-set listchars=tab:▸\ ,eol:\ 
+set listchars=tab:▸\ ,eol:\
+set nolist
 "tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set linebreak
 "when splitting place the new window right of
@@ -48,6 +47,7 @@ set foldenable
 " set foldminlines=0
 set foldminlines=2
 set scrollback=10000
+set smoothscroll
 set foldmarker=❰❰❰,❱❱❱
 set foldmethod=marker
 "set foldtext=MyFoldText()
@@ -170,6 +170,7 @@ set go-=T
 " Color Settings
 "══════════════════════════════════════════════════
 set termguicolors
+set background=light
 "══════════════════════════════════════════════════
 " Statusline
 "══════════════════════════════════════════════════
@@ -201,7 +202,7 @@ let maplocalleader               = '/'
 let g:vimsyn_embed               = 'l'
 let g:no_vim_maps                = 0
 
-let g:nvim_config_home           = $HOME . '/.config/nvim'
+let g:nvim_config_home           = stdpath('config')
 
 " let g:clipboard = {
 " \   'name': 'myClipboard',
@@ -303,3 +304,8 @@ augroup END
 
 
 lua require'style.mytcols'
+" lua require'style.myhl'
+lua require'plugins'
+lua require'settings.diagnostics'
+
+" highlight DiagnosticSignWarn guibg=gray
