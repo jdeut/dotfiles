@@ -8,9 +8,6 @@
 [submodule "mpv/.config/mpv/scripts/live-filters/remote"]
 	path = mpv/.config/mpv/scripts/live-filters/remote
 	url = https://github.com/hdb/mpv-live-filters
-[submodule "mpv/.config/mpv/scripts/mpvacious/remote"]
-	path = mpv/.config/mpv/scripts/mpvacious/remote
-	url = https://github.com/Ajatt-Tools/mpvacious
 [submodule "mpv/.config/mpv/scripts/zenity-open-files"]
 	path = mpv/.config/mpv/scripts/zenity-open-files
 	url = https://github.com/alifarazz/mpv-zenity-open-files
