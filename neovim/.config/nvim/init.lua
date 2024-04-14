@@ -130,7 +130,7 @@ o.timeoutlen          = 300
 -- apply to key codes
 o.ttimeoutlen         = 1
 -- set persistent undo
-o.undodir             = "~/.local/share/nvim/undo"
+o.undodir             = vim.fs.joinpath(vim.fn.stdpath('config'), 'undo')
 o.undofile            = true
 -- change directory to current buffer
 -- set autochdir
@@ -269,5 +269,3 @@ require'style.mytcols'
 -- " lua require'style.myhl'
 require'plugins'
 require'settings.diagnostics'
-
--- " highlight DiagnosticSignWarn guibg=gray
