@@ -1,0 +1,68 @@
+[general]
+status_path = "~/.cache/vdirsyncer/status/"
+
+# The password can also be fetched from the system password storage, netrc or a
+# custom command. See http://vdirsyncer.pimutils.org/en/stable/keyring.html
+#password =
+#
+# to store the password:
+#    secret-tool store --collection="/org/freedesktop/secrets/collection/Services"  --label "label" user "..." domain "..."
+
+# One time sync for android contacts
+# [pair contacts_baikal]
+# a = "local_contacts_baikal"
+# b = "remote_contacts_baikal"
+# collections = null
+#
+# [storage local_contacts_baikal]
+# type = "singlefile"
+# path = "~/.contacts/baikal/default/contacts_2024_04_05_13_32_06.vcf"
+#
+# [storage remote_contacts_baikal]
+# type = "carddav"
+# auth = "basic"
+# url.fetch = ["command", "secret-tool", "lookup", "service", "carddav", "pseudonym", "my", "isurl", "true"]
+# username.fetch = ["command", "secret-tool", "lookup", "service", "carddav", "pseudonym", "my", "isusername", "true"]
+# password.fetch = ["command", "secret-tool", "lookup", "service", "carddav", "pseudonym", "my", "ispassword", "true"]
+
+#################################################################
+# Feiertage
+#################################################################
+
+[pair feiertage_calendar]
+a = "remote_feiertage_calendar_baikal"
+b = "remote_feiertage_calendar"
+collections = null
+
+[storage remote_feiertage_calendar_baikal]
+type = "caldav"
+auth = "basic"
+url.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "calendar", "feiertage", "pseudonym", "my", "isurl", "true"]
+username.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "pseudonym", "my", "isusername", "true"]
+password.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "pseudonym", "my", "ispassword", "true"]
+
+[storage remote_feiertage_calendar]
+type = "http"
+url = "http://i.cal.to/ical/61/nrw/feiertage/b3a39470.2b856cf8-11578856.ics"
+
+#################################################################
+# WBGS Kalender
+#################################################################
+
+[pair wbgs_calendar]
+a = "remote_wbgs_calendar_baikal"
+b = "remote_wbgs_calendar_logineo"
+collections = null
+
+[storage remote_wbgs_calendar_baikal]
+type = "caldav"
+auth = "basic"
+url.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "calendar", "wbgs", "pseudonym", "my", "isurl", "true"]
+username.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "pseudonym", "my", "isusername", "true"]
+password.fetch = ["command", "secret-tool", "lookup", "service", "baikal", "pseudonym", "my", "ispassword", "true"]
+
+[storage remote_wbgs_calendar_logineo]
+type = "http"
+url.fetch = ["command", "secret-tool", "lookup", "service", "logineo", "pseudonym", "my", "protocol", "ics", "isurl", "true"]
+username.fetch = ["command", "secret-tool", "lookup", "service", "logineo", "pseudonym", "my", "isusername", "true"]
+password.fetch = ["command", "secret-tool", "lookup", "service", "logineo", "pseudonym", "my", "ispassword", "true"]
