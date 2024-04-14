@@ -130,7 +130,7 @@ o.timeoutlen          = 300
 -- apply to key codes
 o.ttimeoutlen         = 1
 -- set persistent undo
-o.undodir             = vim.fs.joinpath(vim.fn.stdpath('config'), 'undo')
+o.undodir             = vim.fs.joinpath(vim.fn.stdpath('data'), 'undo')
 o.undofile            = true
 -- change directory to current buffer
 -- set autochdir
