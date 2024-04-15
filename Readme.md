@@ -36,6 +36,12 @@ The given URL is recorded into .gitmodules.
  git rm <submodule path> && git commit.
 ```
 
+or
+
+```
+git config -f .gitmodules --remove-section submodule.<submodule_name>
+```
+
 ## Update Submodules
 
 ```
