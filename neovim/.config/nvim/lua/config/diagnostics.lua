@@ -6,6 +6,7 @@ vim.diagnostic.config {
    -- disable virtual text
    virtual_text = {
       prefix = '●',
+      severity = { min = vim.diagnostic.severity.HINT, max = vim.diagnostic.severity.ERROR },
       format = diagnostic_format,
       spacing = 13
    },

@@ -12,7 +12,7 @@ local settings_nvim = {
          setType = true,       -- Show a hint to display the type being applied at assignment operations.
       },
       diagnostics = {
-         globals = { 'use' },
+         globals = { 'use', 'vim' },
          -- disable = { 'trailing-space' },
          severity = "Hint",
          neededFileStatus = {
@@ -31,7 +31,7 @@ local settings_nvim = {
          -- preloadFileSize = 150,
          library = {
             -- Make the server aware of Neovim runtime files
-            vim.env.VIMRUNTIME,
+            vim.api.nvim_get_runtime_file("", true),
             vim.fn.stdpath("config") .. "/lua"
             -- "${3rd}/luv/library"
          }
@@ -89,7 +89,9 @@ return function(client)
    --    path.nvim_config
    -- }
 
-   local regex = vim.regex("^" .. path.nvim_config)
+   local regex = vim.regex("^" .. path.nvim_config .. "\\|^" .. vim.env.HOME .. "/.dotfiles/neovim")
+
+   print(path.workspace)
 
    if regex:match_str(path.workspace) then
       -- require'myhelper'.gxmessage( "workspace folder is stdpath config" )

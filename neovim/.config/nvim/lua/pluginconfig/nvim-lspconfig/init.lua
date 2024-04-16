@@ -1,7 +1,7 @@
 local mason_lspconfig = require 'mason-lspconfig'
 local lspconfig = require 'lspconfig'
 
-local servers = { "texlab", "lua_ls", "vala_ls", "clangd" }
+local servers = { "texlab", "lua_ls", "vala_ls" }
 
 mason_lspconfig.setup({
    ensure_installed = servers
@@ -42,7 +42,7 @@ table.insert(servers, "ccls")
 for _, server in pairs(servers) do
    local settings = {}
 
-   local ok, overwrite_settings = pcall(require, 'lsp.settings' .. server)
+   local ok, overwrite_settings = pcall(require, 'lsp.settings.' .. server)
 
    if ok then
       settings = overwrite_settings
@@ -50,8 +50,22 @@ for _, server in pairs(servers) do
 
    if server == 'lua_ls' then
       require("lspconfig")[server].setup {
-         on_init = require'lsp.settings.lua_ls',
+         on_init = require('pluginconfig.nvim-lspconfig.lsconfig.' .. server),
          capabilities = capabilities
+      }
+   elseif server == 'ccls' then
+      require("lspconfig")[server].setup {
+         cmd = { "ccls", "--log-file=/tmp/ccls.log", "-v=1" },
+         capabilities = capabilities,
+         init_options = {
+            compilationDatabaseDirectory = "build",
+            index = {
+               threads = 0;
+            },
+            clang = {
+               excludeArgs = { "-frounding-math"} ;
+            },
+         }
       }
    else
       require("lspconfig")[server].setup {

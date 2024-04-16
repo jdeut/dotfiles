@@ -1,4 +1,4 @@
-local settings = {
+return {
    texlab = {
       latexindent = {
          ["local"] = vim.fs.joinpath(vim.env.HOME, '.latexindent.yaml')
@@ -24,14 +24,14 @@ local settings = {
          args = { "-f", "%l", "%p", '"code -g %f:%l"' }
       },
       build = {
-         args = { "-shell-escape", "-pdflatex=lualatex", "-interaction=nonstopmode", "-synctex=1", "%f" },
+         -- args = { "-shell-escape", "-pdflatex=lualatex", "-interaction=nonstopmode", "-synctex=1", "%f" },
+         args = { "-verbose", "%f" },
          executable = "latexmk",
          onSave = true,
+         auxDirectory = "compiled",
+         logDirectory = "compiled",
          pdfDirectory = "compiled",
          isContinuous = false
       }
    }
 }
-
-
-return settings
